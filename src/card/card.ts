@@ -1,9 +1,7 @@
-type CardType = {
+export default class Card {
   suite: string;
-};
 
-export function Card(suite: string): CardType {
-  return {
-    suite: suite,
-  };
+  constructor(suite: string) {
+    this.suite = suite;
+  }
 }
