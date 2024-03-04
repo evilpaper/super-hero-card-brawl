@@ -1,11 +1,7 @@
-import { describe, expect, test } from "@jest/globals";
+import { expect, test } from "vitest";
 import Card from "./card";
 
-describe("Card", () => {
-  describe("when created", () => {
-    test("has a suite", () => {
-      const card = new Card("clover");
-      expect(card.suite).toBeDefined();
-    });
-  });
+test("card", () => {
+  const card = new Card("clover");
+  expect(card.suite).toBeDefined();
 });
