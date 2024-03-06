@@ -2,7 +2,6 @@ import "./style.css";
 import typescriptLogo from "./typescript.svg";
 import viteLogo from "/vite.svg";
 import { setupCounter } from "./counter.ts";
-import Card from "./card/card.ts";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
@@ -21,11 +20,5 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     </p>
   </div>
 `;
-
-const card = new Card("♠︎", "2");
-card.element.textContent = "I'm a card";
-const app = document.querySelector("#app");
-
-app && app.appendChild(card.element);
 
 setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
