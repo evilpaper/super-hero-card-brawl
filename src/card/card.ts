@@ -7,7 +7,9 @@ import { Suite, Rank, Value } from "./card.types";
  * 3. value
  * 4. name
  * 5. element
- * WHat should I be able to do with a card?
+ *
+ * What should I be able to do with a card?
+ * 1. createHTMLElement (to DOM)
  */
 
 export default class Card {
@@ -15,13 +17,15 @@ export default class Card {
   rank: Rank;
   value: Value;
   name: string;
-  // element: HTMLDivElement;
+  element: HTMLDivElement | null;
 
   constructor(suite: Suite, rank: Rank, value: Value, name: string) {
     this.suite = suite;
     this.rank = rank;
     this.value = value;
     this.name = name;
-    // this.element = document.createElement("div");
+    this.element = null;
   }
+
+  // createHTMLElement = function () {};
 }
