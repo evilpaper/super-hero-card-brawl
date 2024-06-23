@@ -18,6 +18,7 @@ export default class Card {
   value: Value;
   name: string;
   element: HTMLDivElement | null;
+  isFlipped: boolean;
 
   constructor(suite: Suite, rank: Rank, value: Value, name: string) {
     this.suite = suite;
@@ -25,7 +26,6 @@ export default class Card {
     this.value = value;
     this.name = name;
     this.element = null;
+    this.isFlipped = false;
   }
-
-  // createHTMLElement = function () {};
 }
