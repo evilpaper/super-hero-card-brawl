@@ -1,4 +1,5 @@
 import { expect, test } from "vitest";
+
 import Card from "./card";
 
 /**
@@ -22,12 +23,11 @@ test("Card get initialised with correct properties", () => {
     rank: "9",
     suite: "♠︎",
     value: 9,
-    isFlipped: false,
-    element: undefined,
+    played: false,
   });
 });
 
-test("Card can get fliped", () => {
+test("Card can get flipped", () => {
   card.flip();
-  expect(card.isFlipped).toEqual(true);
+  expect(card.played).toEqual(true);
 });

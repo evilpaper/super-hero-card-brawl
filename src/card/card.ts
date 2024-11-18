@@ -5,25 +5,22 @@ export default class Card {
   rank: Rank;
   value: Value;
   name: string;
-  isFlipped: boolean;
-  element?: HTMLDivElement;
+  played: boolean;
 
   constructor(
     suite: Suite,
     rank: Rank,
     value: Value,
     name: string,
-    element?: HTMLDivElement
   ) {
     this.suite = suite;
     this.rank = rank;
     this.value = value;
     this.name = name;
-    this.element = element;
-    this.isFlipped = false;
+    this.played = false;
   }
 
   flip() {
-    this.isFlipped = true;
+    this.played = true;
   }
 }
