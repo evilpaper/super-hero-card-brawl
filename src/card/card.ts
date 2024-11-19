@@ -7,12 +7,7 @@ export default class Card {
   name: string;
   played: boolean;
 
-  constructor(
-    suite: Suite,
-    rank: Rank,
-    value: Value,
-    name: string,
-  ) {
+  constructor(suite: Suite, rank: Rank, value: Value, name: string) {
     this.suite = suite;
     this.rank = rank;
     this.value = value;
@@ -20,7 +15,7 @@ export default class Card {
     this.played = false;
   }
 
-  flip() {
+  play() {
     this.played = true;
   }
 }

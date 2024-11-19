@@ -11,8 +11,7 @@ import Card from "./card";
  * 5. element
  *
  * What should we be able to do with a card?
- * 1. CreateHTMLElement (to DOM)
- * 2. Flip it
+ * - Play it
  */
 
 const card = new Card("♠︎", "9", 9, "Wolverine");
@@ -27,7 +26,7 @@ test("Card get initialised with correct properties", () => {
   });
 });
 
-test("Card can get flipped", () => {
-  card.flip();
+test("Card get played", () => {
+  card.play();
   expect(card.played).toEqual(true);
 });
