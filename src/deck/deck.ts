@@ -34,7 +34,18 @@ export default class Deck {
         }
     }
 
-    draw(count: number) {
-        return count
+    draw(count: number): Array<Card> {
+        // Handle invalid inputs
+        if (count <= 0 || count > 4) {
+            return [];
+        }
+
+        // Check if we have enough cards
+        if (count > this.cards.length) {
+            return [];
+        }
+
+        // Remove and return the specified number of cards from the top
+        return this.cards.splice(0, count);
     }
 }
