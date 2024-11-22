@@ -23,4 +23,14 @@ export default class Deck {
             }
         }
     }
+
+    shuffle(): void {
+        // Fisher-Yates shuffle algorithm
+        for (let i = this.cards.length - 1; i > 0; i--) {
+            // Generate random index from 0 to i
+            const j = Math.floor(Math.random() * (i + 1));
+            // Swap elements at indices i and j
+            [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+        }
+    }
 }
