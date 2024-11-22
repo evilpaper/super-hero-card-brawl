@@ -32,3 +32,36 @@ test("shuffle should randomize card order", () => {
     expect(deck.cards.length).toBe(52);
 });
 
+test("draw should return specified number of cards", () => {
+    const deck = new Deck();
+    
+    // Test drawing 1 card
+    const singleDraw = deck.draw(1);
+    expect(singleDraw).toHaveLength(1);
+    expect(deck.cards.length).toBe(51);
+    
+    // Test drawing 3 cards
+    const threeDraw = deck.draw(3);
+    expect(threeDraw).toHaveLength(3);
+    expect(deck.cards.length).toBe(48);
+    
+    // Test drawing 4 cards
+    const fourDraw = deck.draw(4);
+    expect(fourDraw).toHaveLength(4);
+    expect(deck.cards.length).toBe(44);
+    
+    // Test invalid count (0 or negative)
+    expect(deck.draw(0)).toHaveLength(0);
+    expect(deck.draw(-1)).toHaveLength(0);
+    
+    // Test count greater than 4
+    expect(deck.draw(5)).toHaveLength(0);
+    
+    // Test drawing when less than requested cards remain
+    const remainingCards = deck.cards.length;
+    for (let i = 0; i < remainingCards; i += 4) {
+        deck.draw(4);
+    }
+    expect(deck.draw(4)).toHaveLength(0);
+});
+

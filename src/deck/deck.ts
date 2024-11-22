@@ -33,4 +33,8 @@ export default class Deck {
             [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
         }
     }
+
+    draw(count: number) {
+        return count
+    }
 }
