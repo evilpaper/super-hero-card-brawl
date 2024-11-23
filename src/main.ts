@@ -1,6 +1,6 @@
 import "./style.css";
 import Game from "./game/game"
-import Draw from "./draw/draw";
+import View from "./view/view";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
@@ -12,7 +12,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 `;
 
 const game = new Game();
-const draw = new Draw(game)
+const view = new View(game)
 
 game.start();
-draw.render();
+view.render();

@@ -1,6 +1,6 @@
 import Game from "../game/game";
 
-export default class Draw {
+export default class View {
     private game: Game;
     
     constructor(game: Game) {
