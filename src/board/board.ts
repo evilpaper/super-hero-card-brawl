@@ -16,7 +16,7 @@ export default class Board {
             return;
         }
 
-        const newCards = this.deck.draw(count);
+        const newCards = this.deck.draw_card(count);
         this.cards.push(...newCards);
     }
 }

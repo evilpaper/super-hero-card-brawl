@@ -34,7 +34,7 @@ export default class Deck {
         }
     }
 
-    draw(count: number): Array<Card> {
+    draw_card(count: number): Array<Card> {
         // Handle invalid inputs
         if (count <= 0 || count > 4) {
             return [];
