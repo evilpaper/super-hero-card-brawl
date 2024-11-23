@@ -25,7 +25,14 @@ ul {
   text-indent: 0;
   list-style-type: 0;
 
-  .suite {
-    font-size: 1.6rem;
+  button {
+    padding: 0.2rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    .suite {
+      font-size: 1.4rem;
+    }
   }
 }

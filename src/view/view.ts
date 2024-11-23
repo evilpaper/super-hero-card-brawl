@@ -23,6 +23,10 @@ export default class View {
                         </button>
                     </li>
                 `;
+
+                if (!card.played) {
+                    cardElement.addEventListener("click", () => card.play());
+                  }
                 
                 boardElement.appendChild(cardElement);
             });
