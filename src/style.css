@@ -8,3 +8,24 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+body {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin:0;
+  padding: 0;
+  text-indent: 0;
+  list-style-type: 0;
+
+  .suite {
+    font-size: 1.6rem;
+  }
+}

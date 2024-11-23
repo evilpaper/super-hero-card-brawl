@@ -5,12 +5,13 @@ export default class Game {
     deck: Deck;
     board: Board;
 
-    constructor(deck: Deck, board: Board) {
-        this.deck = deck;
-        this.board = board;
+    constructor() {
+        this.deck = new Deck();
+        this.board = new Board(this.deck);
     }
 
     start() {
+        this.deck.shuffle();
         this.board.draw(4)
     }
 }

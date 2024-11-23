@@ -4,9 +4,7 @@ import Deck from "../deck/deck";
 import Board from "../board/board";
 
 test("Game should be initialized with a deck and a board", () => {
-    const deck = new Deck();
-    const board = new Board(deck);
-    const game = new Game(deck, board);
+    const game = new Game();
     
     // Check if game has a deck
     expect(game.deck).toBeInstanceOf(Deck);
@@ -19,9 +17,7 @@ test("Game should be initialized with a deck and a board", () => {
 
 test("Game should be able to be started. When so, board should be populated with 4 cards from the deck", () => {
     // Setup
-    const deck = new Deck();
-    const board = new Board(deck);
-    const game = new Game(deck, board);
+    const game = new Game();
     const initialDeckSize = game.deck.cards.length;
     
     // Act
