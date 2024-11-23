@@ -1,5 +1,5 @@
 import Card from "../card/card"
-import { Rank, Suite, Value } from "../card/card.types";
+import { Suite, Rank, Value } from "../card/card.types";
 
 export default class Deck {
     cards: Array<Card>

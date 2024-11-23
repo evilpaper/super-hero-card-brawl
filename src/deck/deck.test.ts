@@ -1,4 +1,5 @@
 import { expect, test } from "vitest";
+
 import Deck from "./deck";
 
 test("Deck should be created with 52 cards", () => {
@@ -6,7 +7,7 @@ test("Deck should be created with 52 cards", () => {
     expect(deck.cards.length).toBe(52);
 });
 
-test("shuffle should randomize card order", () => {
+test("Shuffle should randomize card order", () => {
     const deck = new Deck();
 
     const originalOrder = [...deck.cards];
@@ -32,7 +33,7 @@ test("shuffle should randomize card order", () => {
     expect(deck.cards.length).toBe(52);
 });
 
-test("draw should return specified number of cards", () => {
+test("Draw should return specified number of cards", () => {
     const deck = new Deck();
     
     // Test drawing 1 card
