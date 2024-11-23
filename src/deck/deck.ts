@@ -49,6 +49,18 @@ export default class Deck {
         return this.cards.splice(0, count);
     }
 
-    return_card(card: Array<Card>) {
-        this.cards.push(...card)    }
+    return_card(cards: Array<Card>): void {
+        // Validate input
+        if (!Array.isArray(cards)) {
+            return;
+        }
+        
+        // Validate card count
+        if (cards.length > 4) {
+            return;
+        }
+        
+        // Add cards back to deck
+        this.cards.push(...cards);
+    }
 }

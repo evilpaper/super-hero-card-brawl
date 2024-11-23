@@ -33,7 +33,7 @@ test("Deck should be able to be shuffled. Shuffle should randomize card order", 
     expect(deck.cards.length).toBe(52);
 });
 
-test("Deck should be able to return drawn cards", () => {
+test("Deck should be able to return drawn cards, 1 - 4", () => {
     const deck = new Deck();
     
     // Test drawing 1 card
@@ -66,7 +66,7 @@ test("Deck should be able to return drawn cards", () => {
     expect(deck.draw_card(4)).toHaveLength(0);
 });
 
-test("Deck should be able to receive returned cards", () => {
+test("Deck should be able to receive returned cards, 1 - 4", () => {
     const deck = new Deck();
 
     // Test drawing 1 card
