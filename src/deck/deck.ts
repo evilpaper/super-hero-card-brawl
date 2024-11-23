@@ -48,4 +48,7 @@ export default class Deck {
         // Remove and return the specified number of cards from the top
         return this.cards.splice(0, count);
     }
+
+    return_card(card: Array<Card>) {
+        this.cards.push(...card)    }
 }
