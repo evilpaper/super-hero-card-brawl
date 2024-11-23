@@ -26,7 +26,7 @@ export default class View {
 
                 if (!card.played) {
                     cardElement.addEventListener("click", () => card.play());
-                  }
+                }
                 
                 boardElement.appendChild(cardElement);
             });

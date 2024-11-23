@@ -68,14 +68,26 @@ test("Deck should be able to return drawn cards, 1 - 4", () => {
 
 test("Deck should be able to receive returned cards, 1 - 4", () => {
     const deck = new Deck();
-
-    // Test drawing 1 card
-    const singleDraw = deck.draw_card(1);
-    expect(singleDraw).toHaveLength(1);
-    expect(deck.cards.length).toBe(51);
-
-    // Test returning drawn card
-    deck.return_card(singleDraw);
+    
+    // Test drawing and returning multiple cards
+    const drawnCards = deck.draw_card(4);
+    expect(deck.cards.length).toBe(48);
+    
+    deck.return_card(drawnCards);
     expect(deck.cards.length).toBe(52);
-})
+    
+    // Test returning empty array
+    deck.return_card([]);
+    expect(deck.cards.length).toBe(52);
+    
+    // Test returning cards in multiple batches
+    const moreDraw = deck.draw_card(3);
+    expect(deck.cards.length).toBe(49);
+    
+    deck.return_card(moreDraw.slice(0, 1));
+    expect(deck.cards.length).toBe(50);
+    
+    deck.return_card(moreDraw.slice(1));
+    expect(deck.cards.length).toBe(52);
+});
 
