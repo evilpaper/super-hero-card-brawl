@@ -20,8 +20,18 @@ export default class Board {
     this.cards.push(...drawnCards);
   }
 
-  clear() {
+  clear(): void {
+    // Find cards that haven't been played
+    const unplayedCards = this.cards.filter((card) => !card.played);
+
+    // Add unplayed cards back to the end of the deck
+    this.deck.cards.push(...unplayedCards);
+
+    // Clear the board
     this.cards = [];
+
+    // Draw new cards (same amount as we had before)
+    this.draw(unplayedCards.length);
   }
 
   isCleared() {
