@@ -20,19 +20,61 @@ ul {
   list-style: none;
   display: flex;
   gap: 2rem;
-  margin:0;
+  margin: 0;
   padding: 0;
   text-indent: 0;
   list-style-type: 0;
 
-  button {
-    padding: 0.2rem 1rem;
+  .card {
+    width: 120px;
+    height: 180px;
+    color: cadetblue;
+    background: seashell;
+    border-radius: 10px;
+    border: 2px solid #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
     display: flex;
-    align-items: center;
-    gap: 0.4rem;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
 
-    .suite {
-      font-size: 1.4rem;
+    .top-left,
+    .bottom-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      font-size: 1.3rem;
     }
+
+    .top-left {
+      top: 5px;
+      left: 5px;
+    }
+
+    .bottom-right {
+      bottom: 5px;
+      right: 5px;
+      transform: rotate(180deg);
+    }
+
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+    }
+
+    .value {
+      font-weight: bold;
+    }
+  }
+
+  *:disabled {
+    background-color: silver;
   }
 }

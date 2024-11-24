@@ -16,13 +16,19 @@ export default class View {
       this.game.board.cards.forEach((card) => {
         const cardElement = document.createElement("li");
         cardElement.innerHTML = `
-                    <li class="card">
-                        <button>
-                            <div>
-                                <span class="suite">${card.suite}</span>
-                                <span>${card.value}</span>
+                    <li>
+                        <button ${card.played && "disabled"} class="card">
+                          <div class="top-left">
+                              <span class="value">${card.rank}</span>
+                              <span class="suite">${card.suite}</span>
                             </div>
-                             <span>${card.played}</span>
+                            <div class="center">
+                              <span class="suite">${card.suite}</span>
+                            </div>
+                            <div class="bottom-right">
+                              <span class="value">${card.rank}</span>
+                              <span class="suite">${card.suite}</span>
+                            </div>
                         </button>
                     </li>
                 `;
