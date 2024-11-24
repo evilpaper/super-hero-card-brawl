@@ -20,6 +20,10 @@ export default class Board {
     this.cards.push(...drawnCards);
   }
 
+  clear() {
+    this.cards = [];
+  }
+
   isCleared() {
     return this.cards.every((card) => card.played);
   }

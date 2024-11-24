@@ -16,7 +16,11 @@ export default class View {
 
   checkBoardClear() {
     if (this.game.board.isCleared()) {
-      console.log("Board is cleared...");
+      setTimeout(() => {
+        this.game.board.clear(); // Clear the board first
+        this.game.board.draw(4); // Then draw 4 new cards
+        this.render(); // Re-render the view
+      }, 500); // Small delay for better UX
     }
   }
 
