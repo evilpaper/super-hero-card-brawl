@@ -1,3 +1,4 @@
+import Card from "../card/card";
 import Game from "../game/game";
 
 export default class View {
@@ -5,6 +6,18 @@ export default class View {
 
   constructor(game: Game) {
     this.game = game;
+  }
+
+  playCard(card: Card) {
+    card.play();
+    this.checkBoardClear();
+    this.render();
+  }
+
+  checkBoardClear() {
+    if (this.game.board.isCleared()) {
+      console.log("Board is cleared...");
+    }
   }
 
   render() {
@@ -34,10 +47,7 @@ export default class View {
                 `;
 
         if (!card.played) {
-          cardElement.addEventListener("click", () => {
-            card.play();
-            this.render();
-          });
+          cardElement.addEventListener("click", () => this.playCard(card));
         }
 
         boardElement.appendChild(cardElement);
