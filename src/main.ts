@@ -7,6 +7,12 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     <p>
       Super Hero Card Brawl
     </p>
+    <div class="stats">
+      <p>Health:</p>
+      <span id="health"></span> 
+      <p>Defense</p>
+      <span id="defense"></span>
+    </div>
     <ul id="board"></ul>
     <section class="controls">
       <button id="restart">Restart</button>

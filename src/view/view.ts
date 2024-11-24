@@ -9,7 +9,7 @@ export default class View {
 
     const escapeButton = document.getElementById("escape");
 
-    escapeButton?.addEventListener("click", (event) => {
+    escapeButton?.addEventListener("click", () => {
       this.game.board.clear();
       this.render(); // Re-render the view after clearing
     });
@@ -33,6 +33,16 @@ export default class View {
 
   render() {
     const boardElement = document.getElementById("board");
+    const healthElement = document.getElementById("health");
+    const defenseElement = document.getElementById("defense");
+
+    if (healthElement) {
+      healthElement.innerText = this.game.player.health.toString();
+    }
+
+    if (defenseElement) {
+      defenseElement.innerText = this.game.player.defence.toString();
+    }
 
     if (boardElement) {
       boardElement.innerHTML = "";
