@@ -18,13 +18,6 @@ test("Board should be able to draw up to 4 cards", () => {
   expect(board.cards).toHaveLength(4);
 });
 
-test("Board should be able to be cleared", () => {
-  const deck = new Deck();
-  const board = new Board(deck);
-  board.clear();
-  expect(board.cards).toHaveLength(0);
-});
-
 test("clear should return not played cards to the end of the deck and populate board with as many cards as possible from deck up until a maximun number of 4", () => {
   const deck = new Deck();
   const board = new Board(deck);
@@ -44,7 +37,7 @@ test("clear should return not played cards to the end of the deck and populate b
   expect(lastCardsInDeck).toEqual(initialBoardCards);
 
   // Test that we drew new cards to the board
-  expect(board.cards).toHaveLength(3);
+  expect(board.cards).toHaveLength(4);
 
   // Verify these are different cards than before
   expect(board.cards).not.toEqual(initialBoardCards);

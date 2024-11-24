@@ -30,8 +30,9 @@ export default class Board {
     // Clear the board
     this.cards = [];
 
-    // Draw new cards (same amount as we had before)
-    this.draw(unplayedCards.length);
+    // Draw the minimum between 4 and available cards in deck
+    const cardsToDraw = Math.min(4, this.deck.cards.length);
+    this.draw(cardsToDraw);
   }
 
   isCleared() {
