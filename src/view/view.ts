@@ -16,7 +16,7 @@ export default class View {
   }
 
   playCard(card: Card) {
-    card.play();
+    this.game.playCard(card);
     this.checkBoardClear();
     this.render();
   }
