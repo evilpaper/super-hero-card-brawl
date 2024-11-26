@@ -34,7 +34,7 @@ export default class View {
   render() {
     const boardElement = document.getElementById("board");
     const healthElement = document.getElementById("health");
-    const defenseElement = document.getElementById("defense");
+    const defenseElement = document.getElementById("defence");
 
     if (healthElement) {
       healthElement.innerText = this.game.player.health.toString();

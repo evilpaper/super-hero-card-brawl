@@ -10,8 +10,8 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     <div class="stats">
       <p>Health:</p>
       <span id="health"></span> 
-      <p>Defense</p>
-      <span id="defense"></span>
+      <p>Defence</p>
+      <span id="defence"></span>
     </div>
     <ul id="board"></ul>
     <section class="controls">

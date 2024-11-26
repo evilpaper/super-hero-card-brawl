@@ -33,8 +33,8 @@ describe("Player", () => {
     });
   });
 
-  describe("defense", () => {
-    it("should add shield value to defense", () => {
+  describe("defence", () => {
+    it("should add shield value to defence", () => {
       const player = new Player();
       const brawlerValue = 5;
 
@@ -43,7 +43,7 @@ describe("Player", () => {
       expect(player.defence).toBe(5);
     });
 
-    it("should reduce incoming damage by defense value", () => {
+    it("should reduce incoming damage by defence value", () => {
       const player = new Player();
       const brawlerValue = 5;
       const opponentStrength = 10;
@@ -54,7 +54,7 @@ describe("Player", () => {
       expect(player.health).toBe(16); // 21 - (10 - 5) = 16
     });
 
-    it("should reset defense after taking damage", () => {
+    it("should reset defence after taking damage", () => {
       const player = new Player();
       const brawlerValue = 5;
       const opponentStrength = 10;
