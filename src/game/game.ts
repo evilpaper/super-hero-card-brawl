@@ -21,15 +21,16 @@ export default class Game {
 
   playCard(card: Card) {
     card.play();
+    this.handleCardEffect(card);
   }
 
   handleCardEffect(card: Card) {
     switch (card.suite) {
       case "♥︎":
-        // this.player.heal(card.numericValue);
+        // this.player.health(card.value);
         break;
       case "♦︎":
-        // this.player.setShield(card.numericValue);
+        this.player.addDefense(card.value);
         break;
       case "♠︎":
       case "♣︎":

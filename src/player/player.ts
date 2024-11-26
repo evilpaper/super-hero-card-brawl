@@ -9,16 +9,16 @@ export default class Player {
     this.stamina = 0;
   }
 
-  attack(monsterStrength: number): void {
-    if (monsterStrength <= this.defence) {
+  attack(opponentStrength: number): void {
+    if (opponentStrength <= this.defence) {
       return; // No damage taken if monster is weaker than defense
     }
-    const damage = monsterStrength - this.defence;
+    const damage = opponentStrength - this.defence;
     this.health -= damage;
     this.defence = 0; // Reset defense after taking damage
   }
 
-  addDefense(shieldValue: number): void {
-    this.defence = shieldValue;
+  addDefense(brawlerValue: number): void {
+    this.defence = brawlerValue;
   }
 }
