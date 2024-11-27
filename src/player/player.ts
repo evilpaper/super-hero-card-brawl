@@ -9,15 +9,6 @@ export default class Player {
     this._stamina = 0;
   }
 
-  attack(opponentStrength: number): void {
-    if (opponentStrength <= this._defence) {
-      return; // No damage taken if monster is weaker than defence
-    }
-    const damage = opponentStrength - this._defence;
-    this._health -= damage;
-    this._defence = 0; // Reset defence after taking damage
-  }
-
   get health(): number {
     return this._health;
   }
@@ -40,5 +31,18 @@ export default class Player {
 
   set stamina(value: number) {
     this._stamina = value;
+  }
+
+  attack(opponentStrength: number): void {
+    if (opponentStrength <= this._defence) {
+      return; // No damage taken if monster is weaker than defence
+    }
+    const damage = opponentStrength - this._defence;
+    this._health -= damage;
+    this._defence = 0; // Reset defence after taking damage
+  }
+
+  drinkPotion(potionStrengtht: number): void {
+    this._health = Math.min(this._health + potionStrengtht, 21);
   }
 }
