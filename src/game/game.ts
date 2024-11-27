@@ -30,7 +30,7 @@ export default class Game {
         // this.player.health(card.value);
         break;
       case "♦︎":
-        this.player.addDefense(card.value);
+        this.player.defence = card.value;
         break;
       case "♠︎":
       case "♣︎":
