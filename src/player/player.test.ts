@@ -17,7 +17,7 @@ describe("Player", () => {
 
       player.attack(opponentStrength);
 
-      expect(player.health).toBe(11); // 21 - 10 = 11
+      expect(player._health).toBe(11); // 21 - 10 = 11
     });
 
     it("should not take damage when attacking weaker monster", () => {
@@ -25,11 +25,11 @@ describe("Player", () => {
       const opponentStrength = 5;
       const brawlerValue = 6;
 
-      player.addDefense(brawlerValue);
+      player.defence = brawlerValue;
 
       player.attack(opponentStrength);
 
-      expect(player.health).toBe(21); // Health remains unchanged
+      expect(player._health).toBe(21); // Health remains unchanged
     });
   });
 
@@ -38,7 +38,7 @@ describe("Player", () => {
       const player = new Player();
       const brawlerValue = 5;
 
-      player.addDefense(brawlerValue);
+      player.defence = brawlerValue;
 
       expect(player.defence).toBe(5);
     });
@@ -48,7 +48,7 @@ describe("Player", () => {
       const brawlerValue = 5;
       const opponentStrength = 10;
 
-      player.addDefense(brawlerValue);
+      player.defence = brawlerValue;
       player.attack(opponentStrength);
 
       expect(player.health).toBe(16); // 21 - (10 - 5) = 16
@@ -59,7 +59,7 @@ describe("Player", () => {
       const brawlerValue = 5;
       const opponentStrength = 10;
 
-      player.addDefense(brawlerValue);
+      player.defence = brawlerValue;
       player.attack(opponentStrength);
 
       expect(player.defence).toBe(0);

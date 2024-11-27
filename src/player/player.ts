@@ -1,24 +1,44 @@
 export default class Player {
-  health: number;
-  defence: number;
-  stamina: number;
+  _health: number;
+  _defence: number;
+  _stamina: number;
 
   constructor() {
-    this.health = 21;
-    this.defence = 0;
-    this.stamina = 0;
+    this._health = 21;
+    this._defence = 0;
+    this._stamina = 0;
   }
 
   attack(opponentStrength: number): void {
-    if (opponentStrength <= this.defence) {
+    if (opponentStrength <= this._defence) {
       return; // No damage taken if monster is weaker than defence
     }
-    const damage = opponentStrength - this.defence;
-    this.health -= damage;
-    this.defence = 0; // Reset defence after taking damage
+    const damage = opponentStrength - this._defence;
+    this._health -= damage;
+    this._defence = 0; // Reset defence after taking damage
   }
 
-  addDefense(brawlerValue: number): void {
-    this.defence = brawlerValue;
+  get health(): number {
+    return this._health;
+  }
+
+  set health(value: number) {
+    this._health = value;
+  }
+
+  get defence(): number {
+    return this._defence;
+  }
+
+  set defence(value: number) {
+    this._defence = value;
+  }
+
+  get stamina(): number {
+    return this._stamina;
+  }
+
+  set stamina(value: number) {
+    this._stamina = value;
   }
 }

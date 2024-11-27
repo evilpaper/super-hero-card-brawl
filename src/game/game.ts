@@ -20,8 +20,8 @@ export default class Game {
   }
 
   playCard(card: Card) {
-    card.play();
-    this.handleCardEffect(card);
+    card.play(); // Set card to played
+    this.handleCardEffect(card); // Handle effect of the card applied to other entities
   }
 
   handleCardEffect(card: Card) {
