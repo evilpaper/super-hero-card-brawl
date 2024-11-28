@@ -48,5 +48,6 @@ export default class Player {
 
   activateDefender(defenderStrength: number): void {
     this._defence = defenderStrength;
+    this.stamina = 21;
   }
 }
