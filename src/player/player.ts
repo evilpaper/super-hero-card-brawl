@@ -42,7 +42,11 @@ export default class Player {
     this._defence = 0; // Reset defence after taking damage
   }
 
-  drinkPotion(potionStrengtht: number): void {
-    this._health = Math.min(this._health + potionStrengtht, 21);
+  drinkPotion(potionStrength: number): void {
+    this._health = Math.min(this._health + potionStrength, 21);
+  }
+
+  activateDefender(defenderStrength: number): void {
+    this._defence = defenderStrength;
   }
 }
