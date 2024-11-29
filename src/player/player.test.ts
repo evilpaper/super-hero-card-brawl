@@ -1,4 +1,4 @@
-import { test, expect } from "vitest";
+import { test, expect, describe } from "vitest";
 import Player from "./player";
 
 test("Player should initialize with health, defence and stamina with default values", () => {
@@ -42,8 +42,47 @@ test("Select a defender (♦︎) set stamina to 21", () => {
   expect(player.stamina).toBe(21);
 });
 
-("Select a character in the opposite team (♠︎) and (♣︎) trigger a brawl.");
-("First compare the opponents value to the player stamina");
-("If the opponents value is higher reset stamina to 0 and defence to 0");
-("If the opponents value is equal or less deduct the damage as the difference between the opponents value and the players health. Minumum is zero");
-("Reduce players health with the value equal to the damage");
+describe("Brawl mechanics", () => {
+  test("should reset stamina and defense when opponent's value is higher than player stamina", () => {
+    const player = new Player();
+    player.stamina = 5;
+    player.defence = 3;
+
+    player.brawl(8); // opponent value higher than stamina
+
+    expect(player.stamina).toBe(0);
+    expect(player.defence).toBe(0);
+  });
+
+  test("should reduce health by the difference when opponent's value is lower than stamina", () => {
+    const player = new Player();
+    player.stamina = 8;
+    player.health = 21;
+
+    player.brawl(5); // opponent value lower than stamina
+
+    expect(player.health).toBe(18); // 21 - (8-5) = 18
+    expect(player.stamina).toBe(8); // stamina unchanged
+  });
+
+  test("should not reduce health below zero during brawl", () => {
+    const player = new Player();
+    player.health = 2;
+    player.stamina = 8;
+
+    player.brawl(5); // would normally deal 3 damage
+
+    expect(player.health).toBe(0);
+  });
+
+  test("should handle equal values between opponent and player stamina", () => {
+    const player = new Player();
+    player.stamina = 5;
+    player.health = 21;
+
+    player.brawl(5); // equal values
+
+    expect(player.health).toBe(21); // no damage when equal
+    expect(player.stamina).toBe(5); // stamina unchanged
+  });
+});
