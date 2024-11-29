@@ -33,14 +33,14 @@ export default class Player {
     this._stamina = value;
   }
 
-  attack(opponentStrength: number): void {
-    if (opponentStrength <= this._defence) {
-      return; // No damage taken if monster is weaker than defence
-    }
-    const damage = opponentStrength - this._defence;
-    this._health -= damage;
-    this._defence = 0; // Reset defence after taking damage
-  }
+  // attack(opponentStrength: number): void {
+  //   if (opponentStrength <= this._defence) {
+  //     return; // No damage taken if monster is weaker than defence
+  //   }
+  //   const damage = opponentStrength - this._defence;
+  //   this._health -= damage;
+  //   this._defence = 0; // Reset defence after taking damage
+  // }
 
   activateHealer(potionStrength: number): void {
     this._health = Math.min(this._health + potionStrength, 21);
@@ -49,5 +49,15 @@ export default class Player {
   activateDefender(defenderStrength: number): void {
     this._defence = defenderStrength;
     this.stamina = 21;
+  }
+
+  brawl(opponentValue: number): void {
+    if (opponentValue > this.stamina) {
+      this.stamina = 0;
+      this.defence = 0;
+    } else {
+      const damage = this.stamina - opponentValue;
+      this.health = Math.max(0, this.health - damage);
+    }
   }
 }
