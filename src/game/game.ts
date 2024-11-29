@@ -27,14 +27,16 @@ export default class Game {
   handleCardEffect(card: Card) {
     switch (card.suite) {
       case "♥︎":
-        // this.player.health(card.value);
+        this.player.activateHealer(card.value);
         break;
       case "♦︎":
-        this.player.defence = card.value;
+        this.player.activateDefender(card.value);
         break;
       case "♠︎":
+        this.player.brawl(card.value);
+        break;
       case "♣︎":
-        // this.handleMonsterCard(card);
+        this.player.brawl(card.value);
         break;
     }
   }
