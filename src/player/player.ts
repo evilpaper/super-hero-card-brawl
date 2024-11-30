@@ -47,8 +47,9 @@ export default class Player {
       this.stamina = 0;
       this.defence = 0;
     } else {
-      const damage = this.stamina - opponentValue;
-      this.health = Math.max(0, this.health - damage); // This is wrong
+      const damage = this.defence - opponentValue;
+      this.health = Math.max(0, this.health - damage);
+      this.stamina = opponentValue - 1;
     }
   }
 }
