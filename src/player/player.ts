@@ -46,9 +46,9 @@ export default class Player {
     if (opponentValue > this.stamina) {
       this.stamina = 0;
       this.defence = 0;
-      this.health = this.health - opponentValue;
+      this.health = Math.max(0, this.health - opponentValue);
     } else {
-      const damage = this.defence - opponentValue;
+      const damage = Math.max(0, opponentValue - this.defence);
 
       this.health = Math.max(0, this.health - damage);
       this.stamina = opponentValue;

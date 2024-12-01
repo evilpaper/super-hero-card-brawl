@@ -12,6 +12,8 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <span id="health"></span> 
       <p>Defence</p>
       <span id="defence"></span>
+      <p>Stamina</p>
+      <span id="stamina"></span>
     </div>
     <ul id="board"></ul>
     <section class="controls">

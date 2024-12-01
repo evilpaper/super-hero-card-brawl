@@ -35,6 +35,7 @@ export default class View {
     const boardElement = document.getElementById("board");
     const healthElement = document.getElementById("health");
     const defenseElement = document.getElementById("defence");
+    const staminaElement = document.getElementById("stamina");
 
     if (healthElement) {
       healthElement.innerText = this.game.player.health.toString();
@@ -42,6 +43,10 @@ export default class View {
 
     if (defenseElement) {
       defenseElement.innerText = this.game.player.defence.toString();
+    }
+
+    if (staminaElement) {
+      staminaElement.innerText = this.game.player.stamina.toString();
     }
 
     if (boardElement) {

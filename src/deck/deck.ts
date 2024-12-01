@@ -27,7 +27,7 @@ export default class Deck {
       for (const rank of ranks) {
         // Map rank to value (A=1, J=11, Q=13, K=15)
         let value: Value;
-        if (rank === "A") value = 1;
+        if (rank === "A") value = 21;
         else if (rank === "J") value = 11;
         else if (rank === "Q") value = 13;
         else if (rank === "K") value = 15;
