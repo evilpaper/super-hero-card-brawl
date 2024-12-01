@@ -7,9 +7,9 @@ export default class View {
   constructor(game: Game) {
     this.game = game;
 
-    const escapeButton = document.getElementById("escape");
+    const moveOnButton = document.getElementById("move-on");
 
-    escapeButton?.addEventListener("click", () => {
+    moveOnButton?.addEventListener("click", () => {
       this.game.board.clear();
       this.render(); // Re-render the view after clearing
     });

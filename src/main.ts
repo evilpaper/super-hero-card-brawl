@@ -18,7 +18,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     <ul id="board"></ul>
     <section class="controls">
       <button id="restart">Restart</button>
-      <button id="escape">Escape</button>
+      <button id="move-on">Move on</button>
     </sectino>
   </div>
 `;
