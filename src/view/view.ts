@@ -62,7 +62,7 @@ export default class View {
                               <span class="suite">${card.suite}</span>
                             </div>
                             <div class="center">
-                              <span class="suite">${card.suite}</span>
+                              <span class="value">${card.value}</span>
                             </div>
                             <div class="bottom-right">
                               <span class="value">${card.rank}</span>
