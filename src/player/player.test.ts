@@ -43,14 +43,24 @@ test("Select a defender (♦︎) set stamina to 21", () => {
 });
 
 describe("Brawl mechanics", () => {
-  test("if stamina is higher than opponent, reduce stamina to 1 below opponent", () => {
+  test("if stamina is higher than opponent, reduce stamina same value as opponent", () => {
     const player = new Player();
-    player.activateDefender(10);
 
+    player.activateDefender(10);
     player.brawl(5);
 
-    expect(player.stamina).toBe(4);
+    expect(player.stamina).toBe(5);
   });
 
-  test("if stamina is lower than opponent, reset stamina and defence to 0 and reduce healt by opponent value", () => {});
+  test("if stamina is lower than opponent, reset stamina and defence to 0 and reduce health by opponent value", () => {
+    const player = new Player();
+
+    player.activateDefender(5);
+    player.brawl(5);
+    player.brawl(10);
+
+    expect(player.stamina).toBe(0);
+    expect(player.defence).toBe(0);
+    expect(player.health).toBe(11);
+  });
 });
