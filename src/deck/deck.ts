@@ -25,13 +25,19 @@ export default class Deck {
 
     for (const suite of suites) {
       for (const rank of ranks) {
-        // Map rank to value (A=1, J=11, Q=13, K=15)
+        // Determine value based on rank and suite
         let value: Value;
-        if (rank === "A") value = 11;
-        else if (rank === "J") value = 11;
-        else if (rank === "Q") value = 11;
-        else if (rank === "K") value = 11;
-        else value = parseInt(rank) as Value;
+        if (rank === "A") {
+          value = suite === "♠︎" || suite === "♣︎" ? 17 : 11;
+        } else if (rank === "J") {
+          value = suite === "♠︎" || suite === "♣︎" ? 11 : 11;
+        } else if (rank === "Q") {
+          value = suite === "♠︎" || suite === "♣︎" ? 13 : 11;
+        } else if (rank === "K") {
+          value = suite === "♠︎" || suite === "♣︎" ? 15 : 11;
+        } else {
+          value = parseInt(rank) as Value;
+        }
 
         this.cards.push(new Card(suite, rank, value, `${rank} of ${suite}`));
       }
