@@ -4,7 +4,7 @@ import Deck from "./deck";
 
 test("Deck should be created with 52 cards", () => {
   const deck = new Deck();
-  expect(deck.cards.length).toBe(52);
+  expect(deck.cards.length).toBe(54);
 });
 
 test("Deck should be able to be shuffled", () => {
@@ -33,7 +33,7 @@ test("Deck should be able to be shuffled", () => {
 
   expect(orderHasChanged).toBe(true);
   expect(allCardsPresent).toBe(true);
-  expect(deck.cards.length).toBe(52);
+  expect(deck.cards.length).toBe(54);
 });
 
 test("Deck should be able to return drawn cards, 1 - 4", () => {
@@ -42,17 +42,17 @@ test("Deck should be able to return drawn cards, 1 - 4", () => {
   // Test drawing 1 card
   const singleDraw = deck.draw_card(1);
   expect(singleDraw).toHaveLength(1);
-  expect(deck.cards.length).toBe(51);
+  expect(deck.cards.length).toBe(53);
 
   // Test drawing 3 cards
   const threeDraw = deck.draw_card(3);
   expect(threeDraw).toHaveLength(3);
-  expect(deck.cards.length).toBe(48);
+  expect(deck.cards.length).toBe(50);
 
   // Test drawing 4 cards
   const fourDraw = deck.draw_card(4);
   expect(fourDraw).toHaveLength(4);
-  expect(deck.cards.length).toBe(44);
+  expect(deck.cards.length).toBe(46);
 
   // Test invalid count (0 or negative)
   expect(deck.draw_card(0)).toHaveLength(0);
@@ -74,22 +74,22 @@ test("Deck should be able to receive returned cards, 1 - 4", () => {
 
   // Test drawing and returning multiple cards
   const drawnCards = deck.draw_card(4);
-  expect(deck.cards.length).toBe(48);
+  expect(deck.cards.length).toBe(50);
 
   deck.return_card(drawnCards);
-  expect(deck.cards.length).toBe(52);
+  expect(deck.cards.length).toBe(54);
 
   // Test returning empty array
   deck.return_card([]);
-  expect(deck.cards.length).toBe(52);
+  expect(deck.cards.length).toBe(54);
 
   // Test returning cards in multiple batches
   const moreDraw = deck.draw_card(3);
-  expect(deck.cards.length).toBe(49);
+  expect(deck.cards.length).toBe(51);
 
   deck.return_card(moreDraw.slice(0, 1));
-  expect(deck.cards.length).toBe(50);
+  expect(deck.cards.length).toBe(52);
 
   deck.return_card(moreDraw.slice(1));
-  expect(deck.cards.length).toBe(52);
+  expect(deck.cards.length).toBe(54);
 });

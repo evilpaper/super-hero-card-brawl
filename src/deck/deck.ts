@@ -42,6 +42,9 @@ export default class Deck {
         this.cards.push(new Card(suite, rank, value, `${rank} of ${suite}`));
       }
     }
+    // Add two Jokers
+    this.cards.push(new Card("🃏", "JOKER", 21, "Joker A"));
+    this.cards.push(new Card("🃏", "JOKER", 21, "Joker B"));
   }
 
   shuffle(): void {
