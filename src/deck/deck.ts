@@ -43,8 +43,8 @@ export default class Deck {
       }
     }
     // Add two Jokers
-    this.cards.push(new Card("🃏", "JOKER", 21, "Joker A"));
-    this.cards.push(new Card("🃏", "JOKER", 21, "Joker B"));
+    this.cards.push(new Card("★", "Jo", 21, "Joker A"));
+    this.cards.push(new Card("★", "Jo", 21, "Joker B"));
   }
 
   shuffle(): void {

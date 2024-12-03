@@ -27,3 +27,5 @@ test("Game should be able to be started. When so, board should be populated with
   expect(game.board.cards.length).toBe(4); // Board should have 4 cards
   expect(game.deck.cards.length).toBe(initialDeckSize - 4); // Deck should have 4 fewer cards
 });
+
+test("Player may slip pass a wave of brawlers, if you have not slipped pass the previous one", () => {});

@@ -39,7 +39,7 @@ export default class Player {
 
   playOffensiveBrawler(defenderStrength: number): void {
     this._defence = defenderStrength;
-    this.stamina = 21;
+    this.stamina = 22;
   }
 
   brawl(opponentValue: number): void {

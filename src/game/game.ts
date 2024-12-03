@@ -38,7 +38,7 @@ export default class Game {
       case "♣︎":
         this.player.brawl(card.value);
         break;
-      case "🃏":
+      case "★":
         this.player.brawl(card.value);
         break;
     }

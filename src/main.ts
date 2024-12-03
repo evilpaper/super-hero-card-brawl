@@ -8,7 +8,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       Super Hero Card Brawl
     </p>
     <div class="stats">
-      <p>Health:</p>
+      <p>Health</p>
       <span id="health"></span> 
       <p>Defence</p>
       <span id="defence"></span>

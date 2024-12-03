@@ -39,7 +39,7 @@ test("Select a defender (♦︎) set stamina to 21", () => {
 
   player.playOffensiveBrawler(9);
 
-  expect(player.stamina).toBe(21);
+  expect(player.stamina).toBe(22);
 });
 
 describe("Brawl mechanics", () => {

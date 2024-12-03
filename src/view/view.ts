@@ -10,8 +10,11 @@ export default class View {
     const moveOnButton = document.getElementById("move-on");
 
     moveOnButton?.addEventListener("click", () => {
-      this.game.board.clear();
-      this.render(); // Re-render the view after clearing
+      if (this.game.canMoveOn) {
+        this.game.canMoveOn = false;
+        this.game.board.clear();
+        this.render(); // Re-render the view after clearing
+      }
     });
   }
 
@@ -23,6 +26,7 @@ export default class View {
 
   checkBoardClear() {
     if (this.game.board.isCleared()) {
+      this.game.canMoveOn = true;
       setTimeout(() => {
         this.game.board.clear(); // Clear the board first
         this.game.board.draw(4); // Then draw 4 new cards
