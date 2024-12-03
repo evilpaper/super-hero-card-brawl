@@ -52,7 +52,7 @@ describe("Brawl mechanics", () => {
     expect(player.stamina).toBe(5);
   });
 
-  test("if opponents value is higher than stamina, reset stamina and defence to 0 and reduce health by opponent value", () => {
+  test("if opponents value is higher than or equal to stamina, reset stamina and defence to 0 and reduce health by opponent value", () => {
     const player = new Player();
 
     player.playOffensiveBrawler(5); // Sets stamina to 21
@@ -62,6 +62,14 @@ describe("Brawl mechanics", () => {
     expect(player.stamina).toBe(0);
     expect(player.defence).toBe(0);
     expect(player.health).toBe(11);
+
+    player.playOffensiveBrawler(4); // Sets stamina to 21
+    player.brawl(4); // Sets stamina to 4
+    player.brawl(4);
+
+    expect(player.stamina).toBe(0);
+    expect(player.defence).toBe(0);
+    expect(player.health).toBe(7);
   });
 
   test("if opponents value is lower than stamina but higher that defence, deal damage equal to difference between defence and opponent", () => {

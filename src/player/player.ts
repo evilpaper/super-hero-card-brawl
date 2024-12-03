@@ -43,7 +43,7 @@ export default class Player {
   }
 
   brawl(opponentValue: number): void {
-    if (opponentValue > this.stamina) {
+    if (opponentValue >= this.stamina) {
       this.stamina = 0;
       this.defence = 0;
       this.health = Math.max(0, this.health - opponentValue);
