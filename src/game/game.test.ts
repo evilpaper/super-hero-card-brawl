@@ -8,7 +8,7 @@ test("Game should be initialized with a deck and a board", () => {
 
   // Check if game has a deck
   expect(game.deck).toBeInstanceOf(Deck);
-  expect(game.deck.cards.length).toBe(52);
+  expect(game.deck.cards.length).toBe(54);
 
   // Check if game has a board
   expect(game.board).toBeInstanceOf(Board);

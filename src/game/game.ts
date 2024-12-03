@@ -20,17 +20,17 @@ export default class Game {
   }
 
   playCard(card: Card) {
-    card.play(); // Set card to played
-    this.handleCardEffect(card); // Handle effect of the card applied to other entities
+    card.play();
+    this.handleCardEffect(card);
   }
 
   handleCardEffect(card: Card) {
     switch (card.suite) {
       case "♥︎":
-        this.player.activateHealer(card.value);
+        this.player.playDefensiveBrawler(card.value);
         break;
       case "♦︎":
-        this.player.activateDefender(card.value);
+        this.player.playOffensiveBrawler(card.value);
         break;
       case "♠︎":
         this.player.brawl(card.value);

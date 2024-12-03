@@ -33,11 +33,11 @@ export default class Player {
     this._stamina = value;
   }
 
-  activateHealer(potionStrength: number): void {
+  playDefensiveBrawler(potionStrength: number): void {
     this._health = Math.min(this._health + potionStrength, 21);
   }
 
-  activateDefender(defenderStrength: number): void {
+  playOffensiveBrawler(defenderStrength: number): void {
     this._defence = defenderStrength;
     this.stamina = 21;
   }
