@@ -92,3 +92,7 @@ ul {
   justify-content: center;
   gap: 1rem;
 }
+
+.game-over {
+  position: absolute;
+}

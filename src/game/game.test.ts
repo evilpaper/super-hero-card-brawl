@@ -16,16 +16,17 @@ test("Game should be initialized with a deck and a board", () => {
 });
 
 test("Game should be able to be started. When so, board should be populated with 4 cards from the deck", () => {
-  // Setup
   const game = new Game();
   const initialDeckSize = game.deck.cards.length;
 
-  // Act
+  // Start game
   game.start();
 
-  // Assert
-  expect(game.board.cards.length).toBe(4); // Board should have 4 cards
-  expect(game.deck.cards.length).toBe(initialDeckSize - 4); // Deck should have 4 fewer cards
+  // Check if board have 4 cards
+  expect(game.board.cards.length).toBe(4);
+
+  // Ceck if deck have 4 fewer cards
+  expect(game.deck.cards.length).toBe(initialDeckSize - 4);
 });
 
-test("Player may slip pass a wave of brawlers, if you have not slipped pass the previous one", () => {});
+test("Game should end when player health reach zero", () => {});

@@ -10,10 +10,10 @@ export default class View {
     const moveOnButton = document.getElementById("move-on");
 
     moveOnButton?.addEventListener("click", () => {
-      if (this.game.canMoveOn) {
-        this.game.canMoveOn = false;
+      if (this.game.player.canMoveOn) {
+        this.game.player.canMoveOn = false;
         this.game.board.clear();
-        this.render(); // Re-render the view after clearing
+        this.render();
       }
     });
   }
@@ -22,17 +22,30 @@ export default class View {
     this.game.playCard(card);
     this.checkBoardClear();
     this.render();
+
+    if (this.game.player.health <= 0) {
+      this.gameOver();
+    }
   }
 
   checkBoardClear() {
     if (this.game.board.isCleared()) {
-      this.game.canMoveOn = true;
+      this.game.player.canMoveOn = true;
       setTimeout(() => {
         this.game.board.clear(); // Clear the board first
         this.game.board.draw(4); // Then draw 4 new cards
         this.render(); // Re-render the view
       }, 500); // Small delay for better UX
     }
+  }
+
+  gameOver() {
+    const gameOver = document.createElement("div");
+    gameOver.className = "game-over";
+    gameOver.innerHTML = `
+      <h2>Game Over</h2>
+    `;
+    document.body.appendChild(gameOver);
   }
 
   render() {

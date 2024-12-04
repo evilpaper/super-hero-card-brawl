@@ -2,11 +2,13 @@ export default class Player {
   _health: number;
   _defence: number;
   _stamina: number;
+  _canMoveOn: boolean;
 
   constructor() {
     this._health = 21;
     this._defence = 0;
     this._stamina = 0;
+    this._canMoveOn = true;
   }
 
   get health(): number {
@@ -31,6 +33,14 @@ export default class Player {
 
   set stamina(value: number) {
     this._stamina = value;
+  }
+
+  get canMoveOn(): boolean {
+    return this._canMoveOn;
+  }
+
+  set canMoveOn(value: boolean) {
+    this._canMoveOn = value;
   }
 
   playDefensiveBrawler(potionStrength: number): void {
