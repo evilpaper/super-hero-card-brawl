@@ -22,13 +22,13 @@ export default class View {
     this.game.playCard(card);
     this.checkBoardClear();
     this.render();
-
-    if (this.game.player.health <= 0) {
-      this.gameOver();
-    }
   }
 
   checkBoardClear() {
+    if (this.game.player.health <= 0) {
+      console.log("Player is knocked out!");
+      return;
+    }
     if (this.game.board.isCleared()) {
       this.game.player.canMoveOn = true;
       setTimeout(() => {
@@ -37,15 +37,6 @@ export default class View {
         this.render(); // Re-render the view
       }, 500); // Small delay for better UX
     }
-  }
-
-  gameOver() {
-    const gameOver = document.createElement("div");
-    gameOver.className = "game-over";
-    gameOver.innerHTML = `
-      <h2>Game Over</h2>
-    `;
-    document.body.appendChild(gameOver);
   }
 
   render() {
@@ -95,6 +86,15 @@ export default class View {
 
         boardElement.appendChild(cardElement);
       });
+    }
+
+    if (this.game.player.health <= 0) {
+      const gameOverElement = document.createElement("div");
+      gameOverElement.className = "game-over";
+      gameOverElement.innerHTML = `
+        <h2>Game Over</h2>
+      `;
+      boardElement?.appendChild(gameOverElement);
     }
   }
 }
