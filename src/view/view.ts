@@ -8,6 +8,7 @@ export default class View {
     this.game = game;
 
     const moveOnButton = document.getElementById("move-on");
+    const restartButton = document.getElementById("restart");
 
     moveOnButton?.addEventListener("click", () => {
       if (this.game.player.canMoveOn) {
@@ -15,6 +16,11 @@ export default class View {
         this.game.board.clear();
         this.render();
       }
+    });
+
+    restartButton?.addEventListener("click", () => {
+      this.game.restart();
+      this.render();
     });
   }
 

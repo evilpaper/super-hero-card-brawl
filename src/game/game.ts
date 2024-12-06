@@ -19,6 +19,13 @@ export default class Game {
     this.board.draw(4);
   }
 
+  restart() {
+    this.deck = new Deck();
+    this.board = new Board(this.deck);
+    this.player = new Player();
+    this.start();
+  }
+
   playCard(card: Card) {
     card.play();
     this.handleCardEffect(card);
