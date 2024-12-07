@@ -237,6 +237,10 @@ export default class View {
         actionButton.classList.remove("disabled");
       }
 
+      if (this.game.player.health <= 0) {
+        actionButton.classList.remove("disabled");
+      }
+
       actionButton.innerHTML =
         this.game.player.health > 0 ? "Move on" : "Restart";
       actionButton.dataset.buttonType =
