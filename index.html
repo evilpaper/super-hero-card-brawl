@@ -3,13 +3,86 @@
   <head>
     <title>Super Hero Card Brawl</title>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+    rel="preload"
+    href="./fonts/ABCWhyteInktrap-Book.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
+  />
+  <link
+    rel="preload"
+    href="./fonts/ABCWhyteInktrap-Regular.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
+  />
+  <link
+    rel="preload"
+    href="./fonts/ABCWhyteInktrap-Heavy.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
+  />
     <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
     <link rel="stylesheet" href="./styles/style.css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/style-darkwood.css"/>
   </head>
   <body>
-    <div id="app">
+
+    <!-- Welcome to Darkwood -->
+    <main class="app"></main>
+      <section class="tracker">
+        <span>
+          <p class="label">
+            <img
+              src="./images/icons/heart.svg"
+              width="12px"
+              height="12px"
+              alt="Heart icon"
+            />
+            Health
+          </p>
+          <p class="health" id="health">21</p>
+        </span>
+        <span>
+          <p class="label">
+            <img
+              src="./images/icons/tile.svg"
+              width="12px"
+              height="12px"
+              alt="Tile icon"
+            />
+            Defence
+          </p>
+          <p class="defence" id="defence">0</p>
+        </span>
+        <span>
+          <p class="label">
+            <img
+              src="./images/icons/spade.svg"
+              width="12px"
+              height="12px"
+              alt="Spade icon"
+            />
+            <img
+              src="./images/icons/clover.svg"
+              width="12px"
+              height="12px"
+              alt="Clover icon"
+            />
+            Stamina
+          </p>
+          <p class="stamina" id="stamina">0</p>
+        </span>
+      </section>
+    </main>
+    <!-- Leaving Darkwood -->
+
+ 
+    <!-- <div >
       <div>
         <p>
           Super Hero Card Brawl
@@ -28,7 +101,8 @@
           <button id="move-on">Move on</button>
         </sectino>
       </div>
-    </div>
+    </div> -->
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

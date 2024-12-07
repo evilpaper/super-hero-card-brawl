@@ -1,0 +1,268 @@
+:root {
+  --app-height: 100%;
+}
+
+@font-face {
+  font-family: "Whyte Inktrap Book";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/ABCWhyteInktrap-Book.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Whyte Inktrap Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/ABCWhyteInktrap-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Whyte Inktrap Heavy";
+  font-style: normal;
+  font-weight: bold;
+  src: url("../fonts/ABCWhyteInktrap-Heavy.woff2") format("woff2");
+}
+
+/* A minimal CSS reset */
+
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  height: 100vh;
+  height: var(--app-height);
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h5,
+p,
+ol,
+ul,
+button {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  font-size: 1rem;
+  font-family: "Whyte Inktrap Book", sans-serif;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+/* App specific styles */
+
+body {
+  height: 100vh;
+  height: var(--app-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+main {
+  padding: 0.6rem 1rem 1rem 1rem;
+  position: relative;
+}
+
+.tracker {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.tracker span {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.label {
+  font-size: 1rem;
+  color: hsla(0, 0%, 100%, 0.9);
+  font-family: "Whyte Inktrap Book", sans-serif;
+}
+
+.label img {
+  opacity: 1;
+}
+
+.health,
+.defence,
+.stamina {
+  margin-right: 1rem;
+  font-family: "Whyte Inktrap Heavy", sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  color: white;
+  min-width: 1.4rem;
+  text-align: center;
+  margin-left: 0.4rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(1, auto);
+  gap: 1rem;
+  justify-content: center;
+  position: relative;
+  margin: 0.4rem 0;
+}
+
+.card {
+  margin: 0;
+  padding: 0;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: 2px solid hsla(0, 0%, 100%, 0.9);
+  overflow: hidden;
+}
+
+.card:hover {
+  background-color: black;
+}
+
+.card:focus {
+  outline: auto;
+}
+
+.card[disabled] {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.card img {
+  transition: all 0.2s ease-out;
+}
+
+.card img:hover {
+  opacity: 0.8;
+}
+
+/* Phone portrait only */
+@media (max-width: 599px) and (orientation: portrait) {
+  body {
+    align-items: flex-start;
+  }
+  .board {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+  .tracker {
+    justify-content: space-between;
+  }
+  .health,
+  .defence,
+  .stamina {
+    text-align: end;
+    margin-right: 0.6rem;
+    margin-left: 0;
+  }
+}
+
+/* Tablet and up */
+@media (min-width: 900px) {
+  .card:hover {
+    transform: scale(1.05);
+  }
+}
+
+.game-over,
+.game-win {
+  position: absolute;
+  color: white;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: hsla(0, 0%, 0%, 0.8);
+  font-family: "Whyte Inktrap Heavy", sans-serif;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.game-title {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: hsla(0, 0%, 0%, 0.8);
+}
+
+.game-title-image-wrapper {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.start-button {
+  padding: 0.2rem 1rem;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-family: "Whyte Inktrap Book", sans-serif;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.action-button {
+  padding: 0.2rem 1rem;
+  border: 1px solid white;
+  background-color: transparent;
+  border-radius: 1rem;
+  color: white;
+  float: right;
+  font-family: "Whyte Inktrap Regular", sans-serif;
+  font-size: 0.9rem;
+}
+
+.action-button:hover {
+  background-color: white;
+  color: black;
+}
+
+.disabled,
+.disabled:hover {
+  pointer-events: none;
+  background-color: transparent;
+  border-color: hsla(0, 100%, 100%, 0.8);
+  color: hsla(0, 100%, 100%, 0.8);
+  text-decoration: line-through;
+}
