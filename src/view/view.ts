@@ -7,20 +7,26 @@ export default class View {
   constructor(game: Game) {
     this.game = game;
 
-    const moveOnButton = document.getElementById("move-on");
-    const restartButton = document.getElementById("restart");
+    const actionButton = document.querySelector(
+      ".action-button"
+    ) as HTMLElement;
 
-    moveOnButton?.addEventListener("click", () => {
-      if (this.game.player.canMoveOn) {
+    actionButton?.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement;
+
+      if (
+        target?.dataset.buttonType === "evade" &&
+        this.game.player.canMoveOn
+      ) {
         this.game.player.canMoveOn = false;
         this.game.board.clear();
         this.render();
       }
-    });
 
-    restartButton?.addEventListener("click", () => {
-      this.game.restart();
-      this.render();
+      if (target?.dataset.buttonType === "restart") {
+        this.game.restart();
+        this.render();
+      }
     });
   }
 
@@ -49,13 +55,15 @@ export default class View {
     const healthElement = document.getElementById("health");
     const defenseElement = document.getElementById("defence");
     const staminaElement = document.getElementById("stamina");
-    const boardElement = document.getElementById("board");
     const slot1Element = document.querySelector(".slot1");
     const slot2Element = document.querySelector(".slot2");
     const slot3Element = document.querySelector(".slot3");
     const slot4Element = document.querySelector(".slot4");
     const gameOverOverlay = document.querySelector(".game-over") as HTMLElement;
     const gameWonOverlay = document.querySelector(".game-win") as HTMLElement;
+    const actionButton = document.querySelector(
+      ".action-button"
+    ) as HTMLElement;
 
     /**
      * TODO:
@@ -205,6 +213,19 @@ export default class View {
       gameWonOverlay.style.display = "flex";
     } else {
       gameWonOverlay.style.display = "none";
+    }
+
+    if (actionButton) {
+      if (!this.game.player.canMoveOn) {
+        actionButton.classList.add("disabled");
+      } else {
+        actionButton.classList.remove("disabled");
+      }
+
+      actionButton.innerHTML =
+        this.game.player.health > 0 ? "Move on" : "Restart";
+      actionButton.dataset.buttonType =
+        this.game.player.health > 0 ? "evade" : "restart";
     }
   }
 }
