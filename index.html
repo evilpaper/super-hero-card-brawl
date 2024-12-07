@@ -5,35 +5,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-    rel="preload"
-    href="./fonts/ABCWhyteInktrap-Book.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin
-  />
-  <link
-    rel="preload"
-    href="./fonts/ABCWhyteInktrap-Regular.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin
-  />
-  <link
-    rel="preload"
-    href="./fonts/ABCWhyteInktrap-Heavy.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin
-  />
+      rel="preload"
+      href="./fonts/ABCWhyteInktrap-Book.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="./fonts/ABCWhyteInktrap-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="./fonts/ABCWhyteInktrap-Heavy.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
-    <link rel="stylesheet" href="./styles/style.css"/>
-    <link rel="stylesheet" href="./styles/style-darkwood.css"/>
+    <!-- <link rel="stylesheet" href="./styles/style.css"/> -->
+    <link rel="stylesheet" href="./styles/style-darkwood.css" />
   </head>
-  <body>
-
-    <!-- Welcome to Darkwood -->
-    <main class="app"></main>
+  <body style="position: relative">
+    <!-- Entering Darkwood -->
+    <main class="app">
       <section class="tracker">
         <span>
           <p class="label">
@@ -78,10 +77,45 @@
           <p class="stamina" id="stamina">0</p>
         </span>
       </section>
+      <section class="board">
+        <button class="card slot1" data-slot="one">
+          <img
+            src="./images/cards/empty-slot.jpg"
+            width="242px"
+            height="320px"
+          />
+        </button>
+        <button class="card slot2" data-slot="two">
+          <img
+            src="./images/cards/empty-slot.jpg"
+            width="242px"
+            height="320px"
+          />
+        </button>
+        <button class="card slot3" data-slot="three">
+          <img
+            src="./images/cards/empty-slot.jpg"
+            width="242px"
+            height="320px"
+          />
+        </button>
+        <button class="card slot4" data-slot="four">
+          <img
+            src="./images/cards/empty-slot.jpg"
+            width="242px"
+            height="320px"
+          />
+        </button>
+        <p class="game-over">Ouch, you are knocked out!</p>
+        <p class="game-win">Victory! Opponent K-0!</p>
+      </section>
+      <button class="action-button disabled" data-button-type="evade">
+        Move on
+      </button>
     </main>
     <!-- Leaving Darkwood -->
 
- 
+    <!-- Entering First version -->
     <!-- <div >
       <div>
         <p>
@@ -102,6 +136,7 @@
         </sectino>
       </div>
     </div> -->
+    <!-- Leaving First version -->
 
     <script type="module" src="/src/main.ts"></script>
   </body>
