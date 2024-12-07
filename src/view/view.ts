@@ -28,6 +28,16 @@ export default class View {
         this.render();
       }
     });
+
+    const titleScreen = document.querySelector(".game-title") as HTMLElement;
+
+    titleScreen.addEventListener("click", function () {
+      titleScreen.style.display = "none";
+    });
+
+    document.addEventListener("keydown", function () {
+      titleScreen.style.display = "none";
+    });
   }
 
   playCard(card: Card) {

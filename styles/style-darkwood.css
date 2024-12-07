@@ -155,7 +155,7 @@ main {
 }
 
 .card:focus {
-  outline: auto;
+  outline: none;
 }
 
 .card[disabled] {
