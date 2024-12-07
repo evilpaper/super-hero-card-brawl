@@ -1,4 +1,3 @@
-import "./style.css";
 import Game from "./game/game";
 import View from "./view/view";
 
