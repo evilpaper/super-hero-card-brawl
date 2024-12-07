@@ -49,10 +49,13 @@ export default class View {
     const healthElement = document.getElementById("health");
     const defenseElement = document.getElementById("defence");
     const staminaElement = document.getElementById("stamina");
+    const boardElement = document.getElementById("board");
     const slot1Element = document.querySelector(".slot1");
     const slot2Element = document.querySelector(".slot2");
     const slot3Element = document.querySelector(".slot3");
     const slot4Element = document.querySelector(".slot4");
+    const gameOverOverlay = document.querySelector(".game-over") as HTMLElement;
+    const gameWonOverlay = document.querySelector(".game-win") as HTMLElement;
 
     /**
      * TODO:
@@ -180,26 +183,28 @@ export default class View {
       }
     });
 
-    if (this.game.player.health <= 0) {
-      const gameOverElement = document.createElement("div");
-      gameOverElement.className = "game-overlay";
-      gameOverElement.innerHTML = `
-        <h2>Game Over</h2>
-      `;
-      // boardElement?.appendChild(gameOverElement);
+    /**
+     * Game Over
+     */
+
+    if (this.game.player.health <= 0 && gameOverOverlay) {
+      gameOverOverlay.style.display = "flex";
+    } else {
+      gameOverOverlay.style.display = "none";
     }
 
+    /**
+     * Game Won
+     */
     if (
       this.game.player.health > 0 &&
       this.game.deck.cards.length === 0 &&
-      this.game.board.cards.length === 0
+      this.game.board.cards.length === 0 &&
+      gameWonOverlay
     ) {
-      const gameBeatenElement = document.createElement("div");
-      gameBeatenElement.className = "game-overlay";
-      gameBeatenElement.innerHTML = `
-         <h2>You won!</h2>
-      `;
-      // boardElement?.appendChild(gameBeatenElement);
+      gameWonOverlay.style.display = "flex";
+    } else {
+      gameWonOverlay.style.display = "none";
     }
   }
 }
