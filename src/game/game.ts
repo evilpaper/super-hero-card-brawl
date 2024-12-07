@@ -32,7 +32,6 @@ export default class Game {
   }
 
   handleCardEffect(card: Card) {
-    console.log("Player is knocked out!");
     if (this.player.health <= 0) {
       return;
     }

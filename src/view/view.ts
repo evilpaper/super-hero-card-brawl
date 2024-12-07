@@ -38,10 +38,10 @@ export default class View {
     if (this.game.board.isCleared()) {
       this.game.player.canMoveOn = true;
       setTimeout(() => {
-        this.game.board.clear(); // Clear the board first
-        this.game.board.draw(4); // Then draw 4 new cards
-        this.render(); // Re-render the view
-      }, 500); // Small delay for better UX
+        this.game.board.clear();
+        this.game.board.draw(4);
+        this.render();
+      }, 500);
     }
   }
 
@@ -96,11 +96,24 @@ export default class View {
 
     if (this.game.player.health <= 0) {
       const gameOverElement = document.createElement("div");
-      gameOverElement.className = "game-over";
+      gameOverElement.className = "game-overlay";
       gameOverElement.innerHTML = `
         <h2>Game Over</h2>
       `;
       boardElement?.appendChild(gameOverElement);
+    }
+
+    if (
+      this.game.player.health > 0 &&
+      this.game.deck.cards.length === 0 &&
+      this.game.board.cards.length === 0
+    ) {
+      const gameBeatenElement = document.createElement("div");
+      gameBeatenElement.className = "game-overlay";
+      gameBeatenElement.innerHTML = `
+         <h2>You won!</h2>
+      `;
+      boardElement?.appendChild(gameBeatenElement);
     }
   }
 }

@@ -97,7 +97,7 @@ ul {
   position: relative;
 }
 
-.game-over {
+.game-overlay {
   position: absolute;
   background-color: hsla(0, 100%, 0%, 0.8);
   top: 0;
