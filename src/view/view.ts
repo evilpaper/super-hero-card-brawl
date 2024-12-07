@@ -75,13 +75,6 @@ export default class View {
       ".action-button"
     ) as HTMLElement;
 
-    /**
-     * TODO:
-     * [] Check if card has changed
-     * [] if not, do nothing
-     * [] if so, remove old card and add new card
-     */
-
     if (healthElement) {
       healthElement.innerText = this.game.player.health.toString();
     }
@@ -95,7 +88,7 @@ export default class View {
     }
 
     this.game.board.cards.forEach((card, index) => {
-      const cardElement = document.createElement("div");
+      const cardElement = document.createElement("div") as HTMLElement;
       cardElement.classList.add("fluff-card");
       cardElement.dataset.value = card.value.toString();
       cardElement.dataset.suite = card.suite;
@@ -137,6 +130,9 @@ export default class View {
               slot1CardElement.remove();
             }
           }
+          if (card.played) {
+            slot1CardElement.classList.add("disabled");
+          }
         }
       }
       if (index === 1) {
@@ -156,6 +152,9 @@ export default class View {
             if (slot2CardElement) {
               slot2CardElement.remove();
             }
+          }
+          if (card.played) {
+            slot2CardElement.classList.add("disabled");
           }
         }
       }
@@ -177,6 +176,9 @@ export default class View {
               slot3CardElement.remove();
             }
           }
+          if (card.played) {
+            slot3CardElement.classList.add("disabled");
+          }
         }
       }
       if (index === 3) {
@@ -196,6 +198,9 @@ export default class View {
             if (slot4CardElement) {
               slot4CardElement.remove();
             }
+          }
+          if (card.played) {
+            slot4CardElement.classList.add("disabled");
           }
         }
       }
