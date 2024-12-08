@@ -93,20 +93,21 @@ export default class View {
       cardElement.dataset.value = card.value.toString();
       cardElement.dataset.suite = card.suite;
       cardElement.dataset.rank = card.rank;
+      cardElement.style.backgroundImage = `url("./${card.image}")`;
 
-      cardElement.innerHTML = `
-                <div class="top-left">
-                    <span class="value">${card.rank}</span>
-                    <span class="suite">${card.suite}</span>
-                  </div>
-                  <div class="center">
-                    <span class="value">${card.value}</span>
-                  </div>
-                  <div class="bottom-right">
-                    <span class="value">${card.rank}</span>
-                    <span class="suite">${card.suite}</span>
-                  </div>
-                `;
+      // cardElement.innerHTML = `
+      //             <div class="top-left">
+      //               <span class="value">${card.rank}</span>
+      //               <span class="suite">${card.suite}</span>
+      //             </div>
+      //             <div class="center">
+      //               <span class="value">${card.value}</span>
+      //             </div>
+      //             <div class="bottom-right">
+      //               <span class="value">${card.rank}</span>
+      //               <span class="suite">${card.suite}</span>
+      //             </div>
+      //           `;
 
       if (!card.played) {
         cardElement.addEventListener("click", () => this.playCard(card));

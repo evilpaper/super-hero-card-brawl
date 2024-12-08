@@ -60,7 +60,7 @@ export default class Deck {
         );
       }
     }
-    // Add two Jokers
+    // Add the two Donsols
     this.cards.push(
       new Card("★", "Jo", 21, "Joker A", `images/cards/donsol-a.jpg`)
     );
