@@ -26,6 +26,22 @@ test("Select a healer (♥︎) adds health points up to a maximum of 21 health p
   expect(player.health).toBe(21);
 });
 
+test("Select another healer (♥︎) right after a healer (♥︎) will have no effect", () => {
+  const player = new Player();
+
+  // Set initial health to a value less than 21
+  player.health = 10;
+
+  // Simulate drinking a potion with a value of 5
+  player.playDefensiveBrawler(5);
+
+  // Simulate drinking another potion rigt after the first onw, this tomw with a value of 4
+  player.playDefensiveBrawler(4);
+
+  // Check that the second potion didn't have any effect
+  expect(player.health).toBe(15);
+});
+
 test("Select a defender (♦︎) set defence according to the card value", () => {
   const player = new Player();
 
