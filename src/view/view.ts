@@ -3,15 +3,32 @@ import Game from "../game/game";
 
 export default class View {
   private game: Game;
+  private healthElement: HTMLElement | null;
+  private defenseElement: HTMLElement | null;
+  private staminaElement: HTMLElement | null;
+  private slot1Element: HTMLElement | null;
+  private slot2Element: HTMLElement | null;
+  private slot3Element: HTMLElement | null;
+  private slot4Element: HTMLElement | null;
+  private actionButton: HTMLElement | null;
+  private gameOverOverlay: HTMLElement | null;
+  private gameWonOverlay: HTMLElement | null;
 
   constructor(game: Game) {
     this.game = game;
 
-    const actionButton = document.querySelector(
-      ".action-button"
-    ) as HTMLElement;
+    this.healthElement = document.getElementById("health");
+    this.defenseElement = document.getElementById("defence");
+    this.staminaElement = document.getElementById("stamina");
+    this.slot1Element = document.querySelector(".slot1");
+    this.slot2Element = document.querySelector(".slot2");
+    this.slot3Element = document.querySelector(".slot3");
+    this.slot4Element = document.querySelector(".slot4");
+    this.gameOverOverlay = document.querySelector(".game-over") as HTMLElement;
+    this.gameWonOverlay = document.querySelector(".game-win") as HTMLElement;
+    this.actionButton = document.querySelector(".action-button") as HTMLElement;
 
-    actionButton?.addEventListener("click", (event) => {
+    this.actionButton?.addEventListener("click", (event) => {
       const target = event.target as HTMLElement;
 
       if (
@@ -62,29 +79,16 @@ export default class View {
   }
 
   render() {
-    const healthElement = document.getElementById("health");
-    const defenseElement = document.getElementById("defence");
-    const staminaElement = document.getElementById("stamina");
-    const slot1Element = document.querySelector(".slot1");
-    const slot2Element = document.querySelector(".slot2");
-    const slot3Element = document.querySelector(".slot3");
-    const slot4Element = document.querySelector(".slot4");
-    const gameOverOverlay = document.querySelector(".game-over") as HTMLElement;
-    const gameWonOverlay = document.querySelector(".game-win") as HTMLElement;
-    const actionButton = document.querySelector(
-      ".action-button"
-    ) as HTMLElement;
-
-    if (healthElement) {
-      healthElement.innerText = this.game.player.health.toString();
+    if (this.healthElement) {
+      this.healthElement.innerText = this.game.player.health.toString();
     }
 
-    if (defenseElement) {
-      defenseElement.innerText = this.game.player.defence.toString();
+    if (this.defenseElement) {
+      this.defenseElement.innerText = this.game.player.defence.toString();
     }
 
-    if (staminaElement) {
-      staminaElement.innerText = this.game.player.stamina.toString();
+    if (this.staminaElement) {
+      this.staminaElement.innerText = this.game.player.stamina.toString();
     }
 
     this.game.board.cards.forEach((card, index) => {
@@ -95,27 +99,13 @@ export default class View {
       cardElement.dataset.rank = card.rank;
       cardElement.style.backgroundImage = `url("./${card.image}")`;
 
-      // cardElement.innerHTML = `
-      //             <div class="top-left">
-      //               <span class="value">${card.rank}</span>
-      //               <span class="suite">${card.suite}</span>
-      //             </div>
-      //             <div class="center">
-      //               <span class="value">${card.value}</span>
-      //             </div>
-      //             <div class="bottom-right">
-      //               <span class="value">${card.rank}</span>
-      //               <span class="suite">${card.suite}</span>
-      //             </div>
-      //           `;
-
       if (!card.played) {
         cardElement.addEventListener("click", () => this.playCard(card));
       }
 
       if (index === 0) {
-        if (slot1Element) {
-          const slot1CardElement = slot1Element.querySelector(
+        if (this.slot1Element) {
+          const slot1CardElement = this.slot1Element.querySelector(
             ".fluff-card"
           ) as HTMLElement;
           if (
@@ -126,7 +116,7 @@ export default class View {
             // Not changed, do nothing
           } else {
             // Should change, add new and remove old if it exist
-            slot1Element?.appendChild(cardElement);
+            this.slot1Element?.appendChild(cardElement);
             if (slot1CardElement) {
               slot1CardElement.remove();
             }
@@ -137,8 +127,8 @@ export default class View {
         }
       }
       if (index === 1) {
-        if (slot2Element) {
-          const slot2CardElement = slot2Element.querySelector(
+        if (this.slot2Element) {
+          const slot2CardElement = this.slot2Element.querySelector(
             ".fluff-card"
           ) as HTMLElement;
           if (
@@ -149,7 +139,7 @@ export default class View {
             // Not changed, do nothing
           } else {
             // Should change, add new and remove old if it exist
-            slot2Element?.appendChild(cardElement);
+            this.slot2Element?.appendChild(cardElement);
             if (slot2CardElement) {
               slot2CardElement.remove();
             }
@@ -160,8 +150,8 @@ export default class View {
         }
       }
       if (index === 2) {
-        if (slot3Element) {
-          const slot3CardElement = slot3Element.querySelector(
+        if (this.slot3Element) {
+          const slot3CardElement = this.slot3Element.querySelector(
             ".fluff-card"
           ) as HTMLElement;
           if (
@@ -172,7 +162,7 @@ export default class View {
             // Not changed, do nothing
           } else {
             // Should change, add new and remove old if it exist
-            slot3Element?.appendChild(cardElement);
+            this.slot3Element?.appendChild(cardElement);
             if (slot3CardElement) {
               slot3CardElement.remove();
             }
@@ -183,8 +173,8 @@ export default class View {
         }
       }
       if (index === 3) {
-        if (slot4Element) {
-          const slot4CardElement = slot4Element.querySelector(
+        if (this.slot4Element) {
+          const slot4CardElement = this.slot4Element.querySelector(
             ".fluff-card"
           ) as HTMLElement;
           if (
@@ -195,7 +185,7 @@ export default class View {
             // Not changed, do nothing
           } else {
             // Should change, add new and remove old if it exist
-            slot4Element?.appendChild(cardElement);
+            this.slot4Element?.appendChild(cardElement);
             if (slot4CardElement) {
               slot4CardElement.remove();
             }
@@ -211,10 +201,10 @@ export default class View {
      * Game Over
      */
 
-    if (this.game.player.health <= 0 && gameOverOverlay) {
-      gameOverOverlay.style.display = "flex";
+    if (this.game.player.health <= 0 && this.gameOverOverlay) {
+      this.gameOverOverlay.style.display = "flex";
     } else {
-      gameOverOverlay.style.display = "none";
+      this.gameOverOverlay.style.display = "none";
     }
 
     /**
@@ -224,27 +214,27 @@ export default class View {
       this.game.player.health > 0 &&
       this.game.deck.cards.length === 0 &&
       this.game.board.cards.length === 0 &&
-      gameWonOverlay
+      this.gameWonOverlay
     ) {
-      gameWonOverlay.style.display = "flex";
+      this.gameWonOverlay.style.display = "flex";
     } else {
-      gameWonOverlay.style.display = "none";
+      this.gameWonOverlay.style.display = "none";
     }
 
-    if (actionButton) {
+    if (this.actionButton) {
       if (!this.game.player.canMoveOn) {
-        actionButton.classList.add("disabled");
+        this.actionButton.classList.add("disabled");
       } else {
-        actionButton.classList.remove("disabled");
+        this.actionButton.classList.remove("disabled");
       }
 
       if (this.game.player.health <= 0) {
-        actionButton.classList.remove("disabled");
+        this.actionButton.classList.remove("disabled");
       }
 
-      actionButton.innerHTML =
+      this.actionButton.innerHTML =
         this.game.player.health > 0 ? "Move on" : "Restart";
-      actionButton.dataset.buttonType =
+      this.actionButton.dataset.buttonType =
         this.game.player.health > 0 ? "evade" : "restart";
     }
   }
