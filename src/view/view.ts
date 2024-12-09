@@ -201,24 +201,29 @@ export default class View {
      * Game Over
      */
 
-    if (this.game.player.health <= 0 && this.gameOverOverlay) {
-      this.gameOverOverlay.style.display = "flex";
-    } else {
-      this.gameOverOverlay.style.display = "none";
+    if (this.gameOverOverlay?.style) {
+      if (this.game.player.health <= 0 && this.gameOverOverlay) {
+        this.gameOverOverlay.style.display = "flex";
+      } else {
+        this.gameOverOverlay.style.display = "none";
+      }
     }
 
     /**
      * Game Won
      */
-    if (
-      this.game.player.health > 0 &&
-      this.game.deck.cards.length === 0 &&
-      this.game.board.cards.length === 0 &&
-      this.gameWonOverlay
-    ) {
-      this.gameWonOverlay.style.display = "flex";
-    } else {
-      this.gameWonOverlay.style.display = "none";
+
+    if (this.gameWonOverlay?.style) {
+      if (
+        this.game.player.health > 0 &&
+        this.game.deck.cards.length === 0 &&
+        this.game.board.cards.length === 0 &&
+        this.gameWonOverlay
+      ) {
+        this.gameWonOverlay.style.display = "flex";
+      } else {
+        this.gameWonOverlay.style.display = "none";
+      }
     }
 
     if (this.actionButton) {
