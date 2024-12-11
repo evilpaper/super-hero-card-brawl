@@ -1,3 +1,4 @@
+import { animate } from "motion";
 import Card from "../card/card";
 import Game from "../game/game";
 
@@ -100,7 +101,10 @@ export default class View {
       cardElement.style.backgroundImage = `url("./${card.image}")`;
 
       if (!card.played) {
-        cardElement.addEventListener("click", () => this.playCard(card));
+        cardElement.addEventListener("click", () => {
+          animate(cardElement, { scale: [1, 0.9, 1] }, { duration: 0.3 });
+          this.playCard(card);
+        });
       }
 
       if (index === 0) {
