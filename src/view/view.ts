@@ -81,15 +81,52 @@ export default class View {
 
   render() {
     if (this.healthElement) {
-      this.healthElement.innerText = this.game.player.health.toString();
+      // Store the previous health value
+      const previousHealth = parseInt(this.healthElement.innerText, 10);
+      const newHealth = this.game.player.health;
+
+      // Animate the health change
+      animate(previousHealth, newHealth, {
+        duration: 0.3, // Duration of the animation in seconds
+        ease: "circOut", // Easing function for the animation
+        onUpdate: (latest) => {
+          if (this.healthElement) {
+            this.healthElement.innerText = Math.round(latest).toString(); // Update the health display
+          }
+        },
+      });
     }
 
+    // Animate the defense change
     if (this.defenseElement) {
-      this.defenseElement.innerText = this.game.player.defence.toString();
+      const previousDefense = parseInt(this.defenseElement.innerText, 10);
+      const newDefense = this.game.player.defence;
+
+      animate(previousDefense, newDefense, {
+        duration: 0.3,
+        ease: "circOut",
+        onUpdate: (latest) => {
+          if (this.defenseElement) {
+            this.defenseElement.innerText = Math.round(latest).toString(); // Update the defense display
+          }
+        },
+      });
     }
 
+    // Animate the stamina change
     if (this.staminaElement) {
-      this.staminaElement.innerText = this.game.player.stamina.toString();
+      const previousStamina = parseInt(this.staminaElement.innerText, 10);
+      const newStamina = this.game.player.stamina;
+
+      animate(previousStamina, newStamina, {
+        duration: 0.3,
+        ease: "circOut",
+        onUpdate: (latest) => {
+          if (this.staminaElement) {
+            this.staminaElement.innerText = Math.round(latest).toString(); // Update the stamina display
+          }
+        },
+      });
     }
 
     this.game.board.cards.forEach((card, index) => {
