@@ -79,55 +79,32 @@ export default class View {
     }
   }
 
-  render() {
-    if (this.healthElement) {
-      // Store the previous health value
-      const previousHealth = parseInt(this.healthElement.innerText, 10);
-      const newHealth = this.game.player.health;
+  private animateStatChange(element: HTMLElement | null, newValue: number) {
+    if (element) {
+      const previousValue = parseInt(element.innerText, 10);
 
-      // Animate the health change
-      animate(previousHealth, newHealth, {
+      // Animate the change
+      animate(previousValue, newValue, {
         duration: 0.3, // Duration of the animation in seconds
         ease: "circOut", // Easing function for the animation
         onUpdate: (latest) => {
-          if (this.healthElement) {
-            this.healthElement.innerText = Math.round(latest).toString(); // Update the health display
+          if (element) {
+            element.innerText = Math.round(latest).toString(); // Update the display
           }
         },
       });
     }
+  }
+
+  render() {
+    // Animate the health change
+    this.animateStatChange(this.healthElement, this.game.player.health);
 
     // Animate the defense change
-    if (this.defenseElement) {
-      const previousDefense = parseInt(this.defenseElement.innerText, 10);
-      const newDefense = this.game.player.defence;
-
-      animate(previousDefense, newDefense, {
-        duration: 0.3,
-        ease: "circOut",
-        onUpdate: (latest) => {
-          if (this.defenseElement) {
-            this.defenseElement.innerText = Math.round(latest).toString(); // Update the defense display
-          }
-        },
-      });
-    }
+    this.animateStatChange(this.defenseElement, this.game.player.defence);
 
     // Animate the stamina change
-    if (this.staminaElement) {
-      const previousStamina = parseInt(this.staminaElement.innerText, 10);
-      const newStamina = this.game.player.stamina;
-
-      animate(previousStamina, newStamina, {
-        duration: 0.3,
-        ease: "circOut",
-        onUpdate: (latest) => {
-          if (this.staminaElement) {
-            this.staminaElement.innerText = Math.round(latest).toString(); // Update the stamina display
-          }
-        },
-      });
-    }
+    this.animateStatChange(this.staminaElement, this.game.player.stamina);
 
     this.game.board.cards.forEach((card, index) => {
       const cardElement = document.createElement("div") as HTMLElement;
