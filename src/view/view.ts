@@ -83,10 +83,9 @@ export default class View {
     if (element) {
       const previousValue = parseInt(element.innerText, 10);
 
-      // Animate the change
       animate(previousValue, newValue, {
-        duration: 0.3, // Duration of the animation in seconds
-        ease: "circOut", // Easing function for the animation
+        duration: 0.3,
+        ease: "circOut",
         onUpdate: (latest) => {
           if (element) {
             element.innerText = Math.round(latest).toString(); // Update the display
@@ -97,13 +96,10 @@ export default class View {
   }
 
   render() {
-    // Animate the health change
     this.animateStatChange(this.healthElement, this.game.player.health);
 
-    // Animate the defense change
     this.animateStatChange(this.defenseElement, this.game.player.defence);
 
-    // Animate the stamina change
     this.animateStatChange(this.staminaElement, this.game.player.stamina);
 
     this.game.board.cards.forEach((card, index) => {
