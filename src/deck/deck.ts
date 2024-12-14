@@ -51,7 +51,7 @@ export default class Deck {
           value = parseInt(rank) as Value;
         }
 
-        const image = `images/cards/${getSuiteName(
+        const image = `assets/images/cards/${getSuiteName(
           suite
         )}-${rank.toLowerCase()}.jpg`;
 
@@ -62,10 +62,10 @@ export default class Deck {
     }
     // Add the two Donsols
     this.cards.push(
-      new Card("★", "Jo", 21, "Joker A", `images/cards/donsol-a.jpg`)
+      new Card("★", "Jo", 21, "Joker A", `assets/images/cards/donsol-a.jpg`)
     );
     this.cards.push(
-      new Card("★", "Jo", 21, "Joker B", `images/cards/donsol-b.jpg`)
+      new Card("★", "Jo", 21, "Joker B", `assets/images/cards/donsol-b.jpg`)
     );
   }
 
