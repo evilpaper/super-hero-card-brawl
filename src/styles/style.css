@@ -134,7 +134,7 @@ main {
   margin: 0.4rem 0;
 }
 
-.card {
+.card-button {
   margin: 0;
   padding: 0;
   border-radius: 0.8rem;
@@ -149,76 +149,38 @@ main {
   position: relative;
 }
 
-.card:hover {
+.card-button:hover {
   background-color: black;
 }
 
-.card:focus {
+.card-button:focus {
   outline: none;
 }
 
-.card[disabled] {
+.card-button[disabled] {
   pointer-events: none;
   opacity: 0.6;
 }
 
-.card img {
+.card-button img {
   transition: all 0.2s ease-out;
 }
 
-.card img:hover {
+.card-button img:hover {
   opacity: 0.8;
 }
 
-.fluff-card {
+.card {
   position: absolute;
   top: 0rem;
   bottom: 0rem;
   left: 0rem;
   right: 0rem;
   border-radius: 0.8rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 10px;
 
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
-  .top-left,
-  .bottom-right {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    font-size: 1.3rem;
-  }
-
-  .top-left {
-    top: 5px;
-    left: 5px;
-  }
-
-  .bottom-right {
-    bottom: 5px;
-    right: 5px;
-    transform: rotate(180deg);
-  }
-
-  .center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    height: 100%;
-    width: 100%;
-    text-align: center;
-  }
-
-  .value {
-    font-weight: bold;
-  }
 }
 
 /* Phone portrait only */
@@ -246,7 +208,7 @@ main {
 /* Tablet and up */
 
 @media (min-width: 900px) {
-  .card:hover {
+  .card-button:hover {
     transform: scale(1.05);
   }
 }

@@ -229,7 +229,7 @@ export default class View {
 
     this.game.board.cards.forEach((card, index) => {
       const cardElement = document.createElement("div") as HTMLElement;
-      cardElement.classList.add("fluff-card");
+      cardElement.classList.add("card");
       cardElement.dataset.value = card.value.toString();
       cardElement.dataset.suite = card.suite;
       cardElement.dataset.rank = card.rank;
@@ -247,7 +247,7 @@ export default class View {
       if (index === 0) {
         if (this.slot1Element) {
           const slot1CardElement = this.slot1Element.querySelector(
-            ".fluff-card"
+            ".card"
           ) as HTMLElement;
           if (
             slot1CardElement?.dataset.value === card.value.toString() &&
@@ -270,7 +270,7 @@ export default class View {
       if (index === 1) {
         if (this.slot2Element) {
           const slot2CardElement = this.slot2Element.querySelector(
-            ".fluff-card"
+            ".card"
           ) as HTMLElement;
           if (
             slot2CardElement?.dataset.value === card.value.toString() &&
@@ -293,7 +293,7 @@ export default class View {
       if (index === 2) {
         if (this.slot3Element) {
           const slot3CardElement = this.slot3Element.querySelector(
-            ".fluff-card"
+            ".card"
           ) as HTMLElement;
           if (
             slot3CardElement?.dataset.value === card.value.toString() &&
@@ -316,7 +316,7 @@ export default class View {
       if (index === 3) {
         if (this.slot4Element) {
           const slot4CardElement = this.slot4Element.querySelector(
-            ".fluff-card"
+            ".card"
           ) as HTMLElement;
           if (
             slot4CardElement?.dataset.value === card.value.toString() &&
