@@ -2,13 +2,7 @@ import { expect, test } from "vitest";
 
 import Card from "./card";
 
-const card = new Card(
-  "♠︎",
-  "9",
-  9,
-  "Sabretooth",
-  "../assets/images/cards/clover-9.jpg"
-);
+const card = new Card("♠︎", "9", 9, "Sabretooth");
 
 test("Card get initialised with correct properties", () => {
   expect(card).toEqual({
@@ -17,7 +11,6 @@ test("Card get initialised with correct properties", () => {
     suite: "♠︎",
     value: 9,
     played: false,
-    image: "../assets/images/cards/clover-9.jpg",
   });
 });
 

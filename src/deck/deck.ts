@@ -1,18 +1,6 @@
 import Card from "../card/card";
 import { Suite, Rank, Value } from "../card/card.types";
 
-const suiteMap: Record<Suite, string> = {
-  "♠︎": "spade",
-  "♥︎": "heart",
-  "♣︎": "clover",
-  "♦︎": "tile",
-  "★": "donsol",
-};
-
-function getSuiteName(suite: Suite): string {
-  return suiteMap[suite];
-}
-
 export default class Deck {
   cards: Array<Card>;
 
@@ -51,22 +39,12 @@ export default class Deck {
           value = parseInt(rank) as Value;
         }
 
-        const image = `src/assets/images/cards/${getSuiteName(
-          suite
-        )}-${rank.toLowerCase()}.jpg`;
-
-        this.cards.push(
-          new Card(suite, rank, value, `${rank} of ${suite}`, image)
-        );
+        this.cards.push(new Card(suite, rank, value, `${rank} of ${suite}`));
       }
     }
     // Add the two Donsols
-    this.cards.push(
-      new Card("★", "Jo", 21, "Joker A", `src/assets/images/cards/donsol-a.jpg`)
-    );
-    this.cards.push(
-      new Card("★", "Jo", 21, "Joker B", `src/assets/images/cards/donsol-b.jpg`)
-    );
+    this.cards.push(new Card("♣︎", "D", 21, "Donsol A"));
+    this.cards.push(new Card("♠︎", "D", 21, "Donsol B"));
   }
 
   shuffle(): void {
