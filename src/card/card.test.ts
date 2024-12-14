@@ -2,27 +2,22 @@ import { expect, test } from "vitest";
 
 import Card from "./card";
 
-/**
- * What properties should a card have?
- * 1. suite
- * 2. rank
- * 3. value
- * 4. name
- * 5. element
- *
- * What should we be able to do with a card?
- * - Play it
- */
-
-const card = new Card("♠︎", "9", 9, "Wolverine");
+const card = new Card(
+  "♠︎",
+  "9",
+  9,
+  "Sabretooth",
+  "../assets/images/cards/clover-9.jpg"
+);
 
 test("Card get initialised with correct properties", () => {
   expect(card).toEqual({
-    name: "Wolverine",
+    name: "Sabretooth",
     rank: "9",
     suite: "♠︎",
     value: 9,
     played: false,
+    image: "../assets/images/cards/clover-9.jpg",
   });
 });
 
