@@ -144,10 +144,12 @@ export default class View {
     this.healthElement = document.getElementById("health");
     this.defenseElement = document.getElementById("defence");
     this.staminaElement = document.getElementById("stamina");
+
     this.slot1Element = document.querySelector(".slot1");
     this.slot2Element = document.querySelector(".slot2");
     this.slot3Element = document.querySelector(".slot3");
     this.slot4Element = document.querySelector(".slot4");
+
     this.gameOverOverlay = document.querySelector(".game-over") as HTMLElement;
     this.gameWonOverlay = document.querySelector(".game-win") as HTMLElement;
     this.actionButton = document.querySelector(".action-button") as HTMLElement;
