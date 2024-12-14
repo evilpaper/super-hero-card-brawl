@@ -1,3 +1,6 @@
+/**
+ * Represents a player in the game.
+ */
 export default class Player {
   _health: number;
   _defence: number;
@@ -5,6 +8,9 @@ export default class Player {
   _canMoveOn: boolean;
   _canHeal: boolean;
 
+  /**
+   * Creates a new player with default health, defence, and stamina.
+   */
   constructor() {
     this._health = 21;
     this._defence = 0;
@@ -13,10 +19,18 @@ export default class Player {
     this._canHeal = true;
   }
 
+  /**
+   * Gets the player's health.
+   * @returns {number} The current health of the player.
+   */
   get health(): number {
     return this._health;
   }
 
+  /**
+   * Sets the player's health.
+   * @param {number} value - The new health value.
+   */
   set health(value: number) {
     this._health = value;
   }
@@ -53,6 +67,10 @@ export default class Player {
     this._canHeal = value;
   }
 
+  /**
+   * Plays a defensive brawler, increasing health.
+   * @param {number} potionStrength - The strength of the defensive brawler.
+   */
   playDefensiveBrawler(potionStrength: number): void {
     if (this.canHeal) {
       this._health = Math.min(this._health + potionStrength, 21);
@@ -62,6 +80,14 @@ export default class Player {
     }
   }
 
+  /**
+   * Plays an offensive brawler, increasing defence and stamina.
+   * This method sets the player's defence to the given strength and resets stamina to a fixed value.
+   * If the player was unable to heal, it resets the healing ability.
+   *
+   * @param {number} defenderStrength - The strength of the offensive brawler, which sets the player's defence.
+   * @returns {void} This method does not return a value.
+   */
   playOffensiveBrawler(defenderStrength: number): void {
     this._defence = defenderStrength;
     this.stamina = 22;
