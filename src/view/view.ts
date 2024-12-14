@@ -222,9 +222,7 @@ export default class View {
 
   render() {
     this.animateStatChange(this.healthElement, this.game.player.health);
-
     this.animateStatChange(this.defenseElement, this.game.player.defence);
-
     this.animateStatChange(this.staminaElement, this.game.player.stamina);
 
     this.game.board.cards.forEach((card, index) => {
@@ -244,98 +242,7 @@ export default class View {
         });
       }
 
-      if (index === 0) {
-        if (this.slot1Element) {
-          const slot1CardElement = this.slot1Element.querySelector(
-            ".card"
-          ) as HTMLElement;
-          if (
-            slot1CardElement?.dataset.value === card.value.toString() &&
-            slot1CardElement?.dataset.rank === card.rank &&
-            slot1CardElement?.dataset.suite === card.suite
-          ) {
-            // Not changed, do nothing
-          } else {
-            // Should change, add new and remove old if it exist
-            this.slot1Element?.appendChild(cardElement);
-            if (slot1CardElement) {
-              slot1CardElement.remove();
-            }
-          }
-          if (card.played) {
-            slot1CardElement.classList.add("disabled");
-          }
-        }
-      }
-      if (index === 1) {
-        if (this.slot2Element) {
-          const slot2CardElement = this.slot2Element.querySelector(
-            ".card"
-          ) as HTMLElement;
-          if (
-            slot2CardElement?.dataset.value === card.value.toString() &&
-            slot2CardElement?.dataset.rank === card.rank &&
-            slot2CardElement?.dataset.suite === card.suite
-          ) {
-            // Not changed, do nothing
-          } else {
-            // Should change, add new and remove old if it exist
-            this.slot2Element?.appendChild(cardElement);
-            if (slot2CardElement) {
-              slot2CardElement.remove();
-            }
-          }
-          if (card.played) {
-            slot2CardElement.classList.add("disabled");
-          }
-        }
-      }
-      if (index === 2) {
-        if (this.slot3Element) {
-          const slot3CardElement = this.slot3Element.querySelector(
-            ".card"
-          ) as HTMLElement;
-          if (
-            slot3CardElement?.dataset.value === card.value.toString() &&
-            slot3CardElement?.dataset.rank === card.rank &&
-            slot3CardElement?.dataset.suite === card.suite
-          ) {
-            // Not changed, do nothing
-          } else {
-            // Should change, add new and remove old if it exist
-            this.slot3Element?.appendChild(cardElement);
-            if (slot3CardElement) {
-              slot3CardElement.remove();
-            }
-          }
-          if (card.played) {
-            slot3CardElement.classList.add("disabled");
-          }
-        }
-      }
-      if (index === 3) {
-        if (this.slot4Element) {
-          const slot4CardElement = this.slot4Element.querySelector(
-            ".card"
-          ) as HTMLElement;
-          if (
-            slot4CardElement?.dataset.value === card.value.toString() &&
-            slot4CardElement?.dataset.rank === card.rank &&
-            slot4CardElement?.dataset.suite === card.suite
-          ) {
-            // Not changed, do nothing
-          } else {
-            // Should change, add new and remove old if it exist
-            this.slot4Element?.appendChild(cardElement);
-            if (slot4CardElement) {
-              slot4CardElement.remove();
-            }
-          }
-          if (card.played) {
-            slot4CardElement.classList.add("disabled");
-          }
-        }
-      }
+      this.updateSlot(index, cardElement, card);
     });
 
     /**
@@ -382,6 +289,38 @@ export default class View {
         this.game.player.health > 0 ? "Move on" : "Restart";
       this.actionButton.dataset.buttonType =
         this.game.player.health > 0 ? "evade" : "restart";
+    }
+  }
+
+  private updateSlot(index: number, cardElement: HTMLElement, card: Card) {
+    const slotElements = [
+      this.slot1Element,
+      this.slot2Element,
+      this.slot3Element,
+      this.slot4Element,
+    ];
+    const slotElement = slotElements[index];
+
+    if (slotElement) {
+      const existingCardElement = slotElement.querySelector(
+        ".card"
+      ) as HTMLElement;
+      if (
+        existingCardElement?.dataset.value === card.value.toString() &&
+        existingCardElement?.dataset.rank === card.rank &&
+        existingCardElement?.dataset.suite === card.suite
+      ) {
+        // Not changed, do nothing
+      } else {
+        // Should change, add new and remove old if it exists
+        slotElement.appendChild(cardElement);
+        if (existingCardElement) {
+          existingCardElement.remove();
+        }
+      }
+      if (card.played) {
+        existingCardElement?.classList.add("disabled");
+      }
     }
   }
 }
