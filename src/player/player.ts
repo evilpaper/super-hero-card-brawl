@@ -2,69 +2,69 @@
  * Represents a player in the game.
  */
 export default class Player {
-  _health: number;
-  _defence: number;
-  _stamina: number;
-  _canMoveOn: boolean;
-  _canHeal: boolean;
+  private health: number;
+  private defence: number;
+  private stamina: number;
+  private canMoveOn: boolean;
+  private canHeal: boolean;
 
   /**
    * Creates a new player with default health, defence, and stamina.
    */
   constructor() {
-    this._health = 21;
-    this._defence = 0;
-    this._stamina = 0;
-    this._canMoveOn = true;
-    this._canHeal = true;
+    this.health = 21;
+    this.defence = 0;
+    this.stamina = 0;
+    this.canMoveOn = true;
+    this.canHeal = true;
   }
 
   /**
    * Gets the player's health.
    * @returns {number} The current health of the player.
    */
-  get health(): number {
-    return this._health;
+  getHealth(): number {
+    return this.health;
   }
 
   /**
    * Sets the player's health.
    * @param {number} value - The new health value.
    */
-  set health(value: number) {
-    this._health = value;
+  setHealth(value: number): void {
+    this.health = value;
   }
 
-  get defence(): number {
-    return this._defence;
+  getDefence(): number {
+    return this.defence;
   }
 
-  set defence(value: number) {
-    this._defence = value;
+  setDefence(value: number): void {
+    this.defence = value;
   }
 
-  get stamina(): number {
-    return this._stamina;
+  getStamina(): number {
+    return this.stamina;
   }
 
-  set stamina(value: number) {
-    this._stamina = value;
+  setStamina(value: number): void {
+    this.stamina = value;
   }
 
-  get canMoveOn(): boolean {
-    return this._canMoveOn;
+  getCanMoveOn(): boolean {
+    return this.canMoveOn;
   }
 
-  set canMoveOn(value: boolean) {
-    this._canMoveOn = value;
+  setCanMoveOn(value: boolean): void {
+    this.canMoveOn = value;
   }
 
-  get canHeal(): boolean {
-    return this._canHeal;
+  getCanHeal(): boolean {
+    return this.canHeal;
   }
 
-  set canHeal(value: boolean) {
-    this._canHeal = value;
+  setCanHeal(value: boolean): void {
+    this.canHeal = value;
   }
 
   /**
@@ -73,7 +73,7 @@ export default class Player {
    */
   playDefensiveBrawler(potionStrength: number): void {
     if (this.canHeal) {
-      this._health = Math.min(this._health + potionStrength, 21);
+      this.health = Math.min(this.health + potionStrength, 21);
       this.canHeal = false;
     } else {
       this.canHeal = true;
@@ -89,7 +89,7 @@ export default class Player {
    * @returns {void} This method does not return a value.
    */
   playOffensiveBrawler(defenderStrength: number): void {
-    this._defence = defenderStrength;
+    this.defence = defenderStrength;
     this.stamina = 22;
 
     // If canHeal is false, reset it to true
