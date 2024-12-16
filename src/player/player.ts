@@ -35,18 +35,34 @@ export default class Player {
     this.health = value;
   }
 
+  /**
+   * Gets the player's defence.
+   * @returns {number} The current defence of the player.
+   */
   getDefence(): number {
     return this.defence;
   }
 
+  /**
+   * Sets the player's defence.
+   * @param {number} value - The new defence value.
+   */
   setDefence(value: number): void {
     this.defence = value;
   }
 
+  /**
+   * Gets the player's stamina.
+   * @returns {number} The current stamina of the player.
+   */
   getStamina(): number {
     return this.stamina;
   }
 
+  /**
+   * Sets the player's stamina.
+   * @param {number} value - The new stamina value.
+   */
   setStamina(value: number): void {
     this.stamina = value;
   }
