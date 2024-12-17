@@ -2,7 +2,7 @@
 
 A Donsol-style card game featuring characters from Capcom's fighting franchises. Fully responsive and playable on any device.
 
-Made for fun! [Play it here](https://evilpaper.com/superherocardbrawl/)
+This is a non-commercial personal project. Made for fun! [Play it here](https://evilpaper.com/superherocardbrawl/)
 
 Donsol was originally created by John Eternal—or so it seems. [Read the story here](https://boingboing.net/2015/04/16/the-clone-that-wasnt.html). I encountered it through Hundred Rabbits' awesome version. [Donsol](https://100r.co/site/donsol.html)
 
@@ -54,3 +54,5 @@ Changes and improvements are more than welcome! Feel free to fork and open a pul
 You are welcome to do whatever you want with the code. The code is licensed under the MIT license.
 
 The graphical assets (images) are owned by Capcom Co.,Ltd. etc. All rights reserved. I bet!
+
+Title font is [Single Fighter](https://www.dafont.com/single-fighter.font)
