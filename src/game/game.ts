@@ -32,7 +32,7 @@ export default class Game {
   }
 
   handleCardEffect(card: Card) {
-    if (this.player.health <= 0) {
+    if (this.player.getHealth() <= 0) {
       return;
     }
 
