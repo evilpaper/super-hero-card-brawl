@@ -96,9 +96,9 @@ export default class Player {
   playDefensiveBrawler(potionStrength: number): void {
     if (this.canHeal) {
       this.setHealth(this.getHealth() + potionStrength);
-      this.canHeal = false;
+      this.setCanHeal(false);
     } else {
-      this.canHeal = true;
+      this.setCanHeal(true);
     }
   }
 
@@ -111,29 +111,29 @@ export default class Player {
    * @returns {void} This method does not return a value.
    */
   playOffensiveBrawler(defenderStrength: number): void {
-    this.defence = defenderStrength;
-    this.stamina = 22;
+    this.setDefence(defenderStrength);
+    this.setStamina(22);
 
     // If canHeal is false, reset it to true
-    if (!this.canHeal) {
-      this.canHeal = true;
+    if (!this.getCanHeal()) {
+      this.setCanHeal(true);
     }
   }
 
   brawl(opponentValue: number): void {
-    if (opponentValue >= this.stamina) {
-      this.stamina = 0;
-      this.defence = 0;
-      this.health = Math.max(0, this.health - opponentValue);
+    if (opponentValue >= this.getStamina()) {
+      this.setStamina(0);
+      this.setDefence(0);
+      this.setHealth(this.getHealth() - opponentValue);
     } else {
-      const damage = Math.max(0, opponentValue - this.defence);
+      const damage = Math.max(0, opponentValue - this.getDefence());
 
-      this.health = Math.max(0, this.health - damage);
-      this.stamina = opponentValue;
+      this.setHealth(this.getHealth() - damage);
+      this.setStamina(opponentValue);
     }
     // If canHeal is false, reset it to true
-    if (!this.canHeal) {
-      this.canHeal = true;
+    if (!this.getCanHeal()) {
+      this.setCanHeal(true);
     }
   }
 }

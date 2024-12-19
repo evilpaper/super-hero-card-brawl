@@ -10,7 +10,7 @@ Donsol was originally created by John Eternal—or so it seems. [Read the story 
 
 This project leverages TypeScript and Vite to deliver a robust and highly maintainable codebase for a browser-based game. The design philosophy centers on keeping the core game logic well-structured, with a strong emphasis on separation of concerns.
 
-The architecture is modular, with key components such as Game, Player, Deck, Board, and View split into distinct, reusable modules. Each class adheres to the single responsibility principle, making the code easy to navigate, extend, and debug. TypeScript is a cornerstone of the project, providing type safety that catches issues during compile time, significantly reducing runtime bugs—a critical feature for a game with complex state management.
+The architecture is modular, with key components such as Game, Player, Deck, Board, and View split into distinct, reusable modules. Each class adheres to the single responsibility principle, making the code easy to navigate, extend, and debug. The intention has been to keep class properties private and only accessed with getters and setters. TypeScript is a cornerstone of the project, providing type safety that catches issues during compile time, significantly reducing runtime bugs—a critical feature for a game with complex state management.
 
 The View module serves as the bridge between the game logic and the browser, handling DOM updates and user interactions. Event handling in the View class is designed with care, using event listeners to manage player input in a clean and efficient way.
 
