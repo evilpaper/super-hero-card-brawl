@@ -28,11 +28,17 @@ export default class Player {
   }
 
   /**
-   * Sets the player's health.
+   * Sets the player's health with validation
    * @param {number} value - The new health value.
    */
   setHealth(value: number): void {
-    this.health = value;
+    if (value < 0) {
+      this.health = 0; // Ensure health doesn't go below 0
+    } else if (value > 21) {
+      this.health = 21; // Cap health at 21
+    } else {
+      this.health = value;
+    }
   }
 
   /**
@@ -89,7 +95,7 @@ export default class Player {
    */
   playDefensiveBrawler(potionStrength: number): void {
     if (this.canHeal) {
-      this.health = Math.min(this.health + potionStrength, 21);
+      this.setHealth(this.getHealth() + potionStrength);
       this.canHeal = false;
     } else {
       this.canHeal = true;
