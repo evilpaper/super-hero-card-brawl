@@ -28,14 +28,14 @@ export default class Player {
   }
 
   /**
-   * Sets the player's health with validation
+   * Sets the player's health with validation.
    * @param {number} value - The new health value.
    */
   setHealth(value: number): void {
     if (value < 0) {
-      this.health = 0; // Ensure health doesn't go below 0
+      this.health = 0; // Ensure health doesn't go below 0.
     } else if (value > 21) {
-      this.health = 21; // Cap health at 21
+      this.health = 21; // Cap health at 21.
     } else {
       this.health = value;
     }

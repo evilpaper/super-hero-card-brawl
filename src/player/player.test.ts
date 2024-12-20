@@ -4,42 +4,42 @@ import Player from "./player";
 test("Player should initialize with health, defence and stamina with default values", () => {
   const player = new Player();
 
-  expect(player.health).toBe(21);
-  expect(player.defence).toBe(0);
-  expect(player.stamina).toBe(0);
+  expect(player.getHealth()).toBe(21);
+  expect(player.getDefence()).toBe(0);
+  expect(player.getStamina()).toBe(0);
 });
 
 test("Select a healer (♥︎) adds health points up to a maximum of 21 health points", () => {
   const player = new Player();
 
   // Set initial health to a value less than 21
-  player.health = 18;
+  player.setHealth(18);
 
   // Simulate drinking a potion with a value of 5
   player.playDefensiveBrawler(5);
 
   // Check that health does not exceed 21
-  expect(player.health).toBe(21);
+  expect(player.getHealth()).toBe(21);
 
   // Test drinking a potion when health is already at maximum
   player.playDefensiveBrawler(3);
-  expect(player.health).toBe(21);
+  expect(player.getHealth()).toBe(21);
 });
 
 test("Select another healer (♥︎) right after a healer (♥︎) will have no effect", () => {
   const player = new Player();
 
   // Set initial health to a value less than 21
-  player.health = 10;
+  player.setHealth(10);
 
   // Simulate drinking a potion with a value of 5
   player.playDefensiveBrawler(5);
 
-  // Simulate drinking another potion rigt after the first onw, this tomw with a value of 4
+  // Simulate drinking another potion right after the first one, this time with a value of 4
   player.playDefensiveBrawler(4);
 
   // Check that the second potion didn't have any effect
-  expect(player.health).toBe(15);
+  expect(player.getHealth()).toBe(15);
 });
 
 test("Select a defender (♦︎) set defence according to the card value", () => {
@@ -47,53 +47,53 @@ test("Select a defender (♦︎) set defence according to the card value", () =>
 
   player.playOffensiveBrawler(9);
 
-  expect(player.defence).toBe(9);
+  expect(player.getDefence()).toBe(9);
 });
 
-test("Select a defender (♦︎) set stamina to 21", () => {
+test("Select a defender (♦︎) set stamina to 22", () => {
   const player = new Player();
 
   player.playOffensiveBrawler(9);
 
-  expect(player.stamina).toBe(22);
+  expect(player.getStamina()).toBe(22);
 });
 
 describe("Brawl mechanics", () => {
-  test("if opponents value is lower than stamina, reduce stamina same value as opponent", () => {
+  test("if opponent's value is lower than stamina, reduce stamina same value as opponent", () => {
     const player = new Player();
 
     player.playOffensiveBrawler(10);
     player.brawl(5);
 
-    expect(player.stamina).toBe(5);
+    expect(player.getStamina()).toBe(5);
   });
 
-  test("if opponents value is higher than or equal to stamina, reset stamina and defence to 0 and reduce health by opponent value", () => {
+  test("if opponent's value is higher than or equal to stamina, reset stamina and defence to 0 and reduce health by opponent value", () => {
     const player = new Player();
 
-    player.playOffensiveBrawler(5); // Sets stamina to 21
+    player.playOffensiveBrawler(5); // Sets stamina to 22
     player.brawl(5); // Sets stamina to 5
     player.brawl(10);
 
-    expect(player.stamina).toBe(0);
-    expect(player.defence).toBe(0);
-    expect(player.health).toBe(11);
+    expect(player.getStamina()).toBe(0);
+    expect(player.getDefence()).toBe(0);
+    expect(player.getHealth()).toBe(11);
 
-    player.playOffensiveBrawler(4); // Sets stamina to 21
+    player.playOffensiveBrawler(4); // Sets stamina to 22
     player.brawl(4); // Sets stamina to 4
     player.brawl(4);
 
-    expect(player.stamina).toBe(0);
-    expect(player.defence).toBe(0);
-    expect(player.health).toBe(7);
+    expect(player.getStamina()).toBe(0);
+    expect(player.getDefence()).toBe(0);
+    expect(player.getHealth()).toBe(7);
   });
 
-  test("if opponents value is lower than stamina but higher that defence, deal damage equal to difference between defence and opponent", () => {
+  test("if opponent's value is lower than stamina but higher than defence, deal damage equal to difference between defence and opponent", () => {
     const player = new Player();
 
     player.playOffensiveBrawler(5);
     player.brawl(6);
 
-    expect(player.health).toBe(20);
+    expect(player.getHealth()).toBe(20);
   });
 });
