@@ -15,14 +15,16 @@ test("Select a healer (♥︎) adds health points up to a maximum of 21 health p
   // Set initial health to a value less than 21
   player.setHealth(18);
 
-  // Simulate drinking a potion with a value of 5
+  // Play defensive brawler
   player.playDefensiveBrawler(5);
 
-  // Check that health does not exceed 21
+  // Check that health does not exceed 21. 18 + 5 equal 23 but we should cap at 21
   expect(player.getHealth()).toBe(21);
 
   // Test drinking a potion when health is already at maximum
   player.playDefensiveBrawler(3);
+
+  // Check that health still remain at highest value and not higher
   expect(player.getHealth()).toBe(21);
 });
 

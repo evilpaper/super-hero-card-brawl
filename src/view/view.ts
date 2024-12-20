@@ -160,9 +160,9 @@ export default class View {
 
       if (
         target?.dataset.buttonType === "evade" &&
-        this.game.player.canMoveOn
+        this.game.player.getCanMoveOn()
       ) {
-        this.game.player.canMoveOn = false;
+        this.game.player.setCanMoveOn(false);
         this.game.board.clear();
         this.render();
       }
@@ -191,12 +191,12 @@ export default class View {
   }
 
   checkBoardClear() {
-    if (this.game.player.health <= 0) {
+    if (this.game.player.getHealth() <= 0) {
       console.log("Player is knocked out!");
       return;
     }
     if (this.game.board.isCleared()) {
-      this.game.player.canMoveOn = true;
+      this.game.player.setCanMoveOn(true);
       setTimeout(() => {
         this.game.board.clear();
         this.game.board.draw(4);
@@ -254,9 +254,9 @@ export default class View {
   }
 
   render() {
-    this.animateStatChange(this.healthElement, this.game.player.health);
-    this.animateStatChange(this.defenseElement, this.game.player.defence);
-    this.animateStatChange(this.staminaElement, this.game.player.stamina);
+    this.animateStatChange(this.healthElement, this.game.player.getHealth());
+    this.animateStatChange(this.defenseElement, this.game.player.getDefence());
+    this.animateStatChange(this.staminaElement, this.game.player.getStamina());
 
     this.game.board.cards.forEach((card, index) => {
       const cardElement = document.createElement("div") as HTMLElement;
@@ -283,7 +283,7 @@ export default class View {
      */
 
     if (this.gameOverOverlay?.style) {
-      if (this.game.player.health <= 0 && this.gameOverOverlay) {
+      if (this.game.player.getHealth() <= 0 && this.gameOverOverlay) {
         this.gameOverOverlay.style.display = "flex";
       } else {
         this.gameOverOverlay.style.display = "none";
@@ -296,7 +296,7 @@ export default class View {
 
     if (this.gameWonOverlay?.style) {
       if (
-        this.game.player.health > 0 &&
+        this.game.player.getHealth() > 0 &&
         this.game.deck.cards.length === 0 &&
         this.game.board.cards.length === 0 &&
         this.gameWonOverlay
@@ -312,20 +312,20 @@ export default class View {
      */
 
     if (this.actionButton) {
-      if (!this.game.player.canMoveOn) {
+      if (!this.game.player.getCanMoveOn()) {
         this.actionButton.classList.add("disabled");
       } else {
         this.actionButton.classList.remove("disabled");
       }
 
-      if (this.game.player.health <= 0) {
+      if (this.game.player.getHealth() <= 0) {
         this.actionButton.classList.remove("disabled");
       }
 
       this.actionButton.innerHTML =
-        this.game.player.health > 0 ? "Move on" : "Restart";
+        this.game.player.getHealth() > 0 ? "Move on" : "Restart";
       this.actionButton.dataset.buttonType =
-        this.game.player.health > 0 ? "evade" : "restart";
+        this.game.player.getHealth() > 0 ? "evade" : "restart";
     }
   }
 }
