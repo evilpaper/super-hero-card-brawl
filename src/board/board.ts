@@ -22,7 +22,7 @@ export default class Board {
 
   clear(): void {
     // Find cards that haven't been played
-    const unplayedCards = this.cards.filter((card) => !card.played);
+    const unplayedCards = this.cards.filter((card) => !card.getPlayed());
 
     // Add unplayed cards back to the end of the deck
     this.deck.cards.push(...unplayedCards);
@@ -36,6 +36,6 @@ export default class Board {
   }
 
   isCleared() {
-    return this.cards.every((card) => card.played);
+    return this.cards.every((card) => card.getPlayed());
   }
 }

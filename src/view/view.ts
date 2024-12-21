@@ -235,9 +235,9 @@ export default class View {
         ".card"
       ) as HTMLElement;
       if (
-        existingCardElement?.dataset.value === card.value.toString() &&
-        existingCardElement?.dataset.rank === card.rank &&
-        existingCardElement?.dataset.suite === card.suite
+        existingCardElement?.dataset.value === card.getValue().toString() &&
+        existingCardElement?.dataset.rank === card.getRank() &&
+        existingCardElement?.dataset.suite === card.getSuite()
       ) {
         // Not changed, do nothing
       } else {
@@ -247,7 +247,7 @@ export default class View {
           existingCardElement.remove();
         }
       }
-      if (card.played) {
+      if (card.getPlayed()) {
         existingCardElement?.classList.add("disabled");
       }
     }
@@ -261,14 +261,14 @@ export default class View {
     this.game.board.cards.forEach((card, index) => {
       const cardElement = document.createElement("div") as HTMLElement;
       cardElement.classList.add("card");
-      cardElement.dataset.value = card.value.toString();
-      cardElement.dataset.suite = card.suite;
-      cardElement.dataset.rank = card.rank;
+      cardElement.dataset.value = card.getValue().toString();
+      cardElement.dataset.suite = card.getSuite();
+      cardElement.dataset.rank = card.getRank();
       cardElement.style.backgroundImage = `url("${
-        images[`${getSuiteName(card.suite)}-${card.rank}`]
+        images[`${getSuiteName(card.getSuite())}-${card.getRank()}`]
       }")`;
 
-      if (!card.played) {
+      if (!card.getPlayed()) {
         cardElement.addEventListener("click", () => {
           animate(cardElement, { scale: [1, 0.9, 1] }, { duration: 0.3 });
           this.playCard(card);

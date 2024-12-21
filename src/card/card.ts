@@ -1,11 +1,11 @@
 import { Suite, Rank, Value } from "./card.types";
 
 export default class Card {
-  suite: Suite;
-  rank: Rank;
-  value: Value;
-  name: string;
-  played: boolean;
+  private suite: Suite;
+  private rank: Rank;
+  private value: Value;
+  private name: string;
+  private played: boolean;
 
   constructor(suite: Suite, rank: Rank, value: Value, name: string) {
     this.suite = suite;
@@ -15,7 +15,31 @@ export default class Card {
     this.played = false;
   }
 
-  play() {
+  getSuite(): Suite {
+    return this.suite;
+  }
+
+  getRank(): Rank {
+    return this.rank;
+  }
+
+  getValue(): Value {
+    return this.value;
+  }
+
+  getName(): string {
+    return this.name;
+  }
+
+  getPlayed(): boolean {
+    return this.played;
+  }
+
+  setPlayed() {
     this.played = true;
+  }
+
+  play() {
+    this.setPlayed();
   }
 }

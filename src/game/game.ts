@@ -36,18 +36,18 @@ export default class Game {
       return;
     }
 
-    switch (card.suite) {
+    switch (card.getSuite()) {
       case "♥︎":
-        this.player.playDefensiveBrawler(card.value);
+        this.player.playDefensiveBrawler(card.getValue());
         break;
       case "♦︎":
-        this.player.playOffensiveBrawler(card.value);
+        this.player.playOffensiveBrawler(card.getValue());
         break;
       case "♠︎":
-        this.player.brawl(card.value);
+        this.player.brawl(card.getValue());
         break;
       case "♣︎":
-        this.player.brawl(card.value);
+        this.player.brawl(card.getValue());
         break;
     }
   }

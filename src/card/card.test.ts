@@ -16,5 +16,5 @@ test("Card get initialised with correct properties", () => {
 
 test("Card get played", () => {
   card.play();
-  expect(card.played).toEqual(true);
+  expect(card.getPlayed()).toEqual(true);
 });
