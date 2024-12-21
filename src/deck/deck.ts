@@ -42,6 +42,7 @@ export default class Deck {
         this.cards.push(new Card(suite, rank, value, `${rank} of ${suite}`));
       }
     }
+
     // Add the two Donsols
     this.cards.push(new Card("♣︎", "D", 21, "Donsol A"));
     this.cards.push(new Card("♠︎", "D", 21, "Donsol B"));
@@ -57,7 +58,7 @@ export default class Deck {
     }
   }
 
-  draw_card(count: number): Array<Card> {
+  drawCard(count: number): Array<Card> {
     // Handle invalid inputs
     if (count <= 0 || count > 4) {
       return [];
@@ -72,7 +73,7 @@ export default class Deck {
     return this.cards.splice(0, count);
   }
 
-  return_card(cards: Array<Card>): void {
+  returnCard(cards: Array<Card>): void {
     // Validate input
     if (!Array.isArray(cards)) {
       return;
