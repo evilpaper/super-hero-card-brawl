@@ -27,13 +27,13 @@ test("clear should return not played cards to the end of the deck and populate b
   // Draw some cards to the board
   board.draw(3);
   const initialBoardCards = [...board.cards]; // Make a copy of the current board cards
-  const initialDeckLength = deck.cards.length;
+  const initialDeckLength = deck.getCardCount();
 
   // Clear the board - this should return cards to deck and draw new ones
   board.clear();
 
   // Test that the old cards are now at the end of the deck
-  const lastCardsInDeck = deck.cards.slice(-initialBoardCards.length);
+  const lastCardsInDeck = deck.getCards().slice(-initialBoardCards.length);
   expect(lastCardsInDeck).toEqual(initialBoardCards);
 
   // Test that we drew new cards to the board
@@ -43,5 +43,5 @@ test("clear should return not played cards to the end of the deck and populate b
   expect(board.cards).not.toEqual(initialBoardCards);
 
   // Verify the deck size remained the same (cards were just moved around)
-  expect(deck.cards.length).toBe(initialDeckLength);
+  expect(deck.getCardCount()).toBe(initialDeckLength);
 });

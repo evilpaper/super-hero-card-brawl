@@ -297,7 +297,7 @@ export default class View {
     if (this.gameWonOverlay?.style) {
       if (
         this.game.player.getHealth() > 0 &&
-        this.game.deck.cards.length === 0 &&
+        this.game.deck.getCardCount() === 0 &&
         this.game.board.cards.length === 0 &&
         this.gameWonOverlay
       ) {

@@ -8,7 +8,7 @@ test("Game should be initialized with a deck and a board", () => {
 
   // Check if game has a deck
   expect(game.deck).toBeInstanceOf(Deck);
-  expect(game.deck.cards.length).toBe(54);
+  expect(game.deck.getCardCount()).toBe(54);
 
   // Check if game has a board
   expect(game.board).toBeInstanceOf(Board);
@@ -17,7 +17,7 @@ test("Game should be initialized with a deck and a board", () => {
 
 test("Game should be able to be started. When so, board should be populated with 4 cards from the deck", () => {
   const game = new Game();
-  const initialDeckSize = game.deck.cards.length;
+  const initialDeckSize = game.deck.getCardCount();
 
   // Start game
   game.start();
@@ -26,7 +26,7 @@ test("Game should be able to be started. When so, board should be populated with
   expect(game.board.cards.length).toBe(4);
 
   // Ceck if deck have 4 fewer cards
-  expect(game.deck.cards.length).toBe(initialDeckSize - 4);
+  expect(game.deck.getCardCount()).toBe(initialDeckSize - 4);
 });
 
 test("Game should end when player health reach zero", () => {});

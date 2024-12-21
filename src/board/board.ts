@@ -25,13 +25,13 @@ export default class Board {
     const unplayedCards = this.cards.filter((card) => !card.getPlayed());
 
     // Add unplayed cards back to the end of the deck
-    this.deck.cards.push(...unplayedCards);
+    this.deck.returnCard(unplayedCards);
 
     // Clear the board
     this.cards = [];
 
     // Draw the minimum between 4 and available cards in deck
-    const cardsToDraw = Math.min(4, this.deck.cards.length);
+    const cardsToDraw = Math.min(4, this.deck.getCardCount());
     this.draw(cardsToDraw);
   }
 

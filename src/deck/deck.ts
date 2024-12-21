@@ -2,7 +2,7 @@ import Card from "../card/card";
 import { Suite, Rank, Value } from "../card/card.types";
 
 export default class Deck {
-  cards: Array<Card>;
+  private cards: Array<Card>;
 
   constructor() {
     this.cards = [];
@@ -46,6 +46,14 @@ export default class Deck {
     // Add the two Donsols
     this.cards.push(new Card("♣︎", "D", 21, "Donsol A"));
     this.cards.push(new Card("♠︎", "D", 21, "Donsol B"));
+  }
+
+  getCards(): Array<Card> {
+    return [...this.cards]; // Return a copy to maintain encapsulation
+  }
+
+  getCardCount(): number {
+    return this.cards.length;
   }
 
   shuffle(): void {
