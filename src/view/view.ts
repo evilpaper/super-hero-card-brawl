@@ -192,7 +192,6 @@ export default class View {
 
   checkBoardClear() {
     if (this.game.player.getHealth() <= 0) {
-      console.log("Player is knocked out!");
       return;
     }
     if (this.game.board.isCleared()) {
@@ -268,9 +267,11 @@ export default class View {
         images[`${getSuiteName(card.getSuite())}-${card.getRank()}`]
       }")`;
 
+      animateOnEnter(cardElement);
+
       if (!card.getPlayed()) {
         cardElement.addEventListener("click", () => {
-          animate(cardElement, { scale: [1, 0.9, 1] }, { duration: 0.3 });
+          animateOnClick(cardElement);
           this.playCard(card);
         });
       }
@@ -328,4 +329,23 @@ export default class View {
         this.game.player.getHealth() > 0 ? "evade" : "restart";
     }
   }
+}
+
+function animateOnClick(element: HTMLElement) {
+  animate(element, { scale: [1, 0.9, 1] }, { duration: 0.3 });
+}
+
+function animateOnEnter(element: HTMLElement) {
+  // Set the CSS style
+  element.style.transformOrigin = "bottom left";
+
+  // Then animate
+  animate(
+    element,
+    { rotateY: ["-90deg", "0deg"] },
+    {
+      duration: 0.3,
+      ease: "easeInOut",
+    }
+  );
 }
