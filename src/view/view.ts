@@ -337,15 +337,15 @@ function animateOnClick(element: HTMLElement) {
 
 function animateOnEnter(element: HTMLElement) {
   // Set the CSS style
-  element.style.transformOrigin = "bottom left";
+  element.style.transformOrigin = "top";
 
   // Then animate
   animate(
     element,
-    { rotateY: ["-90deg", "0deg"] },
+    { opacity: [0, 1], rotateY: ["-70deg", "0deg"] },
     {
-      duration: 0.3,
-      ease: "easeInOut",
+      duration: 0.6,
+      ease: [0.175, 0.885, 0.32, 1.275],
     }
   );
 }
