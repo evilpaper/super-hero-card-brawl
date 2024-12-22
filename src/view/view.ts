@@ -267,16 +267,18 @@ export default class View {
         images[`${getSuiteName(card.getSuite())}-${card.getRank()}`]
       }")`;
 
-      animateOnEnter(cardElement);
+      setTimeout(() => {
+        animateOnEnter(cardElement);
 
-      if (!card.getPlayed()) {
-        cardElement.addEventListener("click", () => {
-          animateOnClick(cardElement);
-          this.playCard(card);
-        });
-      }
+        if (!card.getPlayed()) {
+          cardElement.addEventListener("click", () => {
+            animateOnClick(cardElement);
+            this.playCard(card);
+          });
+        }
 
-      this.updateSlot(index, cardElement, card);
+        this.updateSlot(index, cardElement, card);
+      }, index * 100);
     });
 
     /**
@@ -337,7 +339,7 @@ function animateOnClick(element: HTMLElement) {
 
 function animateOnEnter(element: HTMLElement) {
   // Set the CSS style
-  element.style.transformOrigin = "top";
+  element.style.transformOrigin = "top left";
 
   // Then animate
   animate(
