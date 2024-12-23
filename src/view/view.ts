@@ -334,11 +334,18 @@ export default class View {
 }
 
 function animateOnClick(element: HTMLElement) {
-  animate(element, { scale: [1, 0.9, 1] }, { duration: 0.3 });
+  // Reset style
+  element.style.transformOrigin = "center";
+
+  animate(
+    element,
+    { opacity: [1, 0.4], scale: [1, 0.9, 1] },
+    { duration: 0.3 }
+  );
 }
 
 function animateOnEnter(element: HTMLElement) {
-  // Set the CSS style
+  // Set necessary style for the animation
   element.style.transformOrigin = "top left";
 
   // Then animate

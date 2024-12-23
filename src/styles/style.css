@@ -281,5 +281,5 @@ main {
   border-color: hsla(0, 100%, 100%, 0.8);
   color: hsla(0, 100%, 100%, 0.8);
   text-decoration: line-through;
-  opacity: 0.4 !important;
+  opacity: 0.4;
 }
