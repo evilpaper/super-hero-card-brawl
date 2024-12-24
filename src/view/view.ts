@@ -220,6 +220,32 @@ export default class View {
     }
   }
 
+  private animateOnClick(element: HTMLElement) {
+    // Reset style
+    element.style.transformOrigin = "center";
+
+    animate(
+      element,
+      { opacity: [1, 0.4], scale: [1, 0.9, 1] },
+      { duration: 0.3 }
+    );
+  }
+
+  private animateOnEnter(element: HTMLElement) {
+    // Set necessary style for the animation
+    element.style.transformOrigin = "top left";
+
+    // Then animate
+    animate(
+      element,
+      { opacity: [0, 1], rotateY: ["-70deg", "0deg"] },
+      {
+        duration: 0.6,
+        ease: [0.175, 0.885, 0.32, 1.275],
+      }
+    );
+  }
+
   private updateSlot(index: number, cardElement: HTMLElement, card: Card) {
     const slotElements = [
       this.slot1Element,
@@ -268,11 +294,11 @@ export default class View {
       }")`;
 
       setTimeout(() => {
-        animateOnEnter(cardElement);
+        this.animateOnEnter(cardElement);
 
         if (!card.getPlayed()) {
           cardElement.addEventListener("click", () => {
-            animateOnClick(cardElement);
+            this.animateOnClick(cardElement);
             this.playCard(card);
           });
         }
@@ -331,30 +357,4 @@ export default class View {
         this.game.player.getHealth() > 0 ? "evade" : "restart";
     }
   }
-}
-
-function animateOnClick(element: HTMLElement) {
-  // Reset style
-  element.style.transformOrigin = "center";
-
-  animate(
-    element,
-    { opacity: [1, 0.4], scale: [1, 0.9, 1] },
-    { duration: 0.3 }
-  );
-}
-
-function animateOnEnter(element: HTMLElement) {
-  // Set necessary style for the animation
-  element.style.transformOrigin = "top left";
-
-  // Then animate
-  animate(
-    element,
-    { opacity: [0, 1], rotateY: ["-70deg", "0deg"] },
-    {
-      duration: 0.6,
-      ease: [0.175, 0.885, 0.32, 1.275],
-    }
-  );
 }
