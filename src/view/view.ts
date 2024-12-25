@@ -238,7 +238,11 @@ export default class View {
     // Then animate
     animate(
       element,
-      { opacity: [0, 1], rotateY: ["-70deg", "0deg"] },
+      {
+        opacity: [0, 1],
+        rotateY: ["-80deg", "0deg"],
+        rotateX: ["-40deg", "0deg"],
+      },
       {
         duration: 0.6,
         ease: [0.175, 0.885, 0.32, 1.275],
@@ -304,7 +308,7 @@ export default class View {
         }
 
         this.updateSlot(index, cardElement, card);
-      }, index * 100);
+      }, index * 160);
     });
 
     /**
