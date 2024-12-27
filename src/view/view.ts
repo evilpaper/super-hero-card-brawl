@@ -240,12 +240,13 @@ export default class View {
       element,
       {
         opacity: [0, 1],
+        rotateX: ["20deg", "0deg"],
         rotateY: ["-80deg", "0deg"],
-        rotateX: ["-40deg", "0deg"],
+        z: [800, 0],
       },
       {
-        duration: 0.6,
-        ease: [0.175, 0.885, 0.32, 1.275],
+        duration: 0.5,
+        ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
   }
