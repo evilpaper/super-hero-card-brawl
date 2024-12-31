@@ -289,7 +289,8 @@ export default class View {
       ) {
         // Not changed, do nothing
       } else {
-        // Should change, add new and remove old if it exists
+        // Should change
+        // Check existing and remove if it exist before adding the new
         if (existingCardElement) {
           this.animateOnExit(existingCardElement);
           setTimeout(() => {
@@ -298,6 +299,7 @@ export default class View {
             slotElement.appendChild(cardElement);
           }, 500);
         } else {
+          // In case no existing card exist, just add the new card
           this.animateOnEnter(cardElement);
           slotElement.appendChild(cardElement);
         }
