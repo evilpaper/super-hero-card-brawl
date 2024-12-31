@@ -252,15 +252,15 @@ export default class View {
   }
 
   private animateOnExit(element: HTMLElement) {
-    element.style.transformOrigin = "top left";
+    element.style.transformOrigin = "top right";
 
     animate(
       element,
       {
         opacity: [1, 0],
-        rotateX: ["0deg", "20deg"],
+        rotateX: ["0deg", "-40deg"],
         rotateY: ["0deg", "-80deg"],
-        z: [800, 0],
+        z: [0, 800],
       },
       {
         duration: 0.5,
