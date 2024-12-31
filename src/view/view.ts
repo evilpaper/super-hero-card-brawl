@@ -251,6 +251,24 @@ export default class View {
     );
   }
 
+  private animateOnExit(element: HTMLElement) {
+    element.style.transformOrigin = "top left";
+
+    animate(
+      element,
+      {
+        opacity: [1, 0],
+        rotateX: ["0deg", "20deg"],
+        rotateY: ["0deg", "-80deg"],
+        z: [800, 0],
+      },
+      {
+        duration: 0.5,
+        ease: [0.175, 0.88, 0.32, 1.275],
+      }
+    );
+  }
+
   private updateSlot(index: number, cardElement: HTMLElement, card: Card) {
     const slotElements = [
       this.slot1Element,
@@ -272,9 +290,16 @@ export default class View {
         // Not changed, do nothing
       } else {
         // Should change, add new and remove old if it exists
-        slotElement.appendChild(cardElement);
         if (existingCardElement) {
-          existingCardElement.remove();
+          this.animateOnExit(existingCardElement);
+          setTimeout(() => {
+            existingCardElement.remove();
+            this.animateOnEnter(cardElement);
+            slotElement.appendChild(cardElement);
+          }, 500);
+        } else {
+          this.animateOnEnter(cardElement);
+          slotElement.appendChild(cardElement);
         }
       }
       if (card.getPlayed()) {
@@ -299,15 +324,12 @@ export default class View {
       }")`;
 
       setTimeout(() => {
-        this.animateOnEnter(cardElement);
-
         if (!card.getPlayed()) {
           cardElement.addEventListener("click", () => {
             this.animateOnClick(cardElement);
             this.playCard(card);
           });
         }
-
         this.updateSlot(index, cardElement, card);
       }, index * 160);
     });
