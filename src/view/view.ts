@@ -233,37 +233,41 @@ export default class View {
 
   private animateOnEnter(element: HTMLElement) {
     // Set necessary style for the animation
-    element.style.transformOrigin = "top left";
+    element.style.transformOrigin = "left";
 
     // Then animate
     animate(
       element,
       {
         opacity: [0, 1],
-        rotateX: ["20deg", "0deg"],
         rotateY: ["-80deg", "0deg"],
+        skewX: ["10deg", "0deg"],
+        x: ["-20px", "0px"],
+        y: ["-10px", "0px"],
         z: [800, 0],
       },
       {
-        duration: 0.5,
+        duration: 0.4,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
   }
 
   private animateOnExit(element: HTMLElement) {
-    element.style.transformOrigin = "top right";
+    element.style.transformOrigin = "right";
 
     animate(
       element,
       {
         opacity: [1, 0],
-        rotateX: ["0deg", "-40deg"],
-        rotateY: ["0deg", "-80deg"],
-        z: [0, 800],
+        rotateY: ["0deg", "80deg"],
+        skewX: ["0deg", "-10deg"],
+        x: ["0px", "20px"],
+        y: ["0px", "10px"],
+        z: [0, 400],
       },
       {
-        duration: 0.5,
+        duration: 0.4,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );

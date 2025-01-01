@@ -147,7 +147,6 @@ main {
   align-items: center;
   background-color: transparent;
   border: none;
-  overflow: hidden;
   position: relative;
 }
 
@@ -166,6 +165,7 @@ main {
 
 .card-button img {
   transition: all 0.2s ease-out;
+  border-radius: inherit;
 }
 
 .card-button img:hover {
