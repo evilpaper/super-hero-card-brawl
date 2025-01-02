@@ -273,9 +273,12 @@ main {
   font-size: 0.9rem;
 }
 
-.action-button:hover {
-  background-color: white;
-  color: black;
+@media (min-width: 900px) {
+  .action-button:hover {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+  }
 }
 
 .disabled,
