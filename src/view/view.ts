@@ -247,19 +247,21 @@ export default class View {
         z: [800, 0],
       },
       {
-        duration: 0.4,
+        duration: 0.5,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
   }
 
   private animateOnExit(element: HTMLElement) {
+    // Get the starting opacity to animate from. Will avoid flickering when opacity is not set.
+    const startingOpacity = Number(element.style.opacity);
     element.style.transformOrigin = "right";
 
     animate(
       element,
       {
-        opacity: [1, 0],
+        opacity: [startingOpacity, 0],
         rotateY: ["0deg", "80deg"],
         skewX: ["0deg", "-10deg"],
         x: ["0px", "20px"],
@@ -267,7 +269,7 @@ export default class View {
         z: [0, 400],
       },
       {
-        duration: 0.4,
+        duration: 0.5,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
