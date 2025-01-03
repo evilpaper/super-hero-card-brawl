@@ -272,7 +272,7 @@ export default class View {
         z: [0, 400],
       },
       {
-        duration: 2,
+        duration: 0.5,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
