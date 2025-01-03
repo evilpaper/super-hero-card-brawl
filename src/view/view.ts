@@ -255,7 +255,10 @@ export default class View {
 
   private animateOnExit(element: HTMLElement) {
     // Get the starting opacity to animate from. Will avoid flickering when opacity is not set.
-    const startingOpacity = Number(element.style.opacity);
+    const computedStyle = window.getComputedStyle(element);
+    const startingOpacity = Number(computedStyle.opacity);
+    console.log("startingOpacity: ", startingOpacity);
+
     element.style.transformOrigin = "right";
 
     animate(
@@ -269,7 +272,7 @@ export default class View {
         z: [0, 400],
       },
       {
-        duration: 0.5,
+        duration: 2,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
