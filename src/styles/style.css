@@ -290,3 +290,10 @@ main {
   text-decoration: line-through;
   opacity: 0.4;
 }
+
+/* Stat icon fill animation */
+
+#heart-background-rect-fill {
+  transition: transform 0.3s ease-in-out;
+  fill: white;
+}

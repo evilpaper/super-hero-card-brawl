@@ -1,6 +1,6 @@
 import Card from "../card/card";
 import Game from "../game/game";
-import { animate, transform } from "motion";
+import { animate } from "motion";
 import { Suite } from "../card/card.types";
 
 import clover2 from "../assets/images/cards/clover-2.jpg";
@@ -280,13 +280,6 @@ export default class View {
     );
   }
 
-  // private animateIcon(element: HTMLElement, value: number) {
-  //   console.log(value);
-  //   animate(element, {
-  //     y: "6px",
-  //   });
-  // }
-
   private updateSlot(index: number, cardElement: HTMLElement, card: Card) {
     const slotElements = [
       this.slot1Element,
@@ -331,8 +324,10 @@ export default class View {
   render() {
     this.animateStatChange(this.healthElement, this.game.player.getHealth());
     if (this.healthFill) {
-      // this.animateIcon(this.healthFill, this.game.player.getHealth());
-      this.healthFill.style.transform = `translateY(${50}%)`;
+      const percentage = Math.floor(
+        100 - (this.game.player.getHealth() / 21) * 100
+      );
+      this.healthFill.style.transform = `translateY(${percentage}%)`;
     }
 
     this.animateStatChange(this.defenseElement, this.game.player.getDefence());
