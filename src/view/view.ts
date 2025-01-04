@@ -1,6 +1,6 @@
 import Card from "../card/card";
 import Game from "../game/game";
-import { animate } from "motion";
+import { animate, transform } from "motion";
 import { Suite } from "../card/card.types";
 
 import clover2 from "../assets/images/cards/clover-2.jpg";
@@ -129,6 +129,7 @@ const images: Record<string, string> = {
 export default class View {
   private game: Game;
   private healthElement: HTMLElement | null;
+  private healthFill: HTMLElement | null;
   private defenseElement: HTMLElement | null;
   private staminaElement: HTMLElement | null;
   private slot1Element: HTMLElement | null;
@@ -143,6 +144,8 @@ export default class View {
     this.game = game;
 
     this.healthElement = document.getElementById("health");
+    this.healthFill = document.getElementById("heart-background-rect-fill");
+
     this.defenseElement = document.getElementById("defence");
     this.staminaElement = document.getElementById("stamina");
 
@@ -277,6 +280,13 @@ export default class View {
     );
   }
 
+  // private animateIcon(element: HTMLElement, value: number) {
+  //   console.log(value);
+  //   animate(element, {
+  //     y: "6px",
+  //   });
+  // }
+
   private updateSlot(index: number, cardElement: HTMLElement, card: Card) {
     const slotElements = [
       this.slot1Element,
@@ -320,6 +330,11 @@ export default class View {
 
   render() {
     this.animateStatChange(this.healthElement, this.game.player.getHealth());
+    if (this.healthFill) {
+      // this.animateIcon(this.healthFill, this.game.player.getHealth());
+      this.healthFill.style.transform = `translateY(${50}%)`;
+    }
+
     this.animateStatChange(this.defenseElement, this.game.player.getDefence());
     this.animateStatChange(this.staminaElement, this.game.player.getStamina());
 
