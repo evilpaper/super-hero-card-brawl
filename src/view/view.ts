@@ -131,6 +131,7 @@ export default class View {
   private healthElement: HTMLElement | null;
   private healthFill: HTMLElement | null;
   private defenseElement: HTMLElement | null;
+  private defenseFill: HTMLElement | null;
   private staminaElement: HTMLElement | null;
   private slot1Element: HTMLElement | null;
   private slot2Element: HTMLElement | null;
@@ -147,6 +148,8 @@ export default class View {
     this.healthFill = document.getElementById("heart-background-rect-fill");
 
     this.defenseElement = document.getElementById("defence");
+    this.defenseFill = document.getElementById("tile-background-rect-fill");
+
     this.staminaElement = document.getElementById("stamina");
 
     this.slot1Element = document.querySelector(".slot1");
@@ -328,6 +331,12 @@ export default class View {
         100 - (this.game.player.getHealth() / 21) * 100
       );
       this.healthFill.style.transform = `translateY(${percentage}%)`;
+    }
+    if (this.defenseFill) {
+      const percentage = Math.floor(
+        100 - (this.game.player.getDefence() / 11) * 100
+      );
+      this.defenseFill.style.transform = `translateY(${percentage}%)`;
     }
 
     this.animateStatChange(this.defenseElement, this.game.player.getDefence());
