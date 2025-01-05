@@ -57,11 +57,18 @@ pnpm test
 pnpm type-check
 ```
 
+## Todo
+
+[ ] - How to play section
+[ ] - Text for each action
+
+## How to play
+
+...coming soon
+
 ## Contributions
 
 Changes and improvements are more than welcome! Feel free to fork and open a pull request. Please make your changes in a specific branch and request to pull into master! If you can, please make sure the game fully works before sending the PR, as that will help speed up the process.
-
-## How to play
 
 ## Licensing
 
