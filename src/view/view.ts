@@ -134,6 +134,7 @@ export default class View {
   private defenseFill: HTMLElement | null;
   private staminaElement: HTMLElement | null;
   private cloverFill: HTMLElement | null;
+  private spadesFill: HTMLElement | null;
   private slot1Element: HTMLElement | null;
   private slot2Element: HTMLElement | null;
   private slot3Element: HTMLElement | null;
@@ -153,6 +154,7 @@ export default class View {
 
     this.staminaElement = document.getElementById("stamina");
     this.cloverFill = document.getElementById("clover-background-rect-fill");
+    this.spadesFill = document.getElementById("spades-background-rect-fill");
 
     this.slot1Element = document.querySelector(".slot1");
     this.slot2Element = document.querySelector(".slot2");
@@ -345,6 +347,12 @@ export default class View {
         100 - (this.game.player.getStamina() / 22) * 100
       );
       this.cloverFill.style.transform = `translateY(${percentage}%)`;
+    }
+    if (this.spadesFill) {
+      const percentage = Math.floor(
+        100 - (this.game.player.getStamina() / 22) * 100
+      );
+      this.spadesFill.style.transform = `translateY(${percentage}%)`;
     }
 
     this.animateStatChange(this.defenseElement, this.game.player.getDefence());

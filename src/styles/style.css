@@ -307,3 +307,8 @@ main {
   transition: transform 0.3s ease-in-out;
   fill: white;
 }
+
+#spades-background-rect-fill {
+  transition: transform 0.3s ease-in-out;
+  fill: white;
+}
