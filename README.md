@@ -61,6 +61,8 @@ pnpm type-check
 
 [ ] - How to play section
 [ ] - Text for each action
+[ ] - Sound effects
+[ ] - Image of game in README.md
 
 ## How to play
 
