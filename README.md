@@ -1,5 +1,7 @@
 # Super Hero Card Brawl
 
+![Image from the project](./public/cover-image.png)
+
 A Donsol-style card game featuring characters from Capcom's fighting franchises. Fully responsive and playable on any device.
 
 This is a non-commercial personal project. Made for fun! [Play it here](https://evilpaper.com/superherocardbrawl/)
@@ -62,7 +64,7 @@ pnpm type-check
 [ ] - How to play section
 [ ] - Text for each action
 [ ] - Sound effects
-[ ] - Image of game in README.md
+[x] - Image of game in README.md
 
 ## How to play
 
