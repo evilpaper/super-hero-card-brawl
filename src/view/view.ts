@@ -257,7 +257,7 @@ export default class View {
         z: [800, 0],
       },
       {
-        duration: 0.5,
+        duration: 0.3,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
@@ -281,7 +281,7 @@ export default class View {
         z: [0, 400],
       },
       {
-        duration: 0.8,
+        duration: 0.4,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
