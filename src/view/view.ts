@@ -237,7 +237,7 @@ export default class View {
     animate(
       element,
       { opacity: [1, 0.4], scale: [1, 0.9, 1] },
-      { duration: 0.3 }
+      { duration: 0.2 }
     );
   }
 
@@ -416,7 +416,33 @@ export default class View {
       if (!this.game.player.getCanMoveOn()) {
         this.actionButton.classList.add("disabled");
       } else {
-        this.actionButton.classList.remove("disabled");
+        animate(
+          this.actionButton,
+          {
+            rotate: [
+              "0deg",
+              "2deg",
+              "-4deg",
+              "4deg",
+              "-4deg",
+              "4deg",
+              "-4deg",
+              "2deg",
+              "-2deg",
+              "2deg",
+              "0deg",
+            ],
+          },
+          {
+            duration: 1,
+            easing: "ease-in-out",
+            transformOrigin: "50% 100%",
+          }
+        ).then(() => {
+          if (this.actionButton) {
+            this.actionButton.classList.remove("disabled");
+          }
+        });
       }
 
       if (this.game.player.getHealth() <= 0) {
