@@ -57,6 +57,7 @@ import tileJ from "../assets/images/cards/tile-j.jpg";
 import tileQ from "../assets/images/cards/tile-q.jpg";
 import tileK from "../assets/images/cards/tile-k.jpg";
 import tileA from "../assets/images/cards/tile-a.jpg";
+import { ObjectTarget } from "motion/react";
 
 const suiteMap: Record<Suite, string> = {
   "♠︎": "spade",
@@ -257,7 +258,7 @@ export default class View {
         z: [800, 0],
       },
       {
-        duration: 0.3,
+        duration: 0.2,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
@@ -281,7 +282,7 @@ export default class View {
         z: [0, 400],
       },
       {
-        duration: 0.4,
+        duration: 0.2,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
@@ -419,6 +420,7 @@ export default class View {
         animate(
           this.actionButton,
           {
+            //@ts-ignore
             rotate: [
               "0deg",
               "2deg",
