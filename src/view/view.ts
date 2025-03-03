@@ -237,8 +237,13 @@ export default class View {
 
     animate(
       element,
-      { opacity: [1, 0.4], scale: [1, 0.9, 1] },
-      { duration: 0.2 }
+      {
+        // @ts-expect-error
+        opacity: [1, 0.4],
+        rotate: [0, -2, 1, -2, 1, 0],
+        scale: [1, 0.95, 1.02, 1],
+      },
+      { duration: 0.2, easing: [0.22, 0.03, 0.26, 1] }
     );
   }
 
@@ -258,7 +263,7 @@ export default class View {
         z: [800, 0],
       },
       {
-        duration: 0.2,
+        duration: 0.26,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
@@ -282,7 +287,7 @@ export default class View {
         z: [0, 400],
       },
       {
-        duration: 0.2,
+        duration: 0.26,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
