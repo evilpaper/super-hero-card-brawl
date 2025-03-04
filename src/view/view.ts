@@ -57,7 +57,6 @@ import tileJ from "../assets/images/cards/tile-j.jpg";
 import tileQ from "../assets/images/cards/tile-q.jpg";
 import tileK from "../assets/images/cards/tile-k.jpg";
 import tileA from "../assets/images/cards/tile-a.jpg";
-import { ObjectTarget } from "motion/react";
 
 const suiteMap: Record<Suite, string> = {
   "♠︎": "spade",
@@ -238,12 +237,11 @@ export default class View {
     animate(
       element,
       {
-        // @ts-expect-error
         opacity: [1, 0.4],
         rotate: [0, -2, 1, -2, 1, 0],
         scale: [1, 0.95, 1.02, 1],
       },
-      { duration: 0.2, easing: [0.22, 0.03, 0.26, 1] }
+      { duration: 0.2, ease: [0.22, 0.03, 0.26, 1] }
     );
   }
 
