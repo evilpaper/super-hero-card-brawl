@@ -420,10 +420,10 @@ export default class View {
       if (!this.game.player.getCanMoveOn()) {
         this.actionButton.classList.add("disabled");
       } else {
+        this.actionButton.style.transformOrigin = "50% 100%";
         animate(
           this.actionButton,
           {
-            //@ts-ignore
             rotate: [
               "0deg",
               "2deg",
@@ -440,8 +440,7 @@ export default class View {
           },
           {
             duration: 1,
-            easing: "ease-in-out",
-            transformOrigin: "50% 100%",
+            ease: "easeInOut",
           }
         ).then(() => {
           if (this.actionButton) {
