@@ -241,7 +241,7 @@ export default class View {
         rotate: [0, -2, 1, -2, 1, 0],
         scale: [1, 0.95, 1.02, 1],
       },
-      { duration: 0.2, ease: [0.22, 0.03, 0.26, 1] }
+      { duration: 0.18, ease: [0.22, 0.03, 0.26, 1] }
     );
   }
 
@@ -389,7 +389,9 @@ export default class View {
 
     if (this.gameOverOverlay?.style) {
       if (this.game.player.getHealth() <= 0 && this.gameOverOverlay) {
-        this.gameOverOverlay.style.display = "flex";
+        setTimeout(() => {
+          this.gameOverOverlay!.style.display = "flex";
+        }, 180);
       } else {
         this.gameOverOverlay.style.display = "none";
       }
