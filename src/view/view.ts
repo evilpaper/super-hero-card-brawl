@@ -214,7 +214,7 @@ export default class View {
     }
   }
 
-  private animateStatChange(element: HTMLElement | null, newValue: number) {
+  private animateValue(element: HTMLElement | null, newValue: number) {
     if (element) {
       const previousValue = parseInt(element.innerText, 10);
 
@@ -333,7 +333,7 @@ export default class View {
   }
 
   render() {
-    this.animateStatChange(this.healthElement, this.game.player.getHealth());
+    this.animateValue(this.healthElement, this.game.player.getHealth());
     if (this.healthFill) {
       const percentage = Math.floor(
         100 - (this.game.player.getHealth() / 21) * 100
@@ -359,8 +359,8 @@ export default class View {
       this.spadesFill.style.transform = `translateY(${percentage}%)`;
     }
 
-    this.animateStatChange(this.defenseElement, this.game.player.getDefence());
-    this.animateStatChange(this.staminaElement, this.game.player.getStamina());
+    this.animateValue(this.defenseElement, this.game.player.getDefence());
+    this.animateValue(this.staminaElement, this.game.player.getStamina());
 
     this.game.board.cards.forEach((card, index) => {
       const cardElement = document.createElement("div") as HTMLElement;
