@@ -248,22 +248,25 @@ export default class View {
   private animateOnEnter(element: HTMLElement, index: number) {
     // Set necessary style for the animation
     element.style.transformOrigin = "left";
+    element.style.zIndex = "10000";
 
     // Then animate
     animate(
       element,
       {
         opacity: [0, 1],
-        rotateY: ["-80deg", "0deg"],
+        // transform: [
+        //   "translateZ(0) rotateY(-45deg) rotateX(0deg)",
+        //   `translateZ(0) rotateY(${0}deg) rotateX(${0}deg)`,
+        // ],
         skewX: ["10deg", "0deg"],
-        x: ["-20px", "0px"],
-        y: ["-10px", "0px"],
-        z: [800, 0],
+        x: ["calc(-100vw + 10px)", "0px"],
+        y: ["calc(100vh - 10px)", "0px"],
       },
       {
-        duration: 0.26,
-        delay: index * 0.15,
-        ease: [0.175, 0.88, 0.32, 1.275],
+        duration: 0.3,
+        delay: index * 0.2,
+        ease: [0.22, 0.68, 0.36, 1.05],
       }
     );
   }
