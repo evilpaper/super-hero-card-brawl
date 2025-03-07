@@ -245,7 +245,7 @@ export default class View {
     );
   }
 
-  private animateOnEnter(element: HTMLElement) {
+  private animateOnEnter(element: HTMLElement, index: number) {
     // Set necessary style for the animation
     element.style.transformOrigin = "left";
 
@@ -262,12 +262,13 @@ export default class View {
       },
       {
         duration: 0.26,
+        delay: index * 0.15,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
   }
 
-  private animateOnExit(element: HTMLElement) {
+  private animateOnExit(element: HTMLElement, index: number) {
     // Get the starting opacity to animate from. Will avoid flickering when opacity is not set.
     const computedStyle = window.getComputedStyle(element);
     const startingOpacity = Number(computedStyle.opacity);
@@ -286,6 +287,7 @@ export default class View {
       },
       {
         duration: 0.26,
+        delay: index * 0.15,
         ease: [0.175, 0.88, 0.32, 1.275],
       }
     );
@@ -314,15 +316,15 @@ export default class View {
         // Should change
         // Check existing and remove if it exist before adding the new
         if (existingCardElement) {
-          this.animateOnExit(existingCardElement);
+          this.animateOnExit(existingCardElement, index);
           setTimeout(() => {
             existingCardElement.remove();
-            this.animateOnEnter(cardElement);
+            this.animateOnEnter(cardElement, index);
             slotElement.appendChild(cardElement);
           }, 500);
         } else {
           // In case no existing card exist, just add the new card
-          this.animateOnEnter(cardElement);
+          this.animateOnEnter(cardElement, index);
           slotElement.appendChild(cardElement);
         }
       }
@@ -372,15 +374,13 @@ export default class View {
         images[`${getSuiteName(card.getSuite())}-${card.getRank()}`]
       }")`;
 
-      setTimeout(() => {
-        if (!card.getPlayed()) {
-          cardElement.addEventListener("click", () => {
-            this.animateOnClick(cardElement);
-            this.playCard(card);
-          });
-        }
-        this.updateSlot(index, cardElement, card);
-      }, index * 160);
+      if (!card.getPlayed()) {
+        cardElement.addEventListener("click", () => {
+          this.animateOnClick(cardElement);
+          this.playCard(card);
+        });
+      }
+      this.updateSlot(index, cardElement, card);
     });
 
     /**
