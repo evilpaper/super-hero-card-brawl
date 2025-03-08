@@ -248,7 +248,7 @@ export default class View {
   private animateOnEnter(element: HTMLElement, index: number) {
     // Set necessary style for the animation
     element.style.transformOrigin = "left";
-    element.style.zIndex = "var(--z-cards)"; // TODO: Set a Z order
+    element.style.zIndex = "var(--z-cards)";
 
     // Then animate
     animate(
@@ -256,8 +256,8 @@ export default class View {
       {
         opacity: [0, 1],
         transform: [
-          "translateZ(0) rotateY(-60deg) rotateX(-30deg) translateX(calc(-100vw)) translateY(calc(100vh))",
-          `translateZ(0) rotateY(0deg) rotateX(0deg), translateX(0) translateY(0)"`,
+          "rotateY(-60deg) rotateX(-30deg) translateX(-100vw) translateY(100vh)",
+          `rotateY(0deg) rotateX(0deg), translateX(0) translateY(0)"`,
         ],
         skewX: ["90deg", "0deg"],
       },
@@ -274,22 +274,24 @@ export default class View {
     const computedStyle = window.getComputedStyle(element);
     const startingOpacity = Number(computedStyle.opacity);
 
-    element.style.transformOrigin = "right";
+    // element.style.transformOrigin = "left";
+    // element.style.zIndex = "var(--z-cards)";
 
     animate(
       element,
       {
         opacity: [startingOpacity, 0],
-        rotateY: ["0deg", "80deg"],
-        skewX: ["0deg", "-10deg"],
-        x: ["0px", "20px"],
-        y: ["0px", "10px"],
-        z: [0, 400],
+        transform: [
+          "rotateY(0deg) rotateX(0deg) translateX(0) translateY(0)",
+          "rotateY(-60deg) rotateX(-30deg) translateX(-50vw) translateY(80vh)",
+        ],
+        skewX: ["0deg", "90deg"],
+        skewY: ["0deg", "90deg"],
       },
       {
-        duration: 0.26,
-        delay: index * 0.15,
-        ease: [0.175, 0.88, 0.32, 1.275],
+        duration: 0.3,
+        delay: index * 0.2,
+        ease: [0.22, 0.68, 0.36, 1.05],
       }
     );
   }
