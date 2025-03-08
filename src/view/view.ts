@@ -256,12 +256,10 @@ export default class View {
       {
         opacity: [0, 1],
         transform: [
-          "translateZ(0) rotateY(-60deg) rotateX(.30deg) translateX(calc(-100vw)) translateY(calc(100vh))",
-          `translateZ(0) rotateY(${0}deg) rotateX(${0}deg), translateX(0) translateX(0)"`,
+          "translateZ(0) rotateY(-60deg) rotateX(-30deg) translateX(calc(-100vw)) translateY(calc(100vh))",
+          `translateZ(0) rotateY(0deg) rotateX(0deg), translateX(0) translateY(0)"`,
         ],
-        skewX: ["10deg", "0deg"],
-        // x: ["calc(-100vw + 10px)", "0px"],
-        // y: ["calc(100vh - 10px)", "0px"],
+        skewX: ["90deg", "0deg"],
       },
       {
         duration: 0.3,
