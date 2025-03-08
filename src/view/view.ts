@@ -248,20 +248,20 @@ export default class View {
   private animateOnEnter(element: HTMLElement, index: number) {
     // Set necessary style for the animation
     element.style.transformOrigin = "left";
-    element.style.zIndex = "10000";
+    element.style.zIndex = "var(--z-cards)"; // TODO: Set a Z order
 
     // Then animate
     animate(
       element,
       {
         opacity: [0, 1],
-        // transform: [
-        //   "translateZ(0) rotateY(-45deg) rotateX(0deg)",
-        //   `translateZ(0) rotateY(${0}deg) rotateX(${0}deg)`,
-        // ],
+        transform: [
+          "translateZ(0) rotateY(-60deg) rotateX(.30deg) translateX(calc(-100vw)) translateY(calc(100vh))",
+          `translateZ(0) rotateY(${0}deg) rotateX(${0}deg), translateX(0) translateX(0)"`,
+        ],
         skewX: ["10deg", "0deg"],
-        x: ["calc(-100vw + 10px)", "0px"],
-        y: ["calc(100vh - 10px)", "0px"],
+        // x: ["calc(-100vw + 10px)", "0px"],
+        // y: ["calc(100vh - 10px)", "0px"],
       },
       {
         duration: 0.3,

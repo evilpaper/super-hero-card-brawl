@@ -2,6 +2,13 @@
 
 :root {
   --app-height: 100%;
+  /* Z-index layers */
+  --z-background: 0;
+  --z-board: 100;
+  --z-cards: 200;
+  --z-ui: 300;
+  --z-overlay: 400;
+  --z-modal: 500;
 }
 
 @font-face {
@@ -311,4 +318,32 @@ main {
 #spades-background-rect-fill {
   transition: transform 0.3s ease-in-out;
   fill: white;
+}
+
+.game-background {
+  z-index: var(--z-background);
+}
+
+.game-board {
+  z-index: var(--z-board);
+}
+
+.card {
+  z-index: var(--z-cards);
+}
+
+.health-bar,
+.defense-bar,
+.stamina-bar {
+  z-index: var(--z-ui);
+}
+
+.game-over,
+.game-win,
+.game-title {
+  z-index: var(--z-overlay);
+}
+
+.modal {
+  z-index: var(--z-modal);
 }
