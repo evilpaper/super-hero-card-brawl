@@ -256,15 +256,14 @@ export default class View {
       {
         opacity: [0, 1],
         transform: [
-          "rotateY(-60deg) rotateX(-30deg) translateX(-100vw) translateY(100vh)",
-          `rotateY(0deg) rotateX(0deg), translateX(0) translateY(0)"`,
+          "rotateY(-45deg) rotateX(90deg) translateX(-100vw) translateY(100vh)",
+          "rotateY(0deg) rotateX(0deg) translateX(0) translateY(0)",
         ],
-        skewX: ["90deg", "0deg"],
       },
       {
         duration: 0.3,
-        delay: index * 0.2,
-        ease: [0.22, 0.68, 0.36, 1.05],
+        delay: index * 0.24,
+        ease: [0.2, 0.6, 0.4, 1],
       }
     );
   }
@@ -274,24 +273,22 @@ export default class View {
     const computedStyle = window.getComputedStyle(element);
     const startingOpacity = Number(computedStyle.opacity);
 
-    // element.style.transformOrigin = "left";
-    // element.style.zIndex = "var(--z-cards)";
+    element.style.transformOrigin = "left";
+    element.style.zIndex = "var(--z-cards)";
 
-    animate(
+    return animate(
       element,
       {
         opacity: [startingOpacity, 0],
         transform: [
           "rotateY(0deg) rotateX(0deg) translateX(0) translateY(0)",
-          "rotateY(-60deg) rotateX(-30deg) translateX(-50vw) translateY(80vh)",
+          "rotateY(-45deg) rotateX(90deg) translateX(-100vw) translateY(100vh)",
         ],
-        skewX: ["0deg", "90deg"],
-        skewY: ["0deg", "90deg"],
       },
       {
         duration: 0.3,
-        delay: index * 0.2,
-        ease: [0.22, 0.68, 0.36, 1.05],
+        delay: index * 0.24,
+        ease: [0.6, 0.0, 0.2, 1],
       }
     );
   }
@@ -319,12 +316,12 @@ export default class View {
         // Should change
         // Check existing and remove if it exist before adding the new
         if (existingCardElement) {
-          this.animateOnExit(existingCardElement, index);
-          setTimeout(() => {
+          const exitAnimation = this.animateOnExit(existingCardElement, index);
+          exitAnimation.then(() => {
             existingCardElement.remove();
             this.animateOnEnter(cardElement, index);
             slotElement.appendChild(cardElement);
-          }, 500);
+          });
         } else {
           // In case no existing card exist, just add the new card
           this.animateOnEnter(cardElement, index);
