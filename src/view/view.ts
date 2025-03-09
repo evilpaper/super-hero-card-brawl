@@ -1,6 +1,6 @@
 import Card from "../card/card";
 import Game from "../game/game";
-import { animate } from "motion";
+import { animate, spring } from "motion";
 import { Suite } from "../card/card.types";
 
 import clover2 from "../assets/images/cards/clover-2.jpg";
@@ -246,24 +246,29 @@ export default class View {
   }
 
   private animateOnEnter(element: HTMLElement, index: number) {
-    // Set necessary style for the animation
     element.style.transformOrigin = "left";
     element.style.zIndex = "var(--z-cards)";
 
-    // Then animate
+    const screenCenterX = window.innerWidth / 2;
+    const rect = element.getBoundingClientRect();
+    const elementCenterX = rect.left + rect.width / 2;
+    const distanceFromCenter = elementCenterX - screenCenterX;
+
     animate(
       element,
       {
         opacity: [0, 1],
-        transform: [
-          "rotateY(-45deg) rotateX(90deg) translateX(-100vw) translateY(100vh)",
-          "rotateY(0deg) rotateX(0deg) translateX(0) translateY(0)",
-        ],
+        x: [-distanceFromCenter, 0],
+        y: ["90vh", 0],
+        rotate: [-90, 0],
+        scale: [0.6, 1],
       },
       {
-        duration: 0.3,
-        delay: index * 0.24,
-        ease: [0.2, 0.6, 0.4, 1],
+        type: "spring",
+        stiffness: 180,
+        damping: 20,
+        duration: 0.2,
+        delay: index * 0.1,
       }
     );
   }
@@ -276,19 +281,26 @@ export default class View {
     element.style.transformOrigin = "left";
     element.style.zIndex = "var(--z-cards)";
 
+    const screenCenterX = window.innerWidth / 2;
+    const rect = element.getBoundingClientRect();
+    const elementCenterX = rect.left + rect.width / 2;
+    const distanceFromCenter = elementCenterX - screenCenterX;
+
     return animate(
       element,
       {
         opacity: [startingOpacity, 0],
-        transform: [
-          "rotateY(0deg) rotateX(0deg) translateX(0) translateY(0)",
-          "rotateY(-45deg) rotateX(90deg) translateX(-100vw) translateY(100vh)",
-        ],
+        x: [0, -distanceFromCenter],
+        y: [0, "90vh"],
+        rotate: [0, -90], // Add slight rotation
+        scale: [1, 0.6],
       },
       {
-        duration: 0.3,
-        delay: index * 0.24,
-        ease: [0.6, 0.0, 0.2, 1],
+        type: "spring",
+        stiffness: 180,
+        damping: 20,
+        duration: 0.2,
+        delay: index * 0.1,
       }
     );
   }
@@ -319,13 +331,13 @@ export default class View {
           const exitAnimation = this.animateOnExit(existingCardElement, index);
           exitAnimation.then(() => {
             existingCardElement.remove();
-            this.animateOnEnter(cardElement, index);
             slotElement.appendChild(cardElement);
+            this.animateOnEnter(cardElement, index);
           });
         } else {
           // In case no existing card exist, just add the new card
-          this.animateOnEnter(cardElement, index);
           slotElement.appendChild(cardElement);
+          this.animateOnEnter(cardElement, index);
         }
       }
       if (card.getPlayed()) {
