@@ -269,10 +269,26 @@ main {
   margin-bottom: 1rem;
 }
 
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
 .action-button {
   padding: 0.2rem 1rem;
   border: 1px solid white;
-  background-color: transparent;
+  background-color: black;
+  border-radius: 1rem;
+  color: white;
+  float: right;
+  font-family: "Whyte Inktrap Regular", sans-serif;
+  font-size: 0.9rem;
+}
+
+.info-button {
+  padding: 0.2rem 1rem;
+  border: 1px solid white;
+  background-color: black;
   border-radius: 1rem;
   color: white;
   float: right;
@@ -282,6 +298,12 @@ main {
 
 @media (min-width: 900px) {
   .action-button:hover {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+  }
+
+  .info-button:hover {
     cursor: pointer;
     background-color: white;
     color: black;
@@ -346,4 +368,64 @@ main {
 
 .modal {
   z-index: var(--z-modal);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+  background-color: rgba(0, 0, 0, 1);
+  margin: 5vh auto; /* Changed from 15% to 5vh to give more space */
+  padding: 2rem;
+  border-radius: 8px;
+  width: 80%;
+  position: relative;
+  color: white;
+  max-height: 90vh; /* Add max-height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+@media (max-width: 900px) {
+  .modal-content {
+    width: 100%;
+    max-height: 100vh;
+  }
+}
+
+.close-button {
+  padding: 0.2rem 1rem;
+  border: 1px solid white;
+  background-color: black;
+  border-radius: 1rem;
+  color: white;
+  float: right;
+  font-family: "Whyte Inktrap Regular", sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: white;
+}
+
+.rules-content {
+  margin-top: 20px;
+  scroll-behavior: smooth;
+}
+
+.rules-content p,
+.rules-content ul {
+  margin-bottom: 10px;
+}
+
+.rules-content ul {
+  padding-left: 20px;
 }

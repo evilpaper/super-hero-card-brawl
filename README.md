@@ -70,7 +70,7 @@ The build process will generate optimized production files in the `dist` directo
 
 ## Todo
 
-[ ] - How to play section
+[x] - How to play section
 [ ] - Text for each action
 [ ] - Sound effects
 [x] - Image of game in README.md

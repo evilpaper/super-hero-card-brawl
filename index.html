@@ -101,7 +101,6 @@
                 fill="transparent"
               />
             </svg>
-
             Defence
           </p>
           <p class="defence" id="defence">0</p>
@@ -203,7 +202,74 @@
         <p class="game-over">Ouch, you are knocked out!</p>
         <p class="game-win">Victory! Opponent K-0!</p>
       </section>
-      <button class="action-button" data-button-type="evade">Move on</button>
+      <section class="buttons">
+        <button class="info-button">?</button>
+        <button class="action-button" data-button-type="evade">Move on</button>
+      </section>
+      <div class="modal" id="rulesModal">
+        <div class="modal-content">
+          <span class="close-button">Close</span>
+          <h2>How to play</h2>
+          <div class="rules-content">
+            <p>Welcome to Super Hero Card Brawl.</p>
+            <p>
+              A Donsol style, single player, card game played with a standard
+              deck of 54 cards, 2 jokers included.
+            </p>
+            <p>
+              The deck is a brawl between red and black. You play red. Your
+              opponent play black. You win if you can fold all black cards. The
+              brawl plays out in waves. Each wave contains four cards. You
+              complete a wave by folding all four cards. After that you get a
+              new wave of four cards until you either get knocked out or knock
+              out all opponents cards.
+            </p>
+            <h3>Spades and Clubs are opponent brawlers</h3>
+            <p>
+              The spades and clubs are opponents. When you fold them, they will
+              attack you, dealing damage equal to their value. If you survive
+              the attack, you defeat the enemy.
+            </p>
+            <h3>Jokers are bosses</h3>
+            <p>
+              The two jokers are bosses -- extremely powerful opponents that
+              lead the opponents team. In fact, they are so strong, that meeting
+              them without a brawler on your side is sure to get you knocked out
+              once and for all! Be extremely cautious when you meet them.
+            </p>
+            <h3>Tiles are your offensive brawlers</h3>
+            <p>
+              The tiles are your offensive brawlers. When you play them, they
+              engage and provide defence from opponent attacks. When a opponent
+              attacks you, the brawler will reduce the amount of damage you take
+              by its own value. If the opponent is weaker than the brawlers
+              defence, their attack will not hurt you at all! However, there's a
+              catch. After a enemy hits your brawler, your brawler loose some
+              stamina and will be unable to withstand attacks from equal or
+              stronger opponents without getting knocked out and leaving you
+              unguarded. To prevent that, be sure to attack stronger opponents
+              before weaker ones and make sure your stamina is higher that the
+              opponents value.
+            </p>
+            <h3>Hearts are your defensive brawlers</h3>
+            <p>
+              The hearts are defensive brawlers. When you play them, they will
+              engage and restore an amount of health equal to their value.
+              However, there's another catch. Your health can only take one
+              boost at the time. If you try to use two or more heart cards in a
+              row, the latter ones will do nothing.
+            </p>
+            <h3>Move pass a wave</h3>
+            <p>
+              You may slip pass a wave of brawlers, if you have not slipped pass
+              the previous one. When slipping pass, the remaining cards are
+              shuffled back into the deck.
+            </p>
+            <br />
+            <p>Good luck!</p>
+          </div>
+        </div>
+      </div>
     </main>
     <section class="game-title">
       <div class="game-title-image-wrapper">
