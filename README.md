@@ -62,8 +62,11 @@ pnpm type-check
 ## Build for production
 
 ```sh
+# Build the project for production deployment
 pnpm build
 ```
+
+The build process will generate optimized production files in the `dist` directory, ready for deployment to any static hosting service.
 
 ## Todo
 
