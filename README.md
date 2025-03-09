@@ -59,6 +59,12 @@ pnpm test
 pnpm type-check
 ```
 
+## Build for production
+
+```sh
+pnpm build
+```
+
 ## Todo
 
 [ ] - How to play section

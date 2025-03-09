@@ -1,6 +1,6 @@
 import Card from "../card/card";
 import Game from "../game/game";
-import { animate, spring } from "motion";
+import { animate } from "motion";
 import { Suite } from "../card/card.types";
 
 import clover2 from "../assets/images/cards/clover-2.jpg";
