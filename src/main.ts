@@ -4,7 +4,8 @@ import View from "./view/view";
 const game = new Game();
 const view = new View(game);
 
-const modal = document.getElementById("rulesModal") as HTMLElement;
+// How to play section
+const modal = document.getElementById("how-to-play-modal") as HTMLElement;
 const infoButton = document.querySelector(".info-button") as HTMLButtonElement;
 const closeButton = document.querySelector(".close-button") as HTMLElement;
 

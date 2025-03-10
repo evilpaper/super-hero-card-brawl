@@ -370,7 +370,7 @@ main {
   z-index: var(--z-modal);
 }
 
-.modal {
+.how-to-play-modal {
   display: none;
   position: fixed;
   z-index: 1000;
@@ -381,7 +381,7 @@ main {
   background-color: rgba(0, 0, 0, 0.9);
 }
 
-.modal-content {
+.how-to-play-content {
   background-color: rgba(0, 0, 0, 1);
   margin: 5vh auto; /* Changed from 15% to 5vh to give more space */
   padding: 2rem;
@@ -391,13 +391,29 @@ main {
   color: white;
   max-height: 90vh; /* Add max-height */
   overflow-y: auto; /* Enable vertical scrolling */
+  scroll-behavior: smooth;
 }
 
 @media (max-width: 900px) {
-  .modal-content {
+  .how-to-play-content {
     width: 100%;
     max-height: 100vh;
   }
+}
+
+.how-to-play-content h1 {
+  font-family: "Whyte Inktrap Heavy", sans-serif;
+  font-size: 2rem;
+}
+
+.how-to-play-content h2 {
+  font-family: "Whyte Inktrap Heavy", sans-serif;
+  font-size: 1.4rem;
+  margin-top: 1rem;
+}
+
+.how-to-play-content p {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .close-button {
@@ -414,18 +430,4 @@ main {
 
 .close-button:hover {
   color: white;
-}
-
-.rules-content {
-  margin-top: 20px;
-  scroll-behavior: smooth;
-}
-
-.rules-content p,
-.rules-content ul {
-  margin-bottom: 10px;
-}
-
-.rules-content ul {
-  padding-left: 20px;
 }
