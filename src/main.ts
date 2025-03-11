@@ -10,7 +10,7 @@ const infoButton = document.querySelector(".info-button") as HTMLButtonElement;
 const closeButton = document.querySelector(".close-button") as HTMLElement;
 
 infoButton.addEventListener("click", () => {
-  modal.style.display = "block";
+  modal.style.display = "grid";
 });
 
 // Close modal when X is clicked

@@ -379,19 +379,25 @@ main {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.9);
+  overflow-y: auto; /* Enable vertical scrolling */
+  scroll-behavior: smooth;
+  place-items: center;
 }
 
 .how-to-play-content {
-  background-color: rgba(0, 0, 0, 1);
-  margin: 5vh auto; /* Changed from 15% to 5vh to give more space */
+  margin: 5vh auto;
   padding: 2rem;
   border-radius: 8px;
   width: 80%;
   position: relative;
   color: white;
   max-height: 90vh; /* Add max-height */
-  overflow-y: auto; /* Enable vertical scrolling */
-  scroll-behavior: smooth;
+  line-height: 1.3;
+}
+
+.instructions {
+  column-count: 3;
+  margin-top: 2rem;
 }
 
 @media (max-width: 900px) {
@@ -403,17 +409,17 @@ main {
 
 .how-to-play-content h1 {
   font-family: "Whyte Inktrap Heavy", sans-serif;
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 .how-to-play-content h2 {
   font-family: "Whyte Inktrap Heavy", sans-serif;
-  font-size: 1.4rem;
-  margin-top: 1rem;
+  font-size: 1.125rem;
 }
 
 .how-to-play-content p {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
 }
 
 .close-button {
@@ -422,10 +428,12 @@ main {
   background-color: black;
   border-radius: 1rem;
   color: white;
-  float: right;
   font-family: "Whyte Inktrap Regular", sans-serif;
   font-size: 0.9rem;
   cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 
 .close-button:hover {
