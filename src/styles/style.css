@@ -382,6 +382,7 @@ main {
   overflow-y: auto; /* Enable vertical scrolling */
   scroll-behavior: smooth;
   place-items: center;
+  opacity: 0;
 }
 
 .how-to-play-content {

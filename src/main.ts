@@ -1,3 +1,4 @@
+import { animate } from "motion";
 import Game from "./game/game";
 import View from "./view/view";
 
@@ -11,23 +12,27 @@ const closeButton = document.querySelector(".close-button") as HTMLElement;
 
 infoButton.addEventListener("click", () => {
   modal.style.display = "grid";
+  animate(modal, { opacity: 1 }, { duration: 0.3 });
 });
 
-// Close modal when X is clicked
-closeButton.addEventListener("click", () => {
+// Close modal when close button is clicked
+closeButton.addEventListener("click", async () => {
+  await animate(modal, { opacity: 0 }, { duration: 0.3 });
   modal.style.display = "none";
 });
 
 // Close modal when clicking outside
-window.addEventListener("click", (event) => {
+window.addEventListener("click", async (event) => {
   if (event.target === modal) {
+    await animate(modal, { opacity: 0 }, { duration: 0.3 });
     modal.style.display = "none";
   }
 });
 
 // Close modal with Escape key
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && modal.style.display === "block") {
+document.addEventListener("keydown", async (event) => {
+  if (event.key === "Escape" && modal.style.display === "grid") {
+    await animate(modal, { opacity: 0 }, { duration: 0.3 });
     modal.style.display = "none";
   }
 });
