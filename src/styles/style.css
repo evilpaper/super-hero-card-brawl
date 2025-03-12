@@ -373,7 +373,7 @@ main {
 .how-to-play-modal {
   display: none;
   position: fixed;
-  z-index: 1000;
+  z-index: var(--z-modal);
   left: 0;
   top: 0;
   width: 100%;
@@ -391,7 +391,7 @@ main {
   width: 80%;
   position: relative;
   color: white;
-  max-height: 90vh; /* Add max-height */
+  max-height: 90vh;
   line-height: 1.3;
 }
 
