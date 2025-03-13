@@ -2,6 +2,7 @@ import Card from "../card/card";
 import Game from "../game/game";
 import { animate } from "motion";
 import { Suite } from "../card/card.types";
+import { TitleScreenView } from "./view.title";
 
 import clover2 from "../assets/images/cards/clover-2.jpg";
 import clover3 from "../assets/images/cards/clover-3.jpg";
@@ -165,6 +166,9 @@ export default class View {
     this.gameWonOverlay = document.querySelector(".game-win") as HTMLElement;
     this.actionButton = document.querySelector(".action-button") as HTMLElement;
 
+    // We don't need to interact with the title screen later. I so we should refactor it an use exposed methods.
+    new TitleScreenView();
+
     this.actionButton?.addEventListener("click", (event) => {
       const target = event.target as HTMLElement;
 
@@ -181,16 +185,6 @@ export default class View {
         this.game.restart();
         this.render();
       }
-    });
-
-    const titleScreen = document.querySelector(".game-title") as HTMLElement;
-
-    titleScreen.addEventListener("click", function () {
-      titleScreen.style.display = "none";
-    });
-
-    document.addEventListener("keydown", function () {
-      titleScreen.style.display = "none";
     });
   }
 
