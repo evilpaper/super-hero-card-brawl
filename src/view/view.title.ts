@@ -7,10 +7,12 @@ export class TitleScreenView {
   }
 
   private initialize() {
+    // Click handler
     this.titleScreen.addEventListener("click", () => {
       this.hide();
     });
 
+    // Keyboard handler
     document.addEventListener("keydown", () => {
       this.hide();
     });

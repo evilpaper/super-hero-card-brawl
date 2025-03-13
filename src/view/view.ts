@@ -166,7 +166,8 @@ export default class View {
     this.gameWonOverlay = document.querySelector(".game-win") as HTMLElement;
     this.actionButton = document.querySelector(".action-button") as HTMLElement;
 
-    // We don't need to interact with the title screen later. I so we should refactor it an use exposed methods.
+    // We don't need to interact with the title screen later.
+    // I so we should refactor it an use exposed methods.
     new TitleScreenView();
 
     this.actionButton?.addEventListener("click", (event) => {
