@@ -6,6 +6,9 @@ export class TitleScreenView {
     this.initialize();
   }
 
+  /**
+   * We want to allow the game to be played with both the mouse and the keyboard.
+   */
   private initialize() {
     // Click handler
     this.titleScreen.addEventListener("click", () => {

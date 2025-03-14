@@ -394,8 +394,12 @@ export default class View {
      * Game Over
      */
 
-    if (this.gameOverOverlay?.style) {
-      if (this.game.player.getHealth() <= 0 && this.gameOverOverlay) {
+    // Handle game over overlay visibility
+    if (this.gameOverOverlay) {
+      const isGameOver = this.game.player.getHealth() <= 0;
+
+      if (isGameOver) {
+        // Small delay to ensure animations complete
         setTimeout(() => {
           this.gameOverOverlay!.style.display = "flex";
         }, 180);
