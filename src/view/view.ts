@@ -435,7 +435,7 @@ export default class View {
         this.actionButton.classList.remove("disabled");
       }
 
-      function getActionButtonLabel(game: Game) {
+      function getActionButtonInnerHTML(game: Game) {
         const isGameOver = game.player.getHealth() <= 0;
         const isGameWon =
           game.player.getHealth() > 0 &&
@@ -451,9 +451,24 @@ export default class View {
         }
       }
 
-      this.actionButton.innerHTML = getActionButtonLabel(this.game);
-      this.actionButton.dataset.buttonType =
-        this.game.player.getHealth() > 0 ? "evade" : "restart";
+      function getActionButtonButtonType(game: Game) {
+        const isGameOver = game.player.getHealth() <= 0;
+        const isGameWon =
+          game.player.getHealth() > 0 &&
+          game.deck.getCardCount() === 0 &&
+          game.board.cards.length === 0;
+
+        if (isGameWon || isGameOver) {
+          return "restart";
+        } else {
+          return "evade";
+        }
+      }
+
+      this.actionButton.innerHTML = getActionButtonInnerHTML(this.game);
+      this.actionButton.dataset.buttonType = getActionButtonButtonType(
+        this.game
+      );
     }
   }
 }
