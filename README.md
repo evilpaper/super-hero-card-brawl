@@ -75,6 +75,11 @@ The build process will generate optimized production files in the `dist` directo
 [ ] - Sound effects
 [x] - Image of game in README.md
 
+## Issues
+
+[ ] - Card stays on board on restart if same card is being assigned to same slot again.
+[ ] - Card hover is sticking out beneath overlay on game over and game won.
+
 ## Contributions
 
 Changes and improvements are more than welcome! Feel free to fork and open a pull request. Please make your changes in a specific branch and request to pull into master! If you can, please make sure the game fully works before sending the PR, as that will help speed up the process.
