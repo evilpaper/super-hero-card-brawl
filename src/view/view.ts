@@ -389,7 +389,7 @@ export default class View {
     });
 
     /**
-     * Overlays handle game won and game over screens
+     * Overlays handle Game Won and Game Over screens
      */
     this.overlays.render(this.game);
 
@@ -435,8 +435,23 @@ export default class View {
         this.actionButton.classList.remove("disabled");
       }
 
-      this.actionButton.innerHTML =
-        this.game.player.getHealth() > 0 ? "Move on" : "Restart";
+      function getActionButtonLabel(game: Game) {
+        const isGameOver = game.player.getHealth() <= 0;
+        const isGameWon =
+          game.player.getHealth() > 0 &&
+          game.deck.getCardCount() === 0 &&
+          game.board.cards.length === 0;
+
+        if (isGameOver) {
+          return "Restart";
+        } else if (isGameWon) {
+          return "Play again";
+        } else {
+          return "Move on";
+        }
+      }
+
+      this.actionButton.innerHTML = getActionButtonLabel(this.game);
       this.actionButton.dataset.buttonType =
         this.game.player.getHealth() > 0 ? "evade" : "restart";
     }

@@ -8,19 +8,19 @@ export default class Deck {
     this.cards = [];
     const suites: Suite[] = ["♠︎", "♥︎", "♣︎", "♦︎"];
     const ranks: Rank[] = [
-      "A",
+      // "A",
       "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "10",
-      "J",
-      "Q",
-      "K",
+      // "3",
+      // "4",
+      // "5",
+      // "6",
+      // "7",
+      // "8",
+      // "9",
+      // "10",
+      // "J",
+      // "Q",
+      // "K",
     ];
 
     for (const suite of suites) {
@@ -44,8 +44,8 @@ export default class Deck {
     }
 
     // Add the two Donsols
-    this.cards.push(new Card("♣︎", "D", 21, "Donsol A"));
-    this.cards.push(new Card("♠︎", "D", 21, "Donsol B"));
+    // this.cards.push(new Card("♣︎", "D", 21, "Donsol A"));
+    // this.cards.push(new Card("♠︎", "D", 21, "Donsol B"));
   }
 
   getCards(): Array<Card> {
