@@ -32,5 +32,17 @@ export class OverlayView {
 
   private updateGameWon(game: Game) {
     // ... game won logic
+    if (this.gameWonOverlay) {
+      const isGameWon =
+        game.player.getHealth() > 0 &&
+        game.deck.getCardCount() === 0 &&
+        game.board.cards.length === 0;
+
+      if (isGameWon) {
+        this.gameWonOverlay.style.display = "flex";
+      } else {
+        this.gameWonOverlay.style.display = "none";
+      }
+    }
   }
 }

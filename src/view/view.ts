@@ -142,8 +142,6 @@ export default class View {
   private slot3Element: HTMLElement | null;
   private slot4Element: HTMLElement | null;
   private actionButton: HTMLElement | null;
-  private gameOverOverlay: HTMLElement | null;
-  private gameWonOverlay: HTMLElement | null;
   private overlays: OverlayView;
 
   constructor(game: Game) {
@@ -163,11 +161,7 @@ export default class View {
     this.slot2Element = document.querySelector(".slot2");
     this.slot3Element = document.querySelector(".slot3");
     this.slot4Element = document.querySelector(".slot4");
-
-    this.gameOverOverlay = document.querySelector(".game-over") as HTMLElement;
-    this.gameWonOverlay = document.querySelector(".game-win") as HTMLElement;
     this.actionButton = document.querySelector(".action-button") as HTMLElement;
-
     this.overlays = new OverlayView();
 
     // We don't need to interact with the title screen later.
@@ -395,27 +389,9 @@ export default class View {
     });
 
     /**
-     * Game Over
+     * Overlays handle game won and game over screens
      */
-
     this.overlays.render(this.game);
-
-    /**
-     * Game Won
-     */
-
-    if (this.gameWonOverlay?.style) {
-      if (
-        this.game.player.getHealth() > 0 &&
-        this.game.deck.getCardCount() === 0 &&
-        this.game.board.cards.length === 0 &&
-        this.gameWonOverlay
-      ) {
-        this.gameWonOverlay.style.display = "flex";
-      } else {
-        this.gameWonOverlay.style.display = "none";
-      }
-    }
 
     /**
      * Action button logic
