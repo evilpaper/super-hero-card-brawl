@@ -2,6 +2,7 @@ import Card from "../card/card";
 import Game from "../game/game";
 import { animate } from "motion";
 import { Suite } from "../card/card.types";
+import { OverlayView } from "./view.overlay";
 import { TitleScreenView } from "./view.title";
 
 import clover2 from "../assets/images/cards/clover-2.jpg";
@@ -58,7 +59,6 @@ import tileJ from "../assets/images/cards/tile-j.jpg";
 import tileQ from "../assets/images/cards/tile-q.jpg";
 import tileK from "../assets/images/cards/tile-k.jpg";
 import tileA from "../assets/images/cards/tile-a.jpg";
-import { OverlayView } from "./view.overlay";
 
 const suiteMap: Record<Suite, string> = {
   "♠︎": "spade",
@@ -165,7 +165,6 @@ export default class View {
     this.overlays = new OverlayView();
 
     // We don't need to interact with the title screen later.
-    // I so we should refactor it an use exposed methods.
     new TitleScreenView();
 
     this.actionButton?.addEventListener("click", (event) => {

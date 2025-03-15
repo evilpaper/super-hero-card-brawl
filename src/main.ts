@@ -1,41 +1,18 @@
-import { animate } from "motion";
 import Game from "./game/game";
 import View from "./view/view";
+import { create } from "./view/how";
 
 const game = new Game();
+/**
+ * Original class based approach. Inspired on my back then understanding of the MVC pattern.
+ * Will move away from this pattern.
+ */
 const view = new View(game);
 
-// How to play section
-const modal = document.getElementById("how-to-play-modal") as HTMLElement;
-const infoButton = document.querySelector(".info-button") as HTMLButtonElement;
-const closeButton = document.querySelector(".close-button") as HTMLElement;
-
-infoButton.addEventListener("click", () => {
-  modal.style.display = "grid";
-  animate(modal, { opacity: 1 }, { duration: 0.3 });
-});
-
-// Close modal when close button is clicked
-closeButton.addEventListener("click", async () => {
-  await animate(modal, { opacity: 0 }, { duration: 0.3 });
-  modal.style.display = "none";
-});
-
-// Close modal when clicking outside
-window.addEventListener("click", async (event) => {
-  if (event.target === modal) {
-    await animate(modal, { opacity: 0 }, { duration: 0.3 });
-    modal.style.display = "none";
-  }
-});
-
-// Close modal with Escape key
-document.addEventListener("keydown", async (event) => {
-  if (event.key === "Escape" && modal.style.display === "grid") {
-    await animate(modal, { opacity: 0 }, { duration: 0.3 });
-    modal.style.display = "none";
-  }
-});
+/**
+ * This is a more functional way to set in up. Will transfer into this pattern.
+ */
+create("how-to-play-modal", ".info-button", ".close-button");
 
 game.start();
 // This small delay ensure first render does not cause layout shift when the actual card images are loaded and rendered
