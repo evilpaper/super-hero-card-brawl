@@ -58,6 +58,7 @@ import tileJ from "../assets/images/cards/tile-j.jpg";
 import tileQ from "../assets/images/cards/tile-q.jpg";
 import tileK from "../assets/images/cards/tile-k.jpg";
 import tileA from "../assets/images/cards/tile-a.jpg";
+import { OverlayView } from "./view.overlay";
 
 const suiteMap: Record<Suite, string> = {
   "♠︎": "spade",
@@ -143,6 +144,7 @@ export default class View {
   private actionButton: HTMLElement | null;
   private gameOverOverlay: HTMLElement | null;
   private gameWonOverlay: HTMLElement | null;
+  private overlays: OverlayView;
 
   constructor(game: Game) {
     this.game = game;
@@ -165,6 +167,8 @@ export default class View {
     this.gameOverOverlay = document.querySelector(".game-over") as HTMLElement;
     this.gameWonOverlay = document.querySelector(".game-win") as HTMLElement;
     this.actionButton = document.querySelector(".action-button") as HTMLElement;
+
+    this.overlays = new OverlayView();
 
     // We don't need to interact with the title screen later.
     // I so we should refactor it an use exposed methods.
@@ -394,19 +398,7 @@ export default class View {
      * Game Over
      */
 
-    // Handle game over overlay visibility
-    if (this.gameOverOverlay) {
-      const isGameOver = this.game.player.getHealth() <= 0;
-
-      if (isGameOver) {
-        // Small delay to ensure animations complete
-        setTimeout(() => {
-          this.gameOverOverlay!.style.display = "flex";
-        }, 180);
-      } else {
-        this.gameOverOverlay.style.display = "none";
-      }
-    }
+    this.overlays.render(this.game);
 
     /**
      * Game Won

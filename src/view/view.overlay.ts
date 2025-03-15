@@ -15,7 +15,19 @@ export class OverlayView {
   }
 
   private updateGameOver(game: Game) {
-    // ... game over logic
+    // Handle game over overlay visibility
+    if (this.gameOverOverlay) {
+      const isGameOver = game.player.getHealth() <= 0;
+
+      if (isGameOver) {
+        // Small delay to ensure animations complete
+        setTimeout(() => {
+          this.gameOverOverlay!.style.display = "flex";
+        }, 180);
+      } else {
+        this.gameOverOverlay.style.display = "none";
+      }
+    }
   }
 
   private updateGameWon(game: Game) {
