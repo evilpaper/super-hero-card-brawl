@@ -34,7 +34,7 @@ const setupEventListeners = (
   });
 };
 
-export function wireUp(
+export function connect(
   elementName: string,
   triggerButtonClass: string,
   closeButtonClass: string

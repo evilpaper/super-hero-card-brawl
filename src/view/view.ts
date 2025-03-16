@@ -1,10 +1,10 @@
 import Card from "../card/card";
 import Game from "../game/game";
 import { animate } from "motion";
+import { cardImages } from "./cardImages";
 import { Suite } from "../card/card.types";
 import { OverlayView } from "./view.overlay";
 import { TitleScreenView } from "./view.title";
-import { cardImages } from "./cardImages";
 
 const suiteMap: Record<Suite, string> = {
   "♠︎": "spade",
