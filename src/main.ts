@@ -1,6 +1,6 @@
 import Game from "./game/game";
 import View from "./view/view";
-import { create } from "./view/how";
+import { wireUp } from "./view/how";
 
 const game = new Game();
 /**
@@ -12,7 +12,7 @@ const view = new View(game);
 /**
  * This is a more functional way to set in up. Will transfer into this pattern.
  */
-create("how-to-play-modal", ".info-button", ".close-button");
+wireUp("how-to-play-modal", ".info-button", ".close-button");
 
 game.start();
 // This small delay ensure first render does not cause layout shift when the actual card images are loaded and rendered

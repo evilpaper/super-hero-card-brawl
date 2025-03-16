@@ -1,16 +1,6 @@
 import { animate } from "motion";
 
-export function create(
-  modalId: string,
-  triggerButtonClass: string,
-  closeButtonClass: string
-) {
-  const modal = document.getElementById(modalId) as HTMLElement;
-  const triggerButton = document.querySelector(
-    triggerButtonClass
-  ) as HTMLButtonElement;
-  const closeButton = document.querySelector(closeButtonClass) as HTMLElement;
-
+const createAnimations = (modal: HTMLElement) => {
   const show = async () => {
     modal.style.display = "grid";
     await animate(modal, { opacity: 1 }, { duration: 0.3 });
@@ -21,14 +11,20 @@ export function create(
     modal.style.display = "none";
   };
 
-  // Event listeners
+  return { show, hide };
+};
+
+const setupEventListeners = (
+  modal: HTMLElement,
+  triggerButton: HTMLButtonElement,
+  closeButton: HTMLElement,
+  { show, hide }: { show: () => Promise<void>; hide: () => Promise<void> }
+) => {
   triggerButton.addEventListener("click", show);
   closeButton.addEventListener("click", hide);
 
   window.addEventListener("click", async (event) => {
-    if (event.target === modal) {
-      await hide();
-    }
+    if (event.target === modal) await hide();
   });
 
   document.addEventListener("keydown", async (event) => {
@@ -36,10 +32,22 @@ export function create(
       await hide();
     }
   });
+};
 
-  // Optionally return controls if needed elsewhere
-  return {
-    show,
-    hide,
-  };
+export function wireUp(
+  elementName: string,
+  triggerButtonClass: string,
+  closeButtonClass: string
+) {
+  const modal = document.getElementById(elementName) as HTMLElement;
+  const triggerButton = document.querySelector(
+    triggerButtonClass
+  ) as HTMLButtonElement;
+  const closeButton = document.querySelector(closeButtonClass) as HTMLElement;
+
+  const animations = createAnimations(modal);
+
+  setupEventListeners(modal, triggerButton, closeButton, animations);
+
+  return animations;
 }
