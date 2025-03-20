@@ -138,7 +138,7 @@ export default class View {
     animate(
       element,
       {
-        opacity: [0, 1],
+        opacity: [0, 0.7, 1],
         x: [-distanceFromCenter, 0],
         y: ["90vh", 0],
         rotate: [-90, 0],
@@ -170,7 +170,7 @@ export default class View {
     return animate(
       element,
       {
-        opacity: [startingOpacity, 0],
+        opacity: [startingOpacity, 0.7, 0],
         x: [0, -distanceFromCenter],
         y: [0, "90vh"],
         rotate: [0, -90], // Add slight rotation
