@@ -53,7 +53,7 @@ import tileQ from "../assets/images/cards/tile-q.jpg";
 import tileK from "../assets/images/cards/tile-k.jpg";
 import tileA from "../assets/images/cards/tile-a.jpg";
 
-export const cardImages: Record<string, string> = {
+export const images: Record<string, string> = {
   "clover-2": clover2,
   "clover-3": clover3,
   "clover-4": clover4,

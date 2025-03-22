@@ -1,11 +1,11 @@
 import Card from "../card/card";
 import Game from "../game/game";
 import { animate } from "motion";
-import { cardImages } from "./cardImages";
+import { images } from "./view.images";
 import { Suite } from "../card/card.types";
-import { OverlayView } from "./view.overlay";
+import { OverlayView } from "./view.end";
 import { TitleScreenView } from "./view.title";
-import { HowView } from "./view.how";
+import { HowView } from "./view.instructions";
 
 const suiteMap: Record<Suite, string> = {
   "♠︎": "spade",
@@ -265,7 +265,7 @@ export default class View {
       cardElement.dataset.suite = card.getSuite();
       cardElement.dataset.rank = card.getRank();
       cardElement.style.backgroundImage = `url("${
-        cardImages[`${getSuiteName(card.getSuite())}-${card.getRank()}`]
+        images[`${getSuiteName(card.getSuite())}-${card.getRank()}`]
       }")`;
 
       if (!card.getPlayed()) {
