@@ -68,14 +68,13 @@ pnpm build
 
 The build process will generate optimized production files in the `dist` directory, ready for deployment to any static hosting service.
 
-## Todo
+## Ideas for the future
 
-[x] - How to play section
-[ ] - Text for each action
-[ ] - Sound effects
-[x] - Image of game in README.md
+[ ] - Spell put each action in text below cards.
+[ ] - Make effect of played card more visual, like an overlay.
+[ ] - Sound effects.
 
-## Issues
+## Known issues
 
 [ ] - Card stays on board on restart if same card is being assigned to same slot again.
 [ ] - Card hover is sticking out beneath overlay on game over and game won.
