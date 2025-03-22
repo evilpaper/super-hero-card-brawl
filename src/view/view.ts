@@ -5,6 +5,7 @@ import { cardImages } from "./cardImages";
 import { Suite } from "../card/card.types";
 import { OverlayView } from "./view.overlay";
 import { TitleScreenView } from "./view.title";
+import { HowView } from "./view.how";
 
 const suiteMap: Record<Suite, string> = {
   "♠︎": "spade",
@@ -53,8 +54,8 @@ export default class View {
     this.actionButton = document.querySelector(".action-button") as HTMLElement;
     this.overlays = new OverlayView();
 
-    // We don't need to interact with the title screen later.
     new TitleScreenView();
+    new HowView();
 
     this.actionButton?.addEventListener("click", (event) => {
       const target = event.target as HTMLElement;

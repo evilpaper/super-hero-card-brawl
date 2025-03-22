@@ -9,18 +9,11 @@ export class OverlayView {
     this.gameWonOverlay = document.querySelector(".game-win");
   }
 
-  render(game: Game) {
-    this.updateGameOver(game);
-    this.updateGameWon(game);
-  }
-
   private updateGameOver(game: Game) {
-    // Handle game over overlay visibility
     if (this.gameOverOverlay) {
       const isGameOver = game.player.getHealth() <= 0;
 
       if (isGameOver) {
-        // Small delay to ensure animations complete
         setTimeout(() => {
           this.gameOverOverlay!.style.display = "flex";
         }, 180);
@@ -31,7 +24,6 @@ export class OverlayView {
   }
 
   private updateGameWon(game: Game) {
-    // ... game won logic
     if (this.gameWonOverlay) {
       const isGameWon =
         game.player.getHealth() > 0 &&
@@ -44,5 +36,10 @@ export class OverlayView {
         this.gameWonOverlay.style.display = "none";
       }
     }
+  }
+
+  render(game: Game) {
+    this.updateGameOver(game);
+    this.updateGameWon(game);
   }
 }
