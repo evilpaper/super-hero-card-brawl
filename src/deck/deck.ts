@@ -44,8 +44,8 @@ export default class Deck {
     }
 
     // Add the two Donsols
-    // this.cards.push(new Card("♣︎", "D", 21, "Donsol A"));
-    // this.cards.push(new Card("♠︎", "D", 21, "Donsol B"));
+    this.cards.push(new Card("♣︎", "D", 21, "Donsol A"));
+    this.cards.push(new Card("♠︎", "D", 21, "Donsol B"));
   }
 
   getCards(): Array<Card> {
