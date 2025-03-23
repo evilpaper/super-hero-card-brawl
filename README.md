@@ -6,7 +6,7 @@ A Donsol-style card game featuring characters from Capcom's fighting franchises.
 
 This is a non-commercial personal project. Made for fun! [Play it here](https://evilpaper.com/superherocardbrawl/)
 
-Donsol was originally created by John Eternal—or so it seems. [Read the story here](https://boingboing.net/2015/04/16/the-clone-that-wasnt.html). I encountered it through Hundred Rabbits' awesome version. [Donsol](https://100r.co/site/donsol.html)
+Donsol was originally created by John Eternal—or so it seems. [Read the story here](https://boingboing.net/2015/04/16/the-clone-that-wasnt.html). I encountered it through Hundred Rabbits awesome version. [Donsol](https://100r.co/site/donsol.html)
 
 ## About this project
 
@@ -77,7 +77,7 @@ The build process will generate optimized production files in the `dist` directo
 ## Known issues
 
 [ ] - Card stays on board on restart if same card is being assigned to same slot again.
-[ ] - Card hover is sticking out beneath overlay on game over and game won.
+[ ] - Card hovered is sticking out beneath overlay on game over and game won.
 
 ## Contributions
 

@@ -82,6 +82,10 @@ button:focus {
   outline: none;
 }
 
+a {
+  color: hsla(0, 0%, 100%, 0.86);
+}
+
 /* App specific styles */
 
 body {
