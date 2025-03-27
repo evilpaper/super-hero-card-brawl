@@ -76,7 +76,6 @@ The build process will generate optimized production files in the `dist` directo
 
 ## Known issues
 
-[ ] - Card stays on board on restart if same card is being assigned to same slot again.
 [ ] - Card hovered is sticking out beneath overlay on game over and game won.
 
 ## Contributions

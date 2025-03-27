@@ -226,6 +226,17 @@ main {
   }
 }
 
+/* Minimize card immediately when game has ended. */
+
+.board.game-ended .card-button {
+  transform: none !important;
+  transition: none !important;
+}
+
+.board.game-ended .card-button:hover {
+  transform: none !important;
+}
+
 /* Misc. */
 
 .game-over,

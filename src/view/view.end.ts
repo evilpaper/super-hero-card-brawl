@@ -3,10 +3,12 @@ import Game from "../game/game";
 export class OverlayView {
   private gameOverOverlay: HTMLElement | null;
   private gameWonOverlay: HTMLElement | null;
+  private board: HTMLElement | null;
 
   constructor() {
     this.gameOverOverlay = document.querySelector(".game-over");
     this.gameWonOverlay = document.querySelector(".game-win");
+    this.board = document.querySelector(".board");
   }
 
   private updateGameOver(game: Game) {
@@ -16,9 +18,11 @@ export class OverlayView {
       if (isGameOver) {
         setTimeout(() => {
           this.gameOverOverlay!.style.display = "flex";
-        }, 180);
+          this.board?.classList.add("game-ended");
+        }, 200);
       } else {
         this.gameOverOverlay.style.display = "none";
+        this.board?.classList.add("game-ended");
       }
     }
   }
@@ -32,8 +36,10 @@ export class OverlayView {
 
       if (isGameWon) {
         this.gameWonOverlay.style.display = "flex";
+        this.board?.classList.add("game-ended");
       } else {
         this.gameWonOverlay.style.display = "none";
+        this.board?.classList.add("game-ended");
       }
     }
   }
