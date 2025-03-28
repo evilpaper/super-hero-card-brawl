@@ -11,6 +11,7 @@ test("Card get initialised with correct properties", () => {
     suite: "♠︎",
     value: 9,
     played: false,
+    id: expect.any(String),
   });
 });
 
