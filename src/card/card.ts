@@ -6,6 +6,7 @@ export default class Card {
   private value: Value;
   private name: string;
   private played: boolean;
+  private readonly id: string;
 
   constructor(suite: Suite, rank: Rank, value: Value, name: string) {
     this.suite = suite;
@@ -13,6 +14,11 @@ export default class Card {
     this.value = value;
     this.name = name;
     this.played = false;
+    this.id = crypto.randomUUID();
+  }
+
+  getId(): string {
+    return this.id;
   }
 
   getSuite(): Suite {

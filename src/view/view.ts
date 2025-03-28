@@ -196,35 +196,63 @@ export default class View {
     ];
     const slotElement = slotElements[index];
 
-    if (slotElement) {
-      const existingCardElement = slotElement.querySelector(
-        ".card"
-      ) as HTMLElement;
-      if (
-        existingCardElement?.dataset.value === card.getValue().toString() &&
-        existingCardElement?.dataset.rank === card.getRank() &&
-        existingCardElement?.dataset.suite === card.getSuite()
-      ) {
-        // Not changed, do nothing
-      } else {
-        // Should change
-        // Check existing and remove if it exist before adding the new
-        if (existingCardElement) {
-          const exitAnimation = this.animateOnExit(existingCardElement, index);
-          exitAnimation.then(() => {
-            existingCardElement.remove();
-            slotElement.appendChild(cardElement);
-            this.animateOnEnter(cardElement, index);
-          });
-        } else {
-          // In case no existing card exist, just add the new card
-          slotElement.appendChild(cardElement);
-          this.animateOnEnter(cardElement, index);
-        }
-      }
+    if (!slotElement) return;
+
+    const existingCardElement = slotElement.querySelector(
+      ".card"
+    ) as HTMLElement;
+
+    // If card hasn't changed, just update disabled state if needed
+    if (
+      existingCardElement?.dataset.value === card.getValue().toString() &&
+      existingCardElement?.dataset.rank === card.getRank() &&
+      existingCardElement?.dataset.suite === card.getSuite() &&
+      existingCardElement?.dataset.id === card.getId()
+    ) {
       if (card.getPlayed()) {
         existingCardElement?.classList.add("disabled");
       }
+      return;
+    }
+
+    // Prepare the new card but don't add it to DOM yet
+    cardElement.style.opacity = "0"; // Start invisible
+
+    if (existingCardElement) {
+      // Animate out existing card first
+      this.animateOnExit(existingCardElement, index).then(() => {
+        existingCardElement.remove();
+        // Now add and animate in the new card
+        slotElement.appendChild(cardElement);
+        /**
+         * Without requestAnimationFrame, this sequence happens:
+         * Card is appended to DOM
+         * Animation starts immediately
+         * Browser might not have processed the DOM update yet
+         * This can cause the flickering as the browser tries to handle both operations at once
+         *
+         * With requestAnimationFrame:
+         * Card is appended to DOM
+         * Browser queues our animation function for the next frame
+         * Browser completes the DOM update
+         * On next frame, animation starts with the element properly placed
+         *
+         * It's like saying "Hey browser, first add this card to the DOM, and once you've done that, on the next available frame, start the animation."
+         */
+        requestAnimationFrame(() => {
+          this.animateOnEnter(cardElement, index);
+        });
+      });
+    } else {
+      // No existing card, just add and animate in the new one
+      slotElement.appendChild(cardElement);
+      requestAnimationFrame(() => {
+        this.animateOnEnter(cardElement, index);
+      });
+    }
+
+    if (card.getPlayed()) {
+      cardElement.classList.add("disabled");
     }
   }
 
@@ -264,6 +292,7 @@ export default class View {
       cardElement.dataset.value = card.getValue().toString();
       cardElement.dataset.suite = card.getSuite();
       cardElement.dataset.rank = card.getRank();
+      cardElement.dataset.id = card.getId();
       cardElement.style.backgroundImage = `url("${
         images[`${getSuiteName(card.getSuite())}-${card.getRank()}`]
       }")`;
