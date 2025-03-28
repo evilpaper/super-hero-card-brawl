@@ -76,7 +76,8 @@ The build process will generate optimized production files in the `dist` directo
 
 ## Known issues
 
-[ ] - Card hovered is sticking out beneath overlay on game over and game won.
+[ ] - Board doen't get cleared between restarts.
+[ ] - Card can flicker when dealt.
 
 ## Contributions
 
