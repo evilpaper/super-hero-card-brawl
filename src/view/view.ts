@@ -171,11 +171,11 @@ export default class View {
     return animate(
       element,
       {
-        opacity: [startingOpacity, 0.2],
+        opacity: [startingOpacity, 0.8],
         x: [0, -distanceFromCenter],
         y: [0, "90vh"],
         rotate: [0, -90], // Add slight rotation
-        scale: [1, 0.6],
+        scale: [1, 0.4],
       },
       {
         type: "spring",
@@ -317,6 +317,7 @@ export default class View {
 
     if (this.actionButton) {
       const wasDisabled = this.actionButton.classList.contains("disabled");
+
       if (!this.game.player.getCanMoveOn()) {
         this.actionButton.classList.add("disabled");
       } else {

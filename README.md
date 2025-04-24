@@ -76,7 +76,7 @@ The build process will generate optimized production files in the `dist` directo
 
 ## Known issues
 
-[ ] - It's possible to click "Move on" when cards are being dealt. Lead to cards being stacked upon each other.
+[ ] - Cards can overlap when "Move on" is clicked during deal animation.
 
 ## Contributions
 
