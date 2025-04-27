@@ -316,38 +316,10 @@ export default class View {
      */
 
     if (this.actionButton) {
-      const wasDisabled = this.actionButton.classList.contains("disabled");
-
       if (!this.game.player.getCanMoveOn()) {
         this.actionButton.classList.add("disabled");
       } else {
         this.actionButton.classList.remove("disabled");
-        if (wasDisabled) {
-          // Only animate if it was previously disabled
-          this.actionButton.style.transformOrigin = "50% 100%";
-          animate(
-            this.actionButton,
-            {
-              x: [
-                "0px",
-                "4px",
-                "-6px",
-                "6px",
-                "-6px",
-                "6px",
-                "-6px",
-                "4px",
-                "-4px",
-                "2px",
-                "0px",
-              ],
-            },
-            {
-              duration: 1,
-              ease: "easeInOut",
-            }
-          );
-        }
       }
 
       if (this.game.player.getHealth() <= 0) {
