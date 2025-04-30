@@ -7,6 +7,10 @@ import { OverlayView } from "./view.end";
 import { TitleScreenView } from "./view.title";
 import { HowView } from "./view.instructions";
 
+const MAX_HEALTH = 21;
+const MAX_DEFENSE = 11;
+const MAX_STAMINA = 22;
+
 const suiteMap: Record<Suite, string> = {
   "♠︎": "spade",
   "♥︎": "heart",
@@ -271,10 +275,26 @@ export default class View {
     this.animateValue(this.defenseElement, this.game.player.getDefence());
     this.animateValue(this.staminaElement, this.game.player.getStamina());
 
-    this.updateBarFill(this.healthFill, this.game.player.getHealth(), 21);
-    this.updateBarFill(this.defenseFill, this.game.player.getDefence(), 11);
-    this.updateBarFill(this.cloverFill, this.game.player.getStamina(), 22);
-    this.updateBarFill(this.spadesFill, this.game.player.getStamina(), 22);
+    this.updateBarFill(
+      this.healthFill,
+      this.game.player.getHealth(),
+      MAX_HEALTH
+    );
+    this.updateBarFill(
+      this.defenseFill,
+      this.game.player.getDefence(),
+      MAX_DEFENSE
+    );
+    this.updateBarFill(
+      this.cloverFill,
+      this.game.player.getStamina(),
+      MAX_STAMINA
+    );
+    this.updateBarFill(
+      this.spadesFill,
+      this.game.player.getStamina(),
+      MAX_STAMINA
+    );
 
     this.game.board.cards.forEach((card, index) => {
       const cardElement = document.createElement("div") as HTMLElement;
