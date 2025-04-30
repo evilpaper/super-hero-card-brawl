@@ -96,6 +96,16 @@ export default class View {
     }
   }
 
+  private updateBarFill(
+    element: HTMLElement | null,
+    value: number,
+    max: number
+  ) {
+    if (!element) return;
+    const percentage = Math.floor(100 - (value / max) * 100);
+    element.style.transform = `translateY(${percentage}%)`;
+  }
+
   private animateValue(element: HTMLElement | null, newValue: number) {
     if (element) {
       const previousValue = parseInt(element.innerText, 10);
@@ -261,30 +271,10 @@ export default class View {
     this.animateValue(this.defenseElement, this.game.player.getDefence());
     this.animateValue(this.staminaElement, this.game.player.getStamina());
 
-    if (this.healthFill) {
-      const percentage = Math.floor(
-        100 - (this.game.player.getHealth() / 21) * 100
-      );
-      this.healthFill.style.transform = `translateY(${percentage}%)`;
-    }
-    if (this.defenseFill) {
-      const percentage = Math.floor(
-        100 - (this.game.player.getDefence() / 11) * 100
-      );
-      this.defenseFill.style.transform = `translateY(${percentage}%)`;
-    }
-    if (this.cloverFill) {
-      const percentage = Math.floor(
-        100 - (this.game.player.getStamina() / 22) * 100
-      );
-      this.cloverFill.style.transform = `translateY(${percentage}%)`;
-    }
-    if (this.spadesFill) {
-      const percentage = Math.floor(
-        100 - (this.game.player.getStamina() / 22) * 100
-      );
-      this.spadesFill.style.transform = `translateY(${percentage}%)`;
-    }
+    this.updateBarFill(this.healthFill, this.game.player.getHealth(), 21);
+    this.updateBarFill(this.defenseFill, this.game.player.getDefence(), 11);
+    this.updateBarFill(this.cloverFill, this.game.player.getStamina(), 22);
+    this.updateBarFill(this.spadesFill, this.game.player.getStamina(), 22);
 
     this.game.board.cards.forEach((card, index) => {
       const cardElement = document.createElement("div") as HTMLElement;
