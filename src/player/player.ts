@@ -97,8 +97,6 @@ export default class Player {
     if (this.canHeal) {
       this.setHealth(this.getHealth() + potionStrength);
       this.setCanHeal(false);
-    } else {
-      this.setCanHeal(true);
     }
   }
 

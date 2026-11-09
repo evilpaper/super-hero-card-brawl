@@ -44,6 +44,45 @@ test("Select another healer (♥︎) right after a healer (♥︎) will have no 
   expect(player.getHealth()).toBe(15);
 });
 
+test("Select a third healer (♥︎) in a row after two healers (♥︎) should also have no effect", () => {
+  const player = new Player();
+
+  player.setHealth(10);
+  player.playDefensiveBrawler(5);
+  player.playDefensiveBrawler(4);
+  player.playDefensiveBrawler(3);
+
+  expect(player.getHealth()).toBe(15);
+});
+
+test("Selecting a healer (♥︎) after a defender (♦︎) should heal again", () => {
+  const player = new Player();
+
+  player.setHealth(8);
+  player.playDefensiveBrawler(3);
+  player.playDefensiveBrawler(4);
+  expect(player.getHealth()).toBe(11);
+
+  player.playOffensiveBrawler(7);
+  player.playDefensiveBrawler(4);
+
+  expect(player.getHealth()).toBe(15);
+});
+
+test("Selecting a healer (♥︎) after a monster brawl should heal again", () => {
+  const player = new Player();
+
+  player.setHealth(10);
+  player.playDefensiveBrawler(4);
+  player.playDefensiveBrawler(3);
+  expect(player.getHealth()).toBe(14);
+
+  player.brawl(1);
+  player.playDefensiveBrawler(3);
+
+  expect(player.getHealth()).toBe(16);
+});
+
 test("Select a defender (♦︎) set defence according to the card value", () => {
   const player = new Player();
 
