@@ -68,8 +68,7 @@ export default class View {
         target?.dataset.buttonType === "evade" &&
         this.game.player.getCanMoveOn()
       ) {
-        this.game.player.setCanMoveOn(false);
-        this.game.board.clear();
+        this.game.escapeRoom();
         this.render();
       }
 
@@ -91,10 +90,9 @@ export default class View {
       return;
     }
     if (this.game.board.isCleared()) {
-      this.game.player.setCanMoveOn(true);
+      this.game.player.setCanMoveOn(false);
       setTimeout(() => {
-        this.game.board.clear();
-        this.game.board.draw(4);
+        this.game.clearHandledRoom();
         this.render();
       }, 500);
     }
