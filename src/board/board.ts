@@ -24,8 +24,11 @@ export default class Board {
     // Find cards that haven't been played
     const unplayedCards = this.cards.filter((card) => !card.getPlayed());
 
-    // Add unplayed cards back to the end of the deck
+    // Return unplayed cards to the deck, then reshuffle when escaping early.
     this.deck.returnCard(unplayedCards);
+    if (unplayedCards.length > 0) {
+      this.deck.shuffle();
+    }
 
     // Clear the board
     this.cards = [];
