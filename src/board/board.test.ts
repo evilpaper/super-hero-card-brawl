@@ -1,4 +1,4 @@
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
 import Board from "./board";
 import Deck from "../deck/deck";
 
@@ -18,30 +18,50 @@ test("Board should be able to draw up to 4 cards", () => {
   expect(board.cards).toHaveLength(4);
 });
 
-test("clear should return not played cards to the end of the deck and populate board with as many cards as possible from deck up until a maximun number of 4", () => {
+test("clear should shuffle unplayed cards back into the deck and keep folded cards out", () => {
   const deck = new Deck();
   const board = new Board(deck);
-  // First, let's clear the board to ensure a known state
-  board.clear();
+  board.draw(4);
 
-  // Draw some cards to the board
-  board.draw(3);
-  const initialBoardCards = [...board.cards]; // Make a copy of the current board cards
+  const initialBoardCards = [...board.cards];
+  const foldedCard = initialBoardCards[0];
+  foldedCard.play();
+  const unplayedCards = initialBoardCards.slice(1);
+
   const initialDeckLength = deck.getCardCount();
+  const randomSpy = vi.spyOn(Math, "random").mockReturnValue(0);
 
   // Clear the board - this should return cards to deck and draw new ones
   board.clear();
+  randomSpy.mockRestore();
 
-  // Test that the old cards are now at the end of the deck
-  const lastCardsInDeck = deck.getCards().slice(-initialBoardCards.length);
-  expect(lastCardsInDeck).toEqual(initialBoardCards);
+  // One folded card should stay out of the deck.
+  expect(deck.getCardCount()).toBe(initialDeckLength - 1);
+  expect(deck.getCards()).not.toContain(foldedCard);
 
-  // Test that we drew new cards to the board
-  // expect(board.cards).toHaveLength(4);
+  // Returned cards should not remain grouped at the very end in the same order.
+  const lastCardsInDeck = deck.getCards().slice(-unplayedCards.length);
+  expect(lastCardsInDeck).not.toEqual(unplayedCards);
 
-  // Verify these are different cards than before
-  expect(board.cards).not.toEqual(initialBoardCards);
+  // Returned cards must still be present somewhere after reshuffle.
+  const inDeckOrBoard = [...deck.getCards(), ...board.cards];
+  unplayedCards.forEach((card) => {
+    expect(inDeckOrBoard).toContain(card);
+  });
+});
 
-  // Verify the deck size remained the same (cards were just moved around)
-  expect(deck.getCardCount()).toBe(initialDeckLength);
+test("clear should not reshuffle the remaining deck when the room is fully folded", () => {
+  const deck = new Deck();
+  const board = new Board(deck);
+  board.draw(4);
+
+  board.cards.forEach((card) => card.play());
+  const expectedNextRoom = deck.getCards().slice(0, 4);
+  const shuffleSpy = vi.spyOn(deck, "shuffle");
+
+  board.clear();
+
+  expect(shuffleSpy).not.toHaveBeenCalled();
+  expect(board.cards).toEqual(expectedNextRoom);
+  shuffleSpy.mockRestore();
 });
