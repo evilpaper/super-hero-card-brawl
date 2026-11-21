@@ -14,7 +14,7 @@ This project leverages TypeScript and Vite to deliver a robust and highly mainta
 
 The architecture is modular, with key components such as Game, Player, Deck, and Board split into distinct, reusable modules. Each class adheres to the single responsibility principle, making the code easy to navigate, extend, and debug. The intention has been to keep class properties private and only accessed with getters and setters.
 
-The game is drawn on a single Canvas 2D element with a hand-rolled game loop and no runtime dependencies. The loop follows the LÖVE model: `update(dt)` changes state, `draw()` renders it, objects are drawn from a flat depth-sorted list, and motion comes from springs chasing targets. The renderer reads game state and calls game commands, but never changes the rules. See [`docs/adr/`](./docs/adr/) for the reasoning and [`CONTEXT.md`](./CONTEXT.md) for the game's vocabulary.
+The game is drawn on a single Canvas 2D element with a hand-rolled game loop and no runtime dependencies. The loop follows the LÖVE model: `update(dt)` changes state, `draw()` renders it, objects are drawn from a flat depth-sorted list, and motion comes from springs chasing targets. The renderer reads game state and calls game commands, but never changes the rules. See [`docs/adr/`](./docs/adr/) for the reasoning, [`CONTEXT.md`](./CONTEXT.md) for the game's vocabulary, and [`docs/how-to-play.md`](./docs/how-to-play.md) for the rules.
 
 TypeScript is a cornerstone of the project, providing type safety that catches issues during compile time, significantly reducing runtime bugs, a critical feature for a game with complex state management.
 

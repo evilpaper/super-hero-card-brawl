@@ -1,8 +1,8 @@
 import Game from "./game/game";
 import Loop from "./engine/loop";
-import Table from "./table/table";
-import CardSprite from "./table/card-sprite";
-import { CARD_HEIGHT } from "./table/draw-card";
+import DisplayList from "./engine/display-list";
+import CardSprite from "./cards/card-sprite";
+import { CARD_HEIGHT } from "./cards/draw-card";
 
 // Must match the font-weight declared in each @font-face rule, or load() won't find the face.
 const FONTS = [
@@ -40,9 +40,9 @@ const game = new Game();
 
 game.start();
 
-const table = new Table();
+const displayList = new DisplayList();
 const firstCard = new CardSprite(game.board.cards[0]);
-table.add(firstCard);
+displayList.add(firstCard);
 
 function centerFirstCard() {
   firstCard.moveTo(width / 2, height / 2);
@@ -55,10 +55,13 @@ window.addEventListener("resize", () => {
 
 resizeCanvas();
 
-const loop = new Loop(
-  (dt) => table.update(dt),
-  () => table.draw(ctx, width, height),
-);
+function draw() {
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, width, height);
+  displayList.draw(ctx);
+}
+
+const loop = new Loop((dt) => displayList.update(dt), draw);
 
 loadFonts().then(() => {
   // Start below the screen, tilted, and let the springs bring it in.

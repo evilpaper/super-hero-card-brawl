@@ -1,5 +1,6 @@
 import Card from "../card/card";
 import Spring from "../engine/spring";
+import { DisplayObject } from "../engine/display-list";
 import { drawCardFace } from "./draw-card";
 
 // A gentle idle rock so resting cards never look frozen.
@@ -7,10 +8,10 @@ const SWAY_ANGLE = 0.02;
 const SWAY_SPEED = 1.3;
 
 /**
- * How one Card looks and moves on the table.
+ * How one Card looks and moves on screen.
  * Position and rotation are springs: moveTo() sets targets and update() chases them.
  */
-export default class CardSprite {
+export default class CardSprite implements DisplayObject {
   private card: Card;
   private x: Spring;
   private y: Spring;
