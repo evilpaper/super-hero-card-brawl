@@ -1,5 +1,4 @@
 # Orignal rules from Hundred Rabbits version
-
 Donsol is a solitary card game, designed by John Eternal in which you must go through the deck in sequences of 4 cards. A standard deck, jokers included, is a dungeon. Shuffle the deck and draw 4 cards, display them before you, this is a room. A room ends when all the cards are folded.
 
 ## ♥︎ Hearts are Potions
