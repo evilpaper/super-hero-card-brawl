@@ -15,11 +15,15 @@ function makeCard(
 test("Game should be initialized with a deck and a board", () => {
   const game = new Game();
 
-  // Check if game has a deck
+  /**
+   * Check if game has a deck
+   */
   expect(game.deck).toBeInstanceOf(Deck);
   expect(game.deck.getCardCount()).toBe(54);
 
-  // Check if game has a board
+  /**
+   * Check if game has a board
+   */
   expect(game.board).toBeInstanceOf(Board);
   expect(game.board.cards.length).toBe(0);
 });
@@ -28,13 +32,19 @@ test("Game should be able to be started. When so, board should be populated with
   const game = new Game();
   const initialDeckSize = game.deck.getCardCount();
 
-  // Start game
+  /**
+   * Start game
+   */
   game.start();
 
-  // Check if board have 4 cards
+  /**
+   * Check if board have 4 cards
+   */
   expect(game.board.cards.length).toBe(4);
 
-  // Ceck if deck have 4 fewer cards
+  /**
+   * Ceck if deck have 4 fewer cards
+   */
   expect(game.deck.getCardCount()).toBe(initialDeckSize - 4);
 });
 

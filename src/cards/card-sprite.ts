@@ -3,7 +3,9 @@ import Spring from "../engine/spring";
 import { DisplayObject } from "../engine/display-list";
 import { drawCardFace } from "./draw-card";
 
-// A gentle idle rock so resting cards never look frozen.
+/**
+ * A gentle idle rock so resting cards never look frozen.
+ */
 const SWAY_ANGLE = 0.02;
 const SWAY_SPEED = 1.3;
 

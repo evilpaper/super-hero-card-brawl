@@ -31,19 +31,27 @@ test("clear should shuffle unplayed cards back into the deck and keep folded car
   const initialDeckLength = deck.getCardCount();
   const randomSpy = vi.spyOn(Math, "random").mockReturnValue(0);
 
-  // Clear the board - this should return cards to deck and draw new ones
+  /**
+   * Clear the board - this should return cards to deck and draw new ones
+   */
   board.clear();
   randomSpy.mockRestore();
 
-  // One folded card should stay out of the deck.
+  /**
+   * One folded card should stay out of the deck.
+   */
   expect(deck.getCardCount()).toBe(initialDeckLength - 1);
   expect(deck.getCards()).not.toContain(foldedCard);
 
-  // Returned cards should not remain grouped at the very end in the same order.
+  /**
+   * Returned cards should not remain grouped at the very end in the same order.
+   */
   const lastCardsInDeck = deck.getCards().slice(-unplayedCards.length);
   expect(lastCardsInDeck).not.toEqual(unplayedCards);
 
-  // Returned cards must still be present somewhere after reshuffle.
+  /**
+   * Returned cards must still be present somewhere after reshuffle.
+   */
   const inDeckOrBoard = [...deck.getCards(), ...board.cards];
   unplayedCards.forEach((card) => {
     expect(inDeckOrBoard).toContain(card);

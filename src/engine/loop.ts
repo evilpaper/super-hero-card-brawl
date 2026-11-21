@@ -1,5 +1,7 @@
-// Longest step update() will ever see, in seconds. Anything longer (a backgrounded
-// tab, a hitch) is treated as this, so objects slow down instead of jumping.
+/**
+ * Longest step update() will ever see, in seconds. Anything longer (a backgrounded
+ * tab, a hitch) is treated as this, so objects slow down instead of jumping.
+ */
 export const MAX_FRAME_TIME = 1 / 30;
 
 type Update = (dt: number) => void;
@@ -41,7 +43,9 @@ export default class Loop {
   }
 
   private tick = (time: DOMHighResTimeStamp): void => {
-    // Request the next frame first, so a throw in update/draw doesn't stop the loop.
+    /**
+     * Request the next frame first, so a throw in update/draw doesn't stop the loop.
+     */
     this.frameId = requestAnimationFrame(this.tick);
 
     const dt =

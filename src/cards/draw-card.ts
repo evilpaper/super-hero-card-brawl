@@ -37,7 +37,9 @@ export function drawCardFace(ctx: CanvasRenderingContext2D, card: Card) {
 }
 
 function drawPaper(ctx: CanvasRenderingContext2D) {
-  // The shadow is drawn with its own fill so it doesn't also blur the strokes.
+  /**
+   * The shadow is drawn with its own fill so it doesn't also blur the strokes.
+   */
   ctx.save();
   ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
   ctx.shadowBlur = 15;

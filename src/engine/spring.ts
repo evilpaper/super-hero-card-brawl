@@ -1,5 +1,7 @@
-// Springs are integrated in steps no longer than this, so stiff springs stay stable
-// even when a frame is long.
+/**
+ * Springs are integrated in steps no longer than this, so stiff springs stay stable
+ * even when a frame is long.
+ */
 const MAX_STEP = 1 / 120;
 
 /**
@@ -54,7 +56,9 @@ export default class Spring {
         -this.stiffness * (this.value - this.target) -
         this.damping * this.velocity;
 
-      // Semi-implicit Euler: velocity first, then position with the new velocity.
+      /**
+       * Semi-implicit Euler: velocity first, then position with the new velocity.
+       */
       this.velocity += force * step;
       this.value += this.velocity * step;
       remaining -= step;

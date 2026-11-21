@@ -33,9 +33,15 @@ export default class Player {
    */
   setHealth(value: number): void {
     if (value < 0) {
-      this.health = 0; // Ensure health doesn't go below 0.
+      /**
+       * Ensure health doesn't go below 0.
+       */
+      this.health = 0;
     } else if (value > 21) {
-      this.health = 21; // Cap health at 21.
+      /**
+       * Cap health at 21.
+       */
+      this.health = 21;
     } else {
       this.health = value;
     }
@@ -112,7 +118,9 @@ export default class Player {
     this.setDefence(defenderStrength);
     this.setStamina(22);
 
-    // If canHeal is false, reset it to true
+    /**
+     * If canHeal is false, reset it to true
+     */
     if (!this.getCanHeal()) {
       this.setCanHeal(true);
     }
@@ -129,7 +137,9 @@ export default class Player {
       this.setHealth(this.getHealth() - damage);
       this.setStamina(opponentValue);
     }
-    // If canHeal is false, reset it to true
+    /**
+     * If canHeal is false, reset it to true
+     */
     if (!this.getCanHeal()) {
       this.setCanHeal(true);
     }

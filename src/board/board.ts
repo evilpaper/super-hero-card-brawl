@@ -11,7 +11,9 @@ export default class Board {
   }
 
   draw(count: number): void {
-    // Don't draw if it would exceed 4 cards
+    /**
+     * Don't draw if it would exceed 4 cards
+     */
     if (this.cards.length + count > 4) {
       return;
     }
@@ -21,19 +23,27 @@ export default class Board {
   }
 
   clear(): void {
-    // Find cards that haven't been played
+    /**
+     * Find cards that haven't been played
+     */
     const unplayedCards = this.cards.filter((card) => !card.getPlayed());
 
-    // Return unplayed cards to the deck, then reshuffle when escaping early.
+    /**
+     * Return unplayed cards to the deck, then reshuffle when escaping early.
+     */
     this.deck.returnCard(unplayedCards);
     if (unplayedCards.length > 0) {
       this.deck.shuffle();
     }
 
-    // Clear the board
+    /**
+     * Clear the board
+     */
     this.cards = [];
 
-    // Draw the minimum between 4 and available cards in deck
+    /**
+     * Draw the minimum between 4 and available cards in deck
+     */
     const cardsToDraw = Math.min(4, this.deck.getCardCount());
     this.draw(cardsToDraw);
   }

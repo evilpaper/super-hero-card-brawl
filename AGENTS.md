@@ -11,3 +11,7 @@ Five canonical roles, label strings equal to their names: `needs-triage`, `needs
 ### Domain docs
 
 Single-context: one `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+## Code style
+
+Comments are always multi-line `/** ... */` blocks, never `//` line or end-of-line comments. See `docs/agents/code-style.md`.

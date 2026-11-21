@@ -25,7 +25,9 @@ export default class Deck {
 
     for (const suite of suites) {
       for (const rank of ranks) {
-        // Determine value based on rank and suite
+        /**
+         * Determine value based on rank and suite
+         */
         let value: Value;
         if (rank === "A") {
           value = suite === "♠︎" || suite === "♣︎" ? 17 : 11;
@@ -43,13 +45,18 @@ export default class Deck {
       }
     }
 
-    // Add the two Donsols
+    /**
+     * Add the two Donsols
+     */
     this.cards.push(new Card("♣︎", "D", 21, "Donsol A"));
     this.cards.push(new Card("♠︎", "D", 21, "Donsol B"));
   }
 
   getCards(): Array<Card> {
-    return [...this.cards]; // Return a copy to maintain encapsulation
+    /**
+     * Return a copy to maintain encapsulation
+     */
+    return [...this.cards];
   }
 
   getCardCount(): number {
@@ -57,42 +64,60 @@ export default class Deck {
   }
 
   shuffle(): void {
-    // Fisher-Yates shuffle algorithm
+    /**
+     * Fisher-Yates shuffle algorithm
+     */
     for (let i = this.cards.length - 1; i > 0; i--) {
-      // Generate random index from 0 to i
+      /**
+       * Generate random index from 0 to i
+       */
       const j = Math.floor(Math.random() * (i + 1));
-      // Swap elements at indices i and j
+      /**
+       * Swap elements at indices i and j
+       */
       [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
     }
   }
 
   drawCard(count: number): Array<Card> {
-    // Handle invalid inputs
+    /**
+     * Handle invalid inputs
+     */
     if (count <= 0 || count > 4) {
       return [];
     }
 
-    // Check if we have enough cards
+    /**
+     * Check if we have enough cards
+     */
     if (count > this.cards.length) {
       return [];
     }
 
-    // Remove and return the specified number of cards from the top
+    /**
+     * Remove and return the specified number of cards from the top
+     */
     return this.cards.splice(0, count);
   }
 
   returnCard(cards: Array<Card>): void {
-    // Validate input
+    /**
+     * Validate input
+     */
     if (!Array.isArray(cards)) {
       return;
     }
 
-    // Validate card count
+    /**
+     * Validate card count
+     */
     if (cards.length > 4) {
       return;
     }
 
-    // Add cards back to deck
+    /**
+     * Add cards back to deck
+     */
     this.cards.push(...cards);
   }
 }

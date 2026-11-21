@@ -4,7 +4,9 @@ import DisplayList from "./engine/display-list";
 import CardSprite from "./cards/card-sprite";
 import { CARD_HEIGHT } from "./cards/draw-card";
 
-// Must match the font-weight declared in each @font-face rule, or load() won't find the face.
+/**
+ * Must match the font-weight declared in each @font-face rule, or load() won't find the face.
+ */
 const FONTS = [
   '16px "Whyte Inktrap Book"',
   '16px "Whyte Inktrap Regular"',
@@ -12,7 +14,9 @@ const FONTS = [
 ];
 
 function loadFonts() {
-  // A missing font shouldn't block the game; canvas falls back to sans-serif.
+  /**
+   * A missing font shouldn't block the game; canvas falls back to sans-serif.
+   */
   return Promise.all(
     FONTS.map((font) => document.fonts.load(font).catch(() => [])),
   );
@@ -22,7 +26,9 @@ const canvas = document.querySelector<HTMLCanvasElement>(".canvas")!;
 
 const ctx = canvas.getContext("2d")!;
 
-// Size of the canvas in CSS pixels, which is what everything is drawn in.
+/**
+ * Size of the canvas in CSS pixels, which is what everything is drawn in.
+ */
 let width = 0;
 let height = 0;
 
@@ -32,7 +38,9 @@ function resizeCanvas() {
   height = window.innerHeight;
   canvas.width = Math.round(width * dpr);
   canvas.height = Math.round(height * dpr);
-  // Draw in CSS pixels; the transform maps them onto the high-DPI backing store.
+  /**
+   * Draw in CSS pixels; the transform maps them onto the high-DPI backing store.
+   */
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 
@@ -64,7 +72,9 @@ function draw() {
 const loop = new Loop((dt) => displayList.update(dt), draw);
 
 loadFonts().then(() => {
-  // Start below the screen, tilted, and let the springs bring it in.
+  /**
+   * Start below the screen, tilted, and let the springs bring it in.
+   */
   firstCard.placeAt(width / 2, height + CARD_HEIGHT, -0.4);
   centerFirstCard();
   loop.start();
