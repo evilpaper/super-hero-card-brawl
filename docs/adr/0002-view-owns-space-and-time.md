@@ -13,3 +13,5 @@ The alternative, moving these into `Game` (e.g. `Board.moveCard`, auto-advancing
 ## Consequences
 
 The logic predates the vocabulary in `CONTEXT.md` and is deliberately left alone, so some names differ: a Wave is `Board` / "room" (`escapeRoom`, `clearHandledRoom`), Slip past is `escapeRoom`, and a Joker is rank `"D"` named "Donsol". Renderer code uses the `CONTEXT.md` terms.
+
+Rules live in `src/game` and import nothing outside it. The browser host lives in `src/web`, and `src/web/main.ts` is its entry. A later terminal host would be a sibling of `web`.

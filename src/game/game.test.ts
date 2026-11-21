@@ -1,8 +1,8 @@
 import { expect, test } from "vitest";
 import Game from "./game";
-import Deck from "../deck/deck";
-import Board from "../board/board";
-import Card from "../card/card";
+import Deck from "./deck";
+import Board from "./board";
+import Card from "./card";
 
 function makeCard(
   suite: "♠︎" | "♥︎" | "♣︎" | "♦︎",

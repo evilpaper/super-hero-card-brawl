@@ -1,5 +1,5 @@
-import Card from "../card/card";
-import { Suite, Rank, Value } from "../card/card.types";
+import Card from "./card";
+import { Suite, Rank, Value } from "./card.types";
 
 export default class Deck {
   private cards: Array<Card>;

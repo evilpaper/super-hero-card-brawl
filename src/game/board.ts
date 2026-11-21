@@ -1,5 +1,5 @@
-import Card from "../card/card";
-import Deck from "../deck/deck";
+import Card from "./card";
+import Deck from "./deck";
 
 export default class Board {
   cards: Array<Card>;

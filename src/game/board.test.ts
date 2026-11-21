@@ -1,6 +1,6 @@
 import { expect, test, vi } from "vitest";
 import Board from "./board";
-import Deck from "../deck/deck";
+import Deck from "./deck";
 
 test("Board should start empty", () => {
   const deck = new Deck();

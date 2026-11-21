@@ -1,5 +1,5 @@
-import Card from "../card/card";
-import { Suite } from "../card/card.types";
+import Card from "../game/card";
+import { Suite } from "../game/card.types";
 
 export const CARD_WIDTH = 112;
 export const CARD_HEIGHT = 158;
