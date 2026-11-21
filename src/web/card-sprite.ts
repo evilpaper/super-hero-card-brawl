@@ -4,12 +4,6 @@ import { DisplayObject } from "./scene";
 import { drawCardFace } from "./draw-card";
 
 /**
- * A gentle idle rock so resting cards never look frozen.
- */
-const SWAY_ANGLE = 0.02;
-const SWAY_SPEED = 1.3;
-
-/**
  * How one Card looks and moves on screen.
  * Position and rotation are springs: moveTo() sets targets and update() chases them.
  */
@@ -63,11 +57,9 @@ export default class CardSprite implements DisplayObject {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    const sway = Math.sin(this.age * SWAY_SPEED) * SWAY_ANGLE;
-
     ctx.save();
     ctx.translate(this.x.getValue(), this.y.getValue());
-    ctx.rotate(this.rotation.getValue() + sway);
+    ctx.rotate(this.rotation.getValue());
     drawCardFace(ctx, this.card);
     ctx.restore();
   }
