@@ -1,6 +1,6 @@
 import Card from "../card/card";
 import Spring from "../engine/spring";
-import { DisplayObject } from "../engine/display-list";
+import { DisplayObject } from "../engine/scene";
 import { drawCardFace } from "./draw-card";
 
 /**

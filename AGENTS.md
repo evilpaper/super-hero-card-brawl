@@ -14,4 +14,4 @@ Single-context: one `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/age
 
 ## Code style
 
-Comments are always multi-line `/** ... */` blocks, never `//` line or end-of-line comments. See `docs/agents/code-style.md`.
+Comments are always multi-line `/** ... */` blocks, never `//` line or end-of-line comments. Name a type for the role the caller sees, and leave the data structure out of the type name. See `docs/agents/code-style.md`.

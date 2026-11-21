@@ -1,11 +1,14 @@
 import Game from "./game/game";
 import Loop from "./engine/loop";
-import DisplayList from "./engine/display-list";
+import Scene from "./engine/scene";
 import CardSprite from "./cards/card-sprite";
 import { CARD_HEIGHT } from "./cards/draw-card";
 
 /**
- * Must match the font-weight declared in each @font-face rule, or load() won't find the face.
+ * Faces the card renderer paints with. They are loaded before the first frame
+ * because canvas text does not update itself when a font arrives later.
+ *
+ * The weight must match each @font-face rule, or load() will not find the face.
  */
 const FONTS = [
   '16px "Whyte Inktrap Book"',
@@ -13,49 +16,75 @@ const FONTS = [
   'bold 16px "Whyte Inktrap Heavy"',
 ];
 
+/**
+ * A missing font must not block the game. Canvas falls back to sans-serif,
+ * which stays readable if a custom face never arrives.
+ */
 function loadFonts() {
-  /**
-   * A missing font shouldn't block the game; canvas falls back to sans-serif.
-   */
   return Promise.all(
     FONTS.map((font) => document.fonts.load(font).catch(() => [])),
   );
 }
 
+/**
+ * The page owns the element so CSS can cover the window. The context is taken
+ * once and reused, because every frame draws into the same surface.
+ */
 const canvas = document.querySelector<HTMLCanvasElement>(".canvas")!;
 
 const ctx = canvas.getContext("2d")!;
 
 /**
- * Size of the canvas in CSS pixels, which is what everything is drawn in.
+ * Layout size in CSS pixels. Centering and drawing use these rather than the
+ * backing-store size, so a high-DPI screen does not move where things sit.
  */
 let width = 0;
 let height = 0;
 
+/**
+ * The backing store is in device pixels and the window is in CSS pixels.
+ * Both are updated together, and the context is scaled so one CSS pixel stays
+ * one unit of game space. Otherwise cards look soft or the wrong size.
+ */
 function resizeCanvas() {
   const dpr = window.devicePixelRatio || 1;
   width = window.innerWidth;
   height = window.innerHeight;
   canvas.width = Math.round(width * dpr);
   canvas.height = Math.round(height * dpr);
-  /**
-   * Draw in CSS pixels; the transform maps them onto the high-DPI backing store.
-   */
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 
+/**
+ * Rules and the dealt board live here, apart from sprites. start() shuffles
+ * and draws the opening room so the scene has a real card to show.
+ */
 const game = new Game();
 
 game.start();
 
-const displayList = new DisplayList();
+/**
+ * What is on screen, separate from the game model. Only the first dealt card
+ * is shown so far, which is enough to prove the deal-in motion before the
+ * rest of the room is drawn.
+ */
+const scene = new Scene();
 const firstCard = new CardSprite(game.board.cards[0]);
-displayList.add(firstCard);
+scene.add(firstCard);
 
+/**
+ * The card's rest pose is the middle of the window. A resize changes that
+ * point, so the spring target has to be set again or the card settles off-center.
+ */
 function centerFirstCard() {
   firstCard.moveTo(width / 2, height / 2);
 }
 
+/**
+ * The canvas does not follow the window on its own. The backing store is
+ * resized and the card retargeted on every resize, and once at boot before
+ * anything is drawn.
+ */
 window.addEventListener("resize", () => {
   resizeCanvas();
   centerFirstCard();
@@ -63,18 +92,29 @@ window.addEventListener("resize", () => {
 
 resizeCanvas();
 
+/**
+ * The canvas keeps the previous frame, so each frame paints a flat background
+ * before the scene. Without the clear, sprites would smear as they move.
+ */
 function draw() {
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, width, height);
-  displayList.draw(ctx);
+  scene.draw(ctx);
 }
 
-const loop = new Loop((dt) => displayList.update(dt), draw);
+/**
+ * Springs advance in update and pixels are written in draw. Keeping them
+ * apart means travel is measured in seconds, so a slow frame does not change
+ * how far the card moves.
+ */
+const loop = new Loop((dt) => scene.update(dt), draw);
 
+/**
+ * The loop waits for the fonts so the first frame uses the real faces.
+ * The card is snapped in below the screen and tilted, then given the center
+ * as its target, so the springs carry it in instead of it appearing at rest.
+ */
 loadFonts().then(() => {
-  /**
-   * Start below the screen, tilted, and let the springs bring it in.
-   */
   firstCard.placeAt(width / 2, height + CARD_HEIGHT, -0.4);
   centerFirstCard();
   loop.start();

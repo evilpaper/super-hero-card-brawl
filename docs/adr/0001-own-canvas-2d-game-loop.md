@@ -6,11 +6,11 @@ The shape is borrowed from LÖVE, the framework Balatro is built on:
 
 - **One loop, two callbacks.** A `requestAnimationFrame` loop calls `update(dt)` and then `draw()` every frame. `update` changes state; `draw` only reads it.
 - **Capped frame time.** `dt` is clamped so a backgrounded tab or a hitch doesn't make objects jump. Variable `dt` was chosen over a fixed timestep to stay smooth on high-refresh displays without interpolation; springs sub-step internally to stay stable.
-- **Flat list, drawn in depth order.** Objects live in one display list sorted by depth, not in a scene graph. A card game has a handful of objects and no need for nested transforms.
+- **Flat list, drawn in depth order.** A scene keeps its objects in one list sorted by depth, not in a scene graph. A card game has a handful of objects and no need for nested transforms.
 - **Set a target, let it chase.** Animated properties are damped springs: game code sets targets, and the visible value chases them with velocity, which gives overshoot and wobble for free. Scripted moments ("flip, wait, gather, deal") are queued timed steps that set targets, never one-off animation code.
 - **Areas place cards.** An area (first: the Wave's four Slots) owns a set of cards and only sets their targets. Layout decisions, like one row versus 2×2, live there.
 - **One input dispatcher.** A single pointer handler hit-tests the depth-sorted list and routes taps and drags. Objects don't register their own listeners.
-- **Scenes later.** Title screen, UI and end screens arrive as scenes once there is more than the Wave.
+- **Further scenes later.** Title screen, UI and end screens arrive as their own scenes once there is more than the Wave.
 
 ## Considered options
 

@@ -5,10 +5,10 @@ export interface DisplayObject {
 }
 
 /**
- * Everything on screen, kept in one flat list.
- * Objects are drawn lowest depth first, so higher depth ends up on top.
+ * What is on screen right now.
+ * Drawn lowest depth first, so higher depth ends up on top.
  */
-export default class DisplayList {
+export default class Scene {
   private objects: DisplayObject[];
 
   constructor() {
