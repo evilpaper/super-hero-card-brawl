@@ -1,27 +1,26 @@
 import GameCard from "../game/card";
-import { Suite } from "../game/card.types";
 import Spring from "./spring";
 import { DisplayObject } from "./scene";
+import {
+  ART_HEIGHT,
+  ART_WIDTH,
+  BLACK,
+  CARD_STOCK,
+  drawFaceArt,
+} from "./face";
+import { drawGuardiansBack } from "./guardians";
 
 export const CARD_WIDTH = 200;
 export const CARD_HEIGHT = 286;
 
-const CORNER_RADIUS = 10;
-const PAPER = "#ffffff";
-const BORDER = "#25231f";
-const RED_INK = "#b63d37";
-const BLACK_INK = "#25231f";
-const RED_SUITES: Suite[] = ["♥︎", "♦︎"];
-
-const RANK_FONT = 'bold 30px "Whyte Inktrap Heavy", sans-serif';
-const CORNER_SUITE_FONT = 'bold 20px "Whyte Inktrap Heavy", sans-serif';
-const CENTER_SUITE_FONT = '50px "Whyte Inktrap Regular", sans-serif';
-
 const LEFT = -CARD_WIDTH / 2;
 const TOP = -CARD_HEIGHT / 2;
 
-const BACK_INSET = 12;
-const BACK_CORNER_RADIUS = 6;
+/**
+ * In art space, where both sides of the card are authored.
+ */
+const CORNER_RADIUS = 30;
+const BORDER_WIDTH = 1;
 
 /**
  * How much bigger the card grows at the middle of a flip, as if lifted off
@@ -154,60 +153,41 @@ export default class Card implements DisplayObject {
 }
 
 /**
- * A placeholder back until the real design exists: plain paper with a solid
- * ink panel. It is symmetric, so being drawn mirrored after a flip is invisible.
+ * The Guardians back. The flip leaves the back mirrored, so it is mirrored
+ * once more here to read the right way round.
  */
 function drawBack(ctx: CanvasRenderingContext2D) {
-  drawPaper(ctx);
-
-  ctx.beginPath();
-  ctx.roundRect(
-    LEFT + BACK_INSET,
-    TOP + BACK_INSET,
-    CARD_WIDTH - BACK_INSET * 2,
-    CARD_HEIGHT - BACK_INSET * 2,
-    BACK_CORNER_RADIUS,
-  );
-  ctx.fillStyle = BLACK_INK;
-  ctx.fill();
+  ctx.save();
+  ctx.scale(-1, 1);
+  drawOnStock(ctx, () => drawGuardiansBack(ctx));
+  ctx.restore();
 }
 
 /**
  * Draws a card face centred on the current origin.
  */
 function drawFace(ctx: CanvasRenderingContext2D, card: GameCard) {
-  drawPaper(ctx);
+  drawOnStock(ctx, () => drawFaceArt(ctx, card));
+}
 
-  ctx.fillStyle = RED_SUITES.includes(card.getSuite()) ? RED_INK : BLACK_INK;
-
-  drawCorner(ctx, card);
-
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.font = CENTER_SUITE_FONT;
-  ctx.fillText(card.getSuite(), 0, 0);
-
+/**
+ * Lays down the card stock in art space, outlines it so the card stands out
+ * from a light table, and paints the art clipped to the rounded corners.
+ */
+function drawOnStock(ctx: CanvasRenderingContext2D, paint: () => void) {
   ctx.save();
-  ctx.rotate(Math.PI);
-  drawCorner(ctx, card);
-  ctx.restore();
-}
+  ctx.translate(LEFT, TOP);
+  ctx.scale(CARD_WIDTH / ART_WIDTH, CARD_HEIGHT / ART_HEIGHT);
 
-function drawPaper(ctx: CanvasRenderingContext2D) {
   ctx.beginPath();
-  ctx.roundRect(LEFT, TOP, CARD_WIDTH, CARD_HEIGHT, CORNER_RADIUS);
-  ctx.fillStyle = PAPER;
+  ctx.roundRect(0, 0, ART_WIDTH, ART_HEIGHT, CORNER_RADIUS);
+  ctx.fillStyle = CARD_STOCK;
   ctx.fill();
-  ctx.lineWidth = 1;
-  ctx.strokeStyle = BORDER;
+  ctx.lineWidth = BORDER_WIDTH;
+  ctx.strokeStyle = BLACK;
   ctx.stroke();
-}
+  ctx.clip();
 
-function drawCorner(ctx: CanvasRenderingContext2D, card: GameCard) {
-  ctx.textAlign = "left";
-  ctx.textBaseline = "top";
-  ctx.font = RANK_FONT;
-  ctx.fillText(card.getRank(), LEFT + 9, TOP + 7);
-  ctx.font = CORNER_SUITE_FONT;
-  ctx.fillText(card.getSuite(), LEFT + 10, TOP + 40);
+  paint();
+  ctx.restore();
 }

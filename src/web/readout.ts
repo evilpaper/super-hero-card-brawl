@@ -1,7 +1,7 @@
 import Player from "../game/player";
 
-const FONT = '16px ui-monospace, "SF Mono", Menlo, Consolas, monospace';
-const INK = "#25231f";
+const FONT = '12px ui-monospace, "SF Mono", Menlo, Consolas, monospace';
+const INK = "#268bd2";
 const LEFT = 16;
 const TOP = 16;
 const LINE_HEIGHT = 22;
@@ -15,9 +15,9 @@ const LINE_HEIGHT = 22;
  */
 export function drawReadout(ctx: CanvasRenderingContext2D, player: Player) {
   const lines = [
-    `Health  ${player.getHealth()}`,
-    `Defence ${player.getDefence()}`,
-    `Stamina ${player.getStamina()}`,
+    `Health (heart)    ${player.getHealth()}`,
+    `Defence (diamond) ${player.getDefence()}`,
+    `Stamina (diamond) ${player.getStamina()}`,
   ];
 
   ctx.font = FONT;

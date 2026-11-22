@@ -128,7 +128,7 @@ function update(dt: number) {
  * and never takes a tap.
  */
 function draw() {
-  ctx.fillStyle = "#ffffff";
+  ctx.fillStyle = "#fdf6e3";
   ctx.fillRect(0, 0, width, height);
   scene.draw(ctx);
   drawReadout(ctx, game.player);
