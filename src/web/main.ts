@@ -4,6 +4,7 @@ import Scene from "./scene";
 import Card from "./card";
 import Dealer from "./dealer";
 import Input from "./input";
+import { drawReadout } from "./readout";
 import Script from "./script";
 import Slots from "./slots";
 
@@ -123,11 +124,14 @@ function update(dt: number) {
 /**
  * The canvas keeps the previous frame, so each frame paints a flat background
  * before the scene. Without the clear, sprites would smear as they move.
+ * The readout is drawn last, outside the scene, so it sits above the cards
+ * and never takes a tap.
  */
 function draw() {
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, width, height);
   scene.draw(ctx);
+  drawReadout(ctx, game.player);
 }
 
 /**
