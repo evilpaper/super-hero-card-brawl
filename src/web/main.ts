@@ -1,8 +1,7 @@
 import Game from "../game/game";
 import Loop from "./loop";
 import Scene from "./scene";
-import CardSprite from "./card-sprite";
-import { CARD_HEIGHT } from "./draw-card";
+import Card, { CARD_HEIGHT } from "./card";
 
 /**
  * Faces the card renderer paints with. They are loaded before the first frame
@@ -69,7 +68,7 @@ game.start();
  * rest of the room is drawn.
  */
 const scene = new Scene();
-const firstCard = new CardSprite(game.board.cards[0]);
+const firstCard = new Card(game.board.cards[0]);
 scene.add(firstCard);
 
 /**
