@@ -2,6 +2,7 @@ import Game from "../game/game";
 import Loop from "./loop";
 import Scene from "./scene";
 import Card, { CARD_HEIGHT } from "./card";
+import Input from "./input";
 
 /**
  * Faces the card renderer paints with. They are loaded before the first frame
@@ -92,6 +93,19 @@ window.addEventListener("resize", () => {
 resizeCanvas();
 
 /**
+ * What a tap means. Input only reports which object was tapped; turning that
+ * into a Game command happens here. The card flips by itself once the game
+ * marks it played.
+ */
+const input = new Input(scene, (object) => {
+  if (object instanceof Card) {
+    game.playCard(object.getCard());
+  }
+});
+
+input.listen(canvas);
+
+/**
  * Springs advance by elapsed seconds rather than by frames, so a slow frame
  * does not change how far the card moves.
  */
@@ -110,8 +124,9 @@ function draw() {
 }
 
 /**
- * State moves forward in update and pixels are written in draw, so drawing
- * never changes what it is drawing.
+ * Update moves what is on screen (springs, timers) and draw writes pixels, so
+ * drawing never changes what it is drawing. Neither applies the rules: Game
+ * commands are called when the player acts or when an animation finishes.
  */
 const loop = new Loop(update, draw);
 

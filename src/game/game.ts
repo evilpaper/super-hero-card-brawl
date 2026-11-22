@@ -32,6 +32,10 @@ export default class Game {
   }
 
   playCard(card: Card) {
+    if (card.getPlayed()) {
+      return;
+    }
+
     card.play();
     this.handleCardEffect(card);
     this.refreshMoveOnAvailability();

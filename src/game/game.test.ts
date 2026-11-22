@@ -98,6 +98,19 @@ test("After escaping the previous room, leaving opens once every monster is hand
   expect(game.player.getCanMoveOn()).toBe(true);
 });
 
+test("A card that is already played has no effect when played again", () => {
+  const game = new Game();
+  const opponent = makeCard("♠︎", "5", 5);
+  game.board.cards = [opponent];
+
+  game.playCard(opponent);
+  const healthAfterFirstPlay = game.player.getHealth();
+  game.playCard(opponent);
+
+  expect(healthAfterFirstPlay).toBeLessThan(21);
+  expect(game.player.getHealth()).toBe(healthAfterFirstPlay);
+});
+
 test("A room with no monsters can be escaped even if the previous room was escaped", () => {
   const game = new Game();
   game.escapeRoom();

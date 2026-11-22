@@ -2,6 +2,17 @@ export interface DisplayObject {
   getDepth(): number;
   update(dt: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
+
+  /**
+   * Whether a point in game space falls on the object as it is drawn now.
+   */
+  contains(x: number, y: number): boolean;
+
+  /**
+   * Whether a tap on the object should reach the tap handler. An object that
+   * is not tappable still blocks taps to anything beneath it.
+   */
+  isTappable(): boolean;
 }
 
 /**
@@ -26,11 +37,20 @@ export default class Scene {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    const byDepth = [...this.objects].sort(
-      (a, b) => a.getDepth() - b.getDepth(),
-    );
-    for (const object of byDepth) {
+    for (const object of this.byDepth()) {
       object.draw(ctx);
     }
+  }
+
+  /**
+   * The object drawn on top at a point, or null if the point is empty.
+   */
+  objectAt(x: number, y: number): DisplayObject | null {
+    const topFirst = this.byDepth().reverse();
+    return topFirst.find((object) => object.contains(x, y)) ?? null;
+  }
+
+  private byDepth(): DisplayObject[] {
+    return [...this.objects].sort((a, b) => a.getDepth() - b.getDepth());
   }
 }
