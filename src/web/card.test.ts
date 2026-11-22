@@ -26,6 +26,14 @@ test("contains should follow the card's rotation", () => {
   expect(card.contains(0, CARD_HEIGHT / 2 - 1)).toBe(false);
 });
 
+test("contains should follow the card's scale", () => {
+  const card = makeCard();
+  card.placeAt(0, 0, 0, 0.5);
+
+  expect(card.contains(CARD_WIDTH / 4 - 1, 0)).toBe(true);
+  expect(card.contains(CARD_WIDTH / 4 + 1, 0)).toBe(false);
+});
+
 test("A card should stop being tappable once it is played", () => {
   const card = makeCard();
 

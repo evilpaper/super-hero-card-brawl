@@ -1,8 +1,10 @@
 import Game from "../game/game";
 import Loop from "./loop";
 import Scene from "./scene";
-import Card, { CARD_HEIGHT } from "./card";
+import Card from "./card";
 import Input from "./input";
+import Script from "./script";
+import Slots from "./slots";
 
 /**
  * Faces the card renderer paints with. They are loaded before the first frame
@@ -57,40 +59,38 @@ function resizeCanvas() {
 
 /**
  * Rules and the dealt board live here, apart from sprites. start() shuffles
- * and draws the opening room so the scene has a real card to show.
+ * and draws the opening Wave so the scene has real cards to show.
  */
 const game = new Game();
 
 game.start();
 
 /**
- * What is on screen, separate from the game model. Only the first dealt card
- * is shown so far, which is enough to prove the deal-in motion before the
- * rest of the room is drawn.
+ * What is on screen, separate from the game model. Each card in the opening
+ * Wave gets a view card, and the Slots decide where those cards sit.
  */
 const scene = new Scene();
-const firstCard = new Card(game.board.cards[0]);
-scene.add(firstCard);
+const waveCards = game.board.cards.map((card) => new Card(card));
+waveCards.forEach((card) => scene.add(card));
+const slots = new Slots(waveCards);
 
 /**
- * The card's rest pose is the middle of the window. A resize changes that
- * point, so the spring target has to be set again or the card settles off-center.
+ * Scripted moments, like the deal, run here one timed step at a time.
  */
-function centerFirstCard() {
-  firstCard.moveTo(width / 2, height / 2);
-}
+const script = new Script();
 
 /**
  * The canvas does not follow the window on its own. The backing store is
- * resized and the card retargeted on every resize, and once at boot before
- * anything is drawn.
+ * resized and the Slots laid out again on every resize, and once at boot
+ * before anything is drawn.
  */
 window.addEventListener("resize", () => {
   resizeCanvas();
-  centerFirstCard();
+  slots.layout(width, height);
 });
 
 resizeCanvas();
+slots.layout(width, height);
 
 /**
  * What a tap means. Input only reports which object was tapped; turning that
@@ -106,10 +106,12 @@ const input = new Input(scene, (object) => {
 input.listen(canvas);
 
 /**
- * Springs advance by elapsed seconds rather than by frames, so a slow frame
- * does not change how far the card moves.
+ * Springs and script steps advance by elapsed seconds rather than by frames,
+ * so a slow frame does not change how far a card moves. The script runs
+ * first, so a target it sets is chased in the same frame.
  */
 function update(dt: number) {
+  script.update(dt);
   scene.update(dt);
 }
 
@@ -132,11 +134,10 @@ const loop = new Loop(update, draw);
 
 /**
  * The loop waits for the fonts so the first frame uses the real faces.
- * The card is snapped in below the screen and tilted, then given the center
- * as its target, so the springs carry it in instead of it appearing at rest.
+ * The deal starts with the loop, so the springs carry each card in from
+ * below the window instead of it appearing at rest.
  */
 loadFonts().then(() => {
-  firstCard.placeAt(width / 2, height + CARD_HEIGHT, -0.4);
-  centerFirstCard();
+  slots.deal(script);
   loop.start();
 });

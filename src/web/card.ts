@@ -31,7 +31,8 @@ const FLIP_LIFT = 0.12;
 
 /**
  * How one Card looks and moves on screen.
- * Position and rotation are springs: moveTo() sets targets and update() chases them.
+ * Position, rotation and scale are springs: moveTo() sets targets and
+ * update() chases them. Scale is relative to CARD_WIDTH by CARD_HEIGHT.
  *
  * The flip is a spring from 0 (face up) to 1 (face down). Its target follows
  * whether the game card is played, so the view never keeps its own copy of
@@ -42,6 +43,7 @@ export default class Card implements DisplayObject {
   private x: Spring;
   private y: Spring;
   private rotation: Spring;
+  private scale: Spring;
   private flip: Spring;
   private depth: number;
   private age: number;
@@ -51,6 +53,7 @@ export default class Card implements DisplayObject {
     this.x = new Spring(0);
     this.y = new Spring(0);
     this.rotation = new Spring(0);
+    this.scale = new Spring(1);
     this.flip = new Spring(card.getPlayed() ? 1 : 0, 200, 18);
     this.depth = 0;
     this.age = 0;
@@ -71,16 +74,18 @@ export default class Card implements DisplayObject {
   /**
    * Puts the card somewhere instantly, e.g. off-screen before it's dealt.
    */
-  placeAt(x: number, y: number, rotation = 0): void {
+  placeAt(x: number, y: number, rotation = 0, scale = 1): void {
     this.x.snap(x);
     this.y.snap(y);
     this.rotation.snap(rotation);
+    this.scale.snap(scale);
   }
 
-  moveTo(x: number, y: number, rotation = 0): void {
+  moveTo(x: number, y: number, rotation = 0, scale = 1): void {
     this.x.setTarget(x);
     this.y.setTarget(y);
     this.rotation.setTarget(rotation);
+    this.scale.setTarget(scale);
   }
 
   isTappable(): boolean {
@@ -93,6 +98,7 @@ export default class Card implements DisplayObject {
     this.x.update(dt);
     this.y.update(dt);
     this.rotation.update(dt);
+    this.scale.update(dt);
     this.flip.update(dt);
     this.age += dt;
   }
@@ -101,7 +107,7 @@ export default class Card implements DisplayObject {
     ctx.save();
     ctx.translate(this.x.getValue(), this.y.getValue());
     ctx.rotate(this.rotation.getValue());
-    ctx.scale(this.getWidthScale(), this.getLift());
+    ctx.scale(this.getWidthScale(), this.getHeightScale());
 
     if (this.isFaceDown()) {
       drawBack(ctx);
@@ -125,7 +131,7 @@ export default class Card implements DisplayObject {
 
     return (
       Math.abs(localX) <= (CARD_WIDTH / 2) * Math.abs(this.getWidthScale()) &&
-      Math.abs(localY) <= (CARD_HEIGHT / 2) * this.getLift()
+      Math.abs(localY) <= (CARD_HEIGHT / 2) * this.getHeightScale()
     );
   }
 
@@ -134,11 +140,12 @@ export default class Card implements DisplayObject {
    * The value goes negative on the back half of the turn.
    */
   private getWidthScale(): number {
-    return Math.cos(Math.PI * this.flip.getValue()) * this.getLift();
+    return Math.cos(Math.PI * this.flip.getValue()) * this.getHeightScale();
   }
 
-  private getLift(): number {
-    return 1 + FLIP_LIFT * Math.sin(Math.PI * this.flip.getValue());
+  private getHeightScale(): number {
+    const lift = 1 + FLIP_LIFT * Math.sin(Math.PI * this.flip.getValue());
+    return this.scale.getValue() * lift;
   }
 
   private isFaceDown(): boolean {
