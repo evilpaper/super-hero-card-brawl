@@ -92,6 +92,14 @@ window.addEventListener("resize", () => {
 resizeCanvas();
 
 /**
+ * Springs advance by elapsed seconds rather than by frames, so a slow frame
+ * does not change how far the card moves.
+ */
+function update(dt: number) {
+  scene.update(dt);
+}
+
+/**
  * The canvas keeps the previous frame, so each frame paints a flat background
  * before the scene. Without the clear, sprites would smear as they move.
  */
@@ -102,11 +110,10 @@ function draw() {
 }
 
 /**
- * Springs advance in update and pixels are written in draw. Keeping them
- * apart means travel is measured in seconds, so a slow frame does not change
- * how far the card moves.
+ * State moves forward in update and pixels are written in draw, so drawing
+ * never changes what it is drawing.
  */
-const loop = new Loop((dt) => scene.update(dt), draw);
+const loop = new Loop(update, draw);
 
 /**
  * The loop waits for the fonts so the first frame uses the real faces.
