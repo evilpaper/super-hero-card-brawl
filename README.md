@@ -12,9 +12,11 @@ Donsol was originally created by John Eternal—or so it seems. [Read the story 
 
 This project leverages TypeScript and Vite to deliver a robust and highly maintainable codebase for a browser-based game. The design philosophy centers on keeping the core game logic well-structured, with a strong emphasis on separation of concerns.
 
-The architecture is modular, with key components such as Game, Player, Deck, Board, and View split into distinct, reusable modules. Each class adheres to the single responsibility principle, making the code easy to navigate, extend, and debug. The intention has been to keep class properties private and only accessed with getters and setters. TypeScript is a cornerstone of the project, providing type safety that catches issues during compile time, significantly reducing runtime bugs—a critical feature for a game with complex state management.
+The architecture is modular, with key components such as Game, Player, Deck, and Board split into distinct, reusable modules. Each class adheres to the single responsibility principle, making the code easy to navigate, extend, and debug. The intention has been to keep class properties private and only accessed with getters and setters.
 
-The View module serves as the bridge between the game logic and the browser, handling DOM updates and user interactions. Event handling in the View class is designed with care, using event listeners to manage player input in a clean and efficient way.
+The game is drawn on a single Canvas 2D element with a hand-rolled game loop and no runtime dependencies. The loop follows the LÖVE model: `update(dt)` changes state, `draw()` renders it, objects are drawn from a flat depth-sorted list, and motion comes from springs chasing targets. The renderer reads game state and calls game commands, but never changes the rules. Rules live in `src/game`; the browser host lives in `src/web`. See [`docs/adr/`](./docs/adr/) for the reasoning, [`CONTEXT.md`](./CONTEXT.md) for the game's vocabulary, and [`docs/how-to-play.md`](./docs/how-to-play.md) for the rules.
+
+TypeScript is a cornerstone of the project, providing type safety that catches issues during compile time, significantly reducing runtime bugs, a critical feature for a game with complex state management.
 
 Testing is another key aspect of this project. Using Vitest, the codebase is equipped with unit tests covering core functionality like player actions and deck operations. These tests not only ensure the game behaves as expected but also act as a safeguard against regressions as new features are introduced.
 
@@ -23,7 +25,7 @@ Testing is another key aspect of this project. Using Vitest, the codebase is equ
 - pnpm
 - TypeScript
 - Vite
-- Motion
+- Canvas 2D (no runtime dependencies)
 
 ## Running Locally
 
@@ -67,16 +69,6 @@ pnpm build
 ```
 
 The build process will generate optimized production files in the `dist` directory, ready for deployment to any static hosting service.
-
-## Ideas for the future
-
-[ ] - Spell put each action in text below cards.
-[ ] - Make effect of played card more visual, like an overlay.
-[ ] - Sound effects.
-
-## Known issues
-
-[ ] - Cards can overlap when "Move on" is clicked during deal animation.
 
 ## Contributions
 

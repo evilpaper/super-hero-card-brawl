@@ -1,7 +1,7 @@
-import Deck from "../deck/deck";
-import Board from "../board/board";
-import Player from "../player/player";
-import Card from "../card/card";
+import Deck from "./deck";
+import Board from "./board";
+import Player from "./player";
+import Card from "./card";
 
 export default class Game {
   deck: Deck;
@@ -32,6 +32,10 @@ export default class Game {
   }
 
   playCard(card: Card) {
+    if (card.getPlayed()) {
+      return;
+    }
+
     card.play();
     this.handleCardEffect(card);
     this.refreshMoveOnAvailability();

@@ -1,8 +1,8 @@
 import { expect, test } from "vitest";
 import Game from "./game";
-import Deck from "../deck/deck";
-import Board from "../board/board";
-import Card from "../card/card";
+import Deck from "./deck";
+import Board from "./board";
+import Card from "./card";
 
 function makeCard(
   suite: "♠︎" | "♥︎" | "♣︎" | "♦︎",
@@ -15,11 +15,15 @@ function makeCard(
 test("Game should be initialized with a deck and a board", () => {
   const game = new Game();
 
-  // Check if game has a deck
+  /**
+   * Check if game has a deck
+   */
   expect(game.deck).toBeInstanceOf(Deck);
   expect(game.deck.getCardCount()).toBe(54);
 
-  // Check if game has a board
+  /**
+   * Check if game has a board
+   */
   expect(game.board).toBeInstanceOf(Board);
   expect(game.board.cards.length).toBe(0);
 });
@@ -28,13 +32,19 @@ test("Game should be able to be started. When so, board should be populated with
   const game = new Game();
   const initialDeckSize = game.deck.getCardCount();
 
-  // Start game
+  /**
+   * Start game
+   */
   game.start();
 
-  // Check if board have 4 cards
+  /**
+   * Check if board have 4 cards
+   */
   expect(game.board.cards.length).toBe(4);
 
-  // Ceck if deck have 4 fewer cards
+  /**
+   * Ceck if deck have 4 fewer cards
+   */
   expect(game.deck.getCardCount()).toBe(initialDeckSize - 4);
 });
 
@@ -86,6 +96,19 @@ test("After escaping the previous room, leaving opens once every monster is hand
   game.playCard(jokerMonster);
 
   expect(game.player.getCanMoveOn()).toBe(true);
+});
+
+test("A card that is already played has no effect when played again", () => {
+  const game = new Game();
+  const opponent = makeCard("♠︎", "5", 5);
+  game.board.cards = [opponent];
+
+  game.playCard(opponent);
+  const healthAfterFirstPlay = game.player.getHealth();
+  game.playCard(opponent);
+
+  expect(healthAfterFirstPlay).toBeLessThan(21);
+  expect(game.player.getHealth()).toBe(healthAfterFirstPlay);
 });
 
 test("A room with no monsters can be escaped even if the previous room was escaped", () => {
