@@ -30,6 +30,10 @@ export default class Scene {
     this.objects.push(object);
   }
 
+  remove(object: DisplayObject): void {
+    this.objects = this.objects.filter((other) => other !== object);
+  }
+
   update(dt: number): void {
     for (const object of this.objects) {
       object.update(dt);

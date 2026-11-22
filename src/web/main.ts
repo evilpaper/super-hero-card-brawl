@@ -2,6 +2,7 @@ import Game from "../game/game";
 import Loop from "./loop";
 import Scene from "./scene";
 import Card from "./card";
+import Dealer from "./dealer";
 import Input from "./input";
 import Script from "./script";
 import Slots from "./slots";
@@ -66,16 +67,14 @@ const game = new Game();
 game.start();
 
 /**
- * What is on screen, separate from the game model. Each card in the opening
- * Wave gets a view card, and the Slots decide where those cards sit.
+ * What is on screen, separate from the game model, and the Slots that decide
+ * where the current Wave's cards sit.
  */
 const scene = new Scene();
-const waveCards = game.board.cards.map((card) => new Card(card));
-waveCards.forEach((card) => scene.add(card));
-const slots = new Slots(waveCards);
+const slots = new Slots();
 
 /**
- * Scripted moments, like the deal, run here one timed step at a time.
+ * Scripted moments, like a Wave change, run here one timed step at a time.
  */
 const script = new Script();
 
@@ -95,15 +94,21 @@ slots.layout(width, height);
 /**
  * What a tap means. Input only reports which object was tapped; turning that
  * into a Game command happens here. The card flips by itself once the game
- * marks it played.
+ * marks it played, and a play that completes the Wave brings on the next one.
  */
 const input = new Input(scene, (object) => {
   if (object instanceof Card) {
     game.playCard(object.getCard());
+
+    if (game.board.isCleared()) {
+      dealer.nextWave();
+    }
   }
 });
 
 input.listen(canvas);
+
+const dealer = new Dealer(game, scene, slots, script, input);
 
 /**
  * Springs and script steps advance by elapsed seconds rather than by frames,
@@ -138,6 +143,6 @@ const loop = new Loop(update, draw);
  * below the window instead of it appearing at rest.
  */
 loadFonts().then(() => {
-  slots.deal(script);
+  dealer.dealOpeningWave();
   loop.start();
 });

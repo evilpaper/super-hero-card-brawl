@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import GameCard from "../game/card";
-import Card from "./card";
+import Card, { CARD_HEIGHT } from "./card";
 import Script from "./script";
 import Slots, { DEAL_INTERVAL, SLOT_COUNT, arrange } from "./slots";
 
@@ -45,12 +45,12 @@ test("There should always be four Slot centres", () => {
 
 test("Dealing should send each card to its own Slot, one step at a time", () => {
   const cards = makeCards(4);
-  const slots = new Slots(cards);
+  const slots = new Slots();
   const script = new Script();
   const { centers } = arrange(1400, 800);
   slots.layout(1400, 800);
 
-  slots.deal(script);
+  slots.deal(cards, script);
   script.update(0);
   settle(cards);
 
@@ -67,12 +67,12 @@ test("Dealing should send each card to its own Slot, one step at a time", () => 
 
 test("A short Wave should keep its cards in the first Slots", () => {
   const cards = makeCards(3);
-  const slots = new Slots(cards);
+  const slots = new Slots();
   const script = new Script();
   const { centers } = arrange(1400, 800);
   slots.layout(1400, 800);
 
-  slots.deal(script);
+  slots.deal(cards, script);
   script.update(1);
   settle(cards);
 
@@ -82,4 +82,43 @@ test("A short Wave should keep its cards in the first Slots", () => {
   expect(cards.some((card) => card.contains(centers[3].x, centers[3].y))).toBe(
     false,
   );
+});
+
+test("Sending off should move every card out of its Slot, below the window", () => {
+  const cards = makeCards(4);
+  const slots = new Slots();
+  const script = new Script();
+  const { centers } = arrange(1400, 800);
+  slots.layout(1400, 800);
+  slots.deal(cards, script);
+  script.update(1);
+  settle(cards);
+
+  slots.sendOff(script);
+  script.update(1);
+  settle(cards);
+
+  cards.forEach((card, slot) => {
+    expect(card.contains(centers[slot].x, centers[slot].y)).toBe(false);
+    expect(card.contains(centers[slot].x, 800 + CARD_HEIGHT)).toBe(true);
+  });
+});
+
+test("A resize should not pull cards that were sent off back into their Slots", () => {
+  const cards = makeCards(4);
+  const slots = new Slots();
+  const script = new Script();
+  slots.layout(1400, 800);
+  slots.deal(cards, script);
+  script.update(1);
+  slots.sendOff(script);
+  script.update(1);
+
+  slots.layout(1200, 800);
+  settle(cards);
+
+  const { centers } = arrange(1200, 800);
+  cards.forEach((card, slot) => {
+    expect(card.contains(centers[slot].x, centers[slot].y)).toBe(false);
+  });
 });

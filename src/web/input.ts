@@ -16,6 +16,9 @@ type TapHandler = (object: DisplayObject) => void;
  * A tap is a press and release on the same tappable object without moving
  * more than TAP_SLOP. Releasing elsewhere cancels it, so a slipped thumb can
  * back out of a play.
+ *
+ * While locked, presses are ignored. That is about the moment, such as a
+ * Wave changing, rather than about any one object being tappable.
  */
 export default class Input {
   private scene: Scene;
@@ -23,6 +26,7 @@ export default class Input {
   private pressed: DisplayObject | null;
   private pressX: number;
   private pressY: number;
+  private locked: boolean;
 
   constructor(scene: Scene, onTap: TapHandler) {
     this.scene = scene;
@@ -30,6 +34,19 @@ export default class Input {
     this.pressed = null;
     this.pressX = 0;
     this.pressY = 0;
+    this.locked = false;
+  }
+
+  /**
+   * A press already in progress is dropped, so it cannot land after the lock.
+   */
+  lock(): void {
+    this.locked = true;
+    this.pressed = null;
+  }
+
+  unlock(): void {
+    this.locked = false;
   }
 
   /**
@@ -66,6 +83,10 @@ export default class Input {
   }
 
   press(x: number, y: number): void {
+    if (this.locked) {
+      return;
+    }
+
     const target = this.scene.objectAt(x, y);
     this.pressed = target !== null && target.isTappable() ? target : null;
     this.pressX = x;

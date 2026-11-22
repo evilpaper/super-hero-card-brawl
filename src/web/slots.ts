@@ -11,7 +11,8 @@ const GAP = 24;
 const MARGIN = 24;
 
 /**
- * Seconds between one card reaching for its Slot and the next.
+ * Seconds between one card reaching for its Slot and the next. Sending cards
+ * off uses the same rhythm.
  */
 export const DEAL_INTERVAL = 0.08;
 
@@ -59,61 +60,93 @@ export function arrange(width: number, height: number): Arrangement {
 }
 
 /**
- * The Wave's four Slots. It owns the Wave's cards on screen and only sets
- * their targets; the card in Slot i is the i-th card the Wave was dealt.
+ * Each Slot's card arrives and leaves at its own slight angle, alternating
+ * sides, so a deal does not look like one block moving.
+ */
+function tilt(slot: number) {
+  return (slot % 2 === 0 ? -1 : 1) * (0.3 + 0.05 * slot);
+}
+
+/**
+ * The Wave's four Slots. They hold the current Wave's cards on screen and only
+ * set their targets; the card in Slot i is the i-th card the Wave was dealt.
  * A Wave with fewer cards leaves its last Slots empty.
+ *
+ * Cards come in from below the window and leave the same way, Slot 1 first.
+ * Only seated cards, those that have been dealt and not yet sent off, follow
+ * the layout when the window changes.
  */
 export default class Slots {
   private cards: Card[];
+  private seated: Set<Card>;
   private width: number;
   private height: number;
-  private dealtCount: number;
 
-  constructor(cards: Card[]) {
-    this.cards = cards;
+  constructor() {
+    this.cards = [];
+    this.seated = new Set();
     this.width = 0;
     this.height = 0;
-    this.dealtCount = 0;
-
-    /**
-     * Later Slots draw on top, so cards crossing in flight overlap in deal order.
-     */
-    cards.forEach((card, slot) => card.setDepth(slot));
   }
 
-  /**
-   * Sends every dealt card to its Slot for a new window size. Cards still
-   * waiting to be dealt stay where they are until their turn.
-   */
   layout(width: number, height: number): void {
     this.width = width;
     this.height = height;
 
-    for (let slot = 0; slot < this.dealtCount; slot++) {
-      this.sendToSlot(slot);
-    }
+    this.cards.forEach((card, slot) => {
+      if (this.seated.has(card)) {
+        this.sendToSlot(card, slot);
+      }
+    });
   }
 
   /**
-   * Snaps every card below the window, tilted, then queues one step per card
-   * that sends it to its Slot, Slot 1 first.
+   * Takes the next Wave's cards, snaps them below the window, and queues one
+   * step per card that sends it to its Slot.
    */
-  deal(script: Script): void {
-    const { scale, centers } = arrange(this.width, this.height);
+  deal(cards: Card[], script: Script): void {
+    this.cards = cards;
+    this.seated = new Set();
 
-    this.cards.forEach((card, slot) => {
-      const tilt = (slot % 2 === 0 ? -1 : 1) * (0.3 + 0.05 * slot);
-      card.placeAt(centers[slot].x, this.height + CARD_HEIGHT, tilt, scale);
+    cards.forEach((card, slot) => {
+      /**
+       * Later Slots draw on top, so cards crossing in flight overlap in deal order.
+       */
+      card.setDepth(slot);
+      this.placeBelow(card, slot);
 
       script.after(slot === 0 ? 0 : DEAL_INTERVAL, () => {
-        this.dealtCount = slot + 1;
-        this.sendToSlot(slot);
+        this.seated.add(card);
+        this.sendToSlot(card, slot);
       });
     });
   }
 
-  private sendToSlot(slot: number): void {
+  /**
+   * Queues one step per card that sends it back below the window, the way it
+   * came in.
+   */
+  sendOff(script: Script): void {
+    this.cards.forEach((card, slot) => {
+      script.after(slot === 0 ? 0 : DEAL_INTERVAL, () => {
+        this.seated.delete(card);
+        this.sendBelow(card, slot);
+      });
+    });
+  }
+
+  private sendToSlot(card: Card, slot: number): void {
     const { scale, centers } = arrange(this.width, this.height);
-    this.cards[slot].moveTo(centers[slot].x, centers[slot].y, 0, scale);
+    card.moveTo(centers[slot].x, centers[slot].y, 0, scale);
+  }
+
+  private placeBelow(card: Card, slot: number): void {
+    const { scale, centers } = arrange(this.width, this.height);
+    card.placeAt(centers[slot].x, this.height + CARD_HEIGHT, tilt(slot), scale);
+  }
+
+  private sendBelow(card: Card, slot: number): void {
+    const { scale, centers } = arrange(this.width, this.height);
+    card.moveTo(centers[slot].x, this.height + CARD_HEIGHT, tilt(slot), scale);
   }
 }

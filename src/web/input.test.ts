@@ -61,6 +61,40 @@ test("An object that is not tappable should not be tapped", () => {
   expect(taps).toEqual([]);
 });
 
+test("A press while locked should not tap", () => {
+  const { input, taps } = setup(box());
+
+  input.lock();
+  input.press(0, 0);
+  input.unlock();
+  input.release(0, 0);
+
+  expect(taps).toEqual([]);
+});
+
+test("Locking should drop a press already in progress", () => {
+  const { input, taps } = setup(box());
+
+  input.press(0, 0);
+  input.lock();
+  input.unlock();
+  input.release(0, 0);
+
+  expect(taps).toEqual([]);
+});
+
+test("Unlocking should let the next press tap again", () => {
+  const object = box();
+  const { input, taps } = setup(object);
+
+  input.lock();
+  input.unlock();
+  input.press(0, 0);
+  input.release(0, 0);
+
+  expect(taps).toEqual([object]);
+});
+
 test("A cancelled press should not tap", () => {
   const { input, taps } = setup(box());
 

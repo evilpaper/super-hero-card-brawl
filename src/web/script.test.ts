@@ -41,6 +41,19 @@ test("A long frame should run every step that became due, in order", () => {
   expect(ran).toEqual(["a", "b"]);
 });
 
+test("wait should delay the step after it", () => {
+  const script = new Script();
+  const ran: string[] = [];
+  script.wait(0.5);
+  script.after(0, () => ran.push("a"));
+
+  script.update(0.4);
+  expect(ran).toEqual([]);
+
+  script.update(0.1);
+  expect(ran).toEqual(["a"]);
+});
+
 test("Idle time should not count toward a step added later", () => {
   const script = new Script();
   const ran: string[] = [];

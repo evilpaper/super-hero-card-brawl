@@ -25,6 +25,13 @@ export default class Script {
     this.steps.push({ delay: seconds, action });
   }
 
+  /**
+   * A pause with nothing to do, so the next step starts later.
+   */
+  wait(seconds: number): void {
+    this.after(seconds, () => {});
+  }
+
   update(dt: number): void {
     this.waited += dt;
 
