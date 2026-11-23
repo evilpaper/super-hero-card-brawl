@@ -1,7 +1,7 @@
 import Player from "../game/player";
 
 const FONT = '12px ui-monospace, "SF Mono", Menlo, Consolas, monospace';
-const INK = "#268bd2";
+const INK = "#979d97";
 const LEFT = 16;
 const TOP = 16;
 const LINE_HEIGHT = 22;
