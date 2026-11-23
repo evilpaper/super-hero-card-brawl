@@ -12,6 +12,7 @@ function box(tappable = true): DisplayObject {
     draw: () => {},
     contains: (x, y) => Math.abs(x) <= 50 && Math.abs(y) <= 50,
     isTappable: () => tappable,
+    setPointer: () => {},
   };
 }
 
@@ -93,6 +94,19 @@ test("Unlocking should let the next press tap again", () => {
   input.release(0, 0);
 
   expect(taps).toEqual([object]);
+});
+
+test("Moving without a press should point at the object under the pointer", () => {
+  const seen: Array<number | null> = [];
+  const object = box();
+  object.setPointer = (x) => seen.push(x);
+  const { input } = setup(object);
+
+  input.move(0, 0);
+  input.move(80, 0);
+
+  expect(seen).toContain(0);
+  expect(seen[seen.length - 1]).toBeNull();
 });
 
 test("A cancelled press should not tap", () => {

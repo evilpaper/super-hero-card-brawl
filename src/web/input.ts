@@ -17,8 +17,11 @@ type TapHandler = (object: DisplayObject) => void;
  * more than TAP_SLOP. Releasing elsewhere cancels it, so a slipped thumb can
  * back out of a play.
  *
- * While locked, presses are ignored. That is about the moment, such as a
- * Wave changing, rather than about any one object being tappable.
+ * Every move is also reported to the scene, so a card under the pointer
+ * can lift. While locked, presses are ignored and cards are not told about
+ * the pointer. That is about the moment, such as a Wave changing, rather
+ * than about any one object being tappable. The position is kept, so the
+ * lift resumes where the pointer still is.
  */
 export default class Input {
   private scene: Scene;
@@ -43,10 +46,12 @@ export default class Input {
   lock(): void {
     this.locked = true;
     this.pressed = null;
+    this.scene.suspendPointer();
   }
 
   unlock(): void {
     this.locked = false;
+    this.scene.resumePointer();
   }
 
   /**
@@ -64,7 +69,8 @@ export default class Input {
         return;
       }
       canvas.setPointerCapture(event.pointerId);
-      this.press(...toLayout(event));
+      const [x, y] = toLayout(event);
+      this.press(x, y);
     });
 
     canvas.addEventListener("pointermove", (event) => {
@@ -74,11 +80,22 @@ export default class Input {
     });
 
     canvas.addEventListener("pointerup", (event) => {
-      if (event.isPrimary) {
-        this.release(...toLayout(event));
+      if (!event.isPrimary) {
+        return;
+      }
+      const [x, y] = toLayout(event);
+      this.release(x, y);
+
+      /**
+       * A touch has no pointer once the finger lifts, so the card must not
+       * stay lifted. A mouse is still there and keeps the lift.
+       */
+      if (event.pointerType === "touch") {
+        this.scene.clearPointer();
       }
     });
 
+    canvas.addEventListener("pointerleave", () => this.scene.clearPointer());
     canvas.addEventListener("pointercancel", () => this.cancel());
   }
 
@@ -87,6 +104,7 @@ export default class Input {
       return;
     }
 
+    this.scene.pointAt(x, y);
     const target = this.scene.objectAt(x, y);
     this.pressed = target !== null && target.isTappable() ? target : null;
     this.pressX = x;
@@ -94,7 +112,9 @@ export default class Input {
   }
 
   move(x: number, y: number): void {
-    if (this.pressed === null) {
+    this.scene.pointAt(x, y);
+
+    if (this.locked || this.pressed === null) {
       return;
     }
 
@@ -118,5 +138,6 @@ export default class Input {
 
   cancel(): void {
     this.pressed = null;
+    this.scene.clearPointer();
   }
 }

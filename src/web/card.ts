@@ -29,6 +29,26 @@ const BORDER_WIDTH = 1;
 const FLIP_LIFT = 0.12;
 
 /**
+ * How much a card grows while the pointer is over it, on top of the size
+ * its Slot gave it. The card comes off the table without leaving its Slot.
+ */
+const HOVER_SCALE = 1.15;
+
+/**
+ * Drawn above the other cards in the Wave while the pointer is over it,
+ * so the lifted card is not covered by a neighbour.
+ */
+const HOVER_DEPTH = 8;
+
+/**
+ * A fast spring, kicked once as the pointer arrives, so the card flicks
+ * and settles instead of slowly twisting with the pose spring.
+ */
+const SHAKE_STIFFNESS = 1400;
+const SHAKE_DAMPING = 22;
+const SHAKE_KICK = 8;
+
+/**
  * How one Card looks and moves on screen.
  * Position, rotation and scale are springs: moveTo() sets targets and
  * update() chases them. Scale is relative to CARD_WIDTH by CARD_HEIGHT.
@@ -36,6 +56,9 @@ const FLIP_LIFT = 0.12;
  * The flip is a spring from 0 (face up) to 1 (face down). Its target follows
  * whether the game card is played, so the view never keeps its own copy of
  * that state.
+ *
+ * Hover is more springs on top of that pose: a lift and a short flick as
+ * the pointer arrives. moveTo() still owns where the card sits.
  */
 export default class Card implements DisplayObject {
   private card: GameCard;
@@ -44,6 +67,9 @@ export default class Card implements DisplayObject {
   private rotation: Spring;
   private scale: Spring;
   private flip: Spring;
+  private hover: Spring;
+  private shake: Spring;
+  private pointerX: number | null;
   private depth: number;
   private age: number;
 
@@ -54,6 +80,9 @@ export default class Card implements DisplayObject {
     this.rotation = new Spring(0);
     this.scale = new Spring(1);
     this.flip = new Spring(card.getPlayed() ? 1 : 0, 200, 18);
+    this.hover = new Spring(0);
+    this.shake = new Spring(0, SHAKE_STIFFNESS, SHAKE_DAMPING);
+    this.pointerX = null;
     this.depth = 0;
     this.age = 0;
   }
@@ -63,7 +92,7 @@ export default class Card implements DisplayObject {
   }
 
   getDepth(): number {
-    return this.depth;
+    return this.depth + (this.pointerX === null ? 0 : HOVER_DEPTH);
   }
 
   setDepth(depth: number): void {
@@ -91,21 +120,38 @@ export default class Card implements DisplayObject {
     return !this.card.getPlayed();
   }
 
+  /**
+   * Where the pointer is while it rests on this card, in game space.
+   * Null when the pointer is elsewhere. Arriving kicks the flick.
+   */
+  setPointer(x: number | null, y: number | null): void {
+    const over = x !== null && y !== null;
+    const arrived = over && this.pointerX === null;
+    this.pointerX = over ? x : null;
+
+    if (arrived) {
+      this.shake.kick(SHAKE_KICK);
+    }
+  }
+
   update(dt: number): void {
     this.flip.setTarget(this.card.getPlayed() ? 1 : 0);
+    this.hover.setTarget(this.pointerX === null ? 0 : 1);
 
     this.x.update(dt);
     this.y.update(dt);
     this.rotation.update(dt);
     this.scale.update(dt);
     this.flip.update(dt);
+    this.hover.update(dt);
+    this.shake.update(dt);
     this.age += dt;
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
     ctx.save();
     ctx.translate(this.x.getValue(), this.y.getValue());
-    ctx.rotate(this.rotation.getValue());
+    ctx.rotate(this.rotation.getValue() + this.shake.getValue());
     ctx.scale(this.getWidthScale(), this.getHeightScale());
 
     if (this.isFaceDown()) {
@@ -144,7 +190,8 @@ export default class Card implements DisplayObject {
 
   private getHeightScale(): number {
     const lift = 1 + FLIP_LIFT * Math.sin(Math.PI * this.flip.getValue());
-    return this.scale.getValue() * lift;
+    const hover = 1 + (HOVER_SCALE - 1) * this.hover.getValue();
+    return this.scale.getValue() * lift * hover;
   }
 
   private isFaceDown(): boolean {
