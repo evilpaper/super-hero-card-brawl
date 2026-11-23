@@ -60,6 +60,32 @@ export function arrange(width: number, height: number): Arrangement {
 }
 
 /**
+ * The Slot whose centre is closest to a point, among the first `count`.
+ * A tie stays with `current`.
+ */
+function nearest(
+  x: number,
+  y: number,
+  centers: Array<{ x: number; y: number }>,
+  count: number,
+  current: number,
+) {
+  let best = current;
+  let bestDistance = Math.hypot(x - centers[current].x, y - centers[current].y);
+
+  for (let slot = 0; slot < count; slot++) {
+    const distance = Math.hypot(x - centers[slot].x, y - centers[slot].y);
+
+    if (distance < bestDistance) {
+      best = slot;
+      bestDistance = distance;
+    }
+  }
+
+  return best;
+}
+
+/**
  * Each Slot's card arrives and leaves at its own slight angle, alternating
  * sides, so a deal does not look like one block moving.
  */
@@ -69,22 +95,25 @@ function tilt(slot: number) {
 
 /**
  * The Wave's four Slots. They hold the current Wave's cards on screen and only
- * set their targets; the card in Slot i is the i-th card the Wave was dealt.
- * A Wave with fewer cards leaves its last Slots empty.
+ * set their targets. Slot order starts as the order the Wave was dealt and
+ * follows the card the player is holding. A Wave with fewer cards leaves its
+ * last Slots empty.
  *
  * Cards come in from below the window and leave the same way, Slot 1 first.
  * Only seated cards, those that have been dealt and not yet sent off, follow
- * the layout when the window changes.
+ * the layout when the window changes. A card in the hand stays on the pointer.
  */
 export default class Slots {
   private cards: Card[];
   private seated: Set<Card>;
+  private held: Card | null;
   private width: number;
   private height: number;
 
   constructor() {
     this.cards = [];
     this.seated = new Set();
+    this.held = null;
     this.width = 0;
     this.height = 0;
   }
@@ -94,10 +123,49 @@ export default class Slots {
     this.height = height;
 
     this.cards.forEach((card, slot) => {
-      if (this.seated.has(card)) {
+      if (this.seated.has(card) && card !== this.held) {
         this.sendToSlot(card, slot);
       }
     });
+  }
+
+  /**
+   * Picks a seated card up. A card still coming in or already held stays put.
+   */
+  grab(card: Card): void {
+    if (this.held !== null || !this.seated.has(card)) {
+      return;
+    }
+
+    this.held = card;
+    card.grab();
+  }
+
+  /**
+   * Moves the held card toward the pointer and gives its Slot to whichever
+   * centre the card itself is nearest. The others slide along. The pointer
+   * running ahead does not move them until the card arrives.
+   */
+  drag(card: Card, x: number, y: number): void {
+    if (this.held !== card) {
+      return;
+    }
+
+    this.giveWay(card);
+    card.follow(x, y, arrange(this.width, this.height).scale);
+  }
+
+  /**
+   * Lets the card spring into the Slot it currently occupies.
+   */
+  drop(card: Card): void {
+    if (this.held !== card) {
+      return;
+    }
+
+    this.held = null;
+    card.letGo();
+    this.sendToSlot(card, this.cards.indexOf(card));
   }
 
   /**
@@ -132,6 +200,31 @@ export default class Slots {
         this.seated.delete(card);
         this.sendBelow(card, slot);
       });
+    });
+  }
+
+  /**
+   * Inserts the held card at the Slot nearest its drawn position, when that
+   * is a different Slot from the one it already occupies. An equal distance
+   * keeps the current Slot, so the card does not flicker on the boundary.
+   */
+  private giveWay(card: Card): void {
+    const from = this.cards.indexOf(card);
+    const { centers } = arrange(this.width, this.height);
+    const to = nearest(card.getX(), card.getY(), centers, this.cards.length, from);
+
+    if (to === from) {
+      return;
+    }
+
+    this.cards.splice(from, 1);
+    this.cards.splice(to, 0, card);
+    this.cards.forEach((other, slot) => {
+      other.setDepth(slot);
+
+      if (other !== card) {
+        this.sendToSlot(other, slot);
+      }
     });
   }
 

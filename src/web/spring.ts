@@ -16,12 +16,17 @@ export default class Spring {
   private stiffness: number;
   private damping: number;
 
+  private homeStiffness: number;
+  private homeDamping: number;
+
   constructor(value: number, stiffness = 170, damping = 20) {
     this.value = value;
     this.target = value;
     this.velocity = 0;
     this.stiffness = stiffness;
     this.damping = damping;
+    this.homeStiffness = stiffness;
+    this.homeDamping = damping;
   }
 
   getValue(): number {
@@ -45,6 +50,20 @@ export default class Spring {
 
   kick(velocity: number): void {
     this.velocity += velocity;
+  }
+
+  /**
+   * Follows more tightly for a while, such as while a card is in the hand.
+   * restore() puts the original response back.
+   */
+  tune(stiffness: number, damping: number): void {
+    this.stiffness = stiffness;
+    this.damping = damping;
+  }
+
+  restore(): void {
+    this.stiffness = this.homeStiffness;
+    this.damping = this.homeDamping;
   }
 
   update(dt: number): void {

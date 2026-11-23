@@ -97,15 +97,35 @@ slots.layout(width, height);
  * into a Game command happens here. The card flips by itself once the game
  * marks it played, and a play that completes the Wave brings on the next one.
  */
-const input = new Input(scene, (object) => {
-  if (object instanceof Card) {
-    game.playCard(object.getCard());
+const input = new Input(
+  scene,
+  (object) => {
+    if (object instanceof Card) {
+      game.playCard(object.getCard());
 
-    if (game.wave.isComplete()) {
-      dealer.nextWave();
+      if (game.wave.isComplete()) {
+        dealer.nextWave();
+      }
     }
-  }
-});
+  },
+  {
+    grab(object) {
+      if (object instanceof Card) {
+        slots.grab(object);
+      }
+    },
+    move(object, x, y) {
+      if (object instanceof Card) {
+        slots.drag(object, x, y);
+      }
+    },
+    drop(object) {
+      if (object instanceof Card) {
+        slots.drop(object);
+      }
+    },
+  },
+);
 
 input.listen(canvas);
 

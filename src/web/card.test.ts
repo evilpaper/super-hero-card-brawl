@@ -69,3 +69,17 @@ test("A card should stop being tappable once it is played", () => {
   card.getCard().play();
   expect(card.isTappable()).toBe(false);
 });
+
+test("A grabbed card should stay lifted after the pointer leaves", () => {
+  const card = makeCard();
+  card.placeAt(0, 0);
+  card.grab();
+  card.setPointer(null, null);
+
+  expect(card.getDepth()).toBeGreaterThan(0);
+
+  card.letGo();
+
+  expect(card.getDepth()).toBe(0);
+});
+

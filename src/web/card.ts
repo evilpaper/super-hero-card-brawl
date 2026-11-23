@@ -49,6 +49,21 @@ const SHAKE_DAMPING = 22;
 const SHAKE_KICK = 8;
 
 /**
+ * While a card is in the hand it stays with the pointer and does not
+ * overshoot, so crossing a Slot does not bounce it back into the previous one.
+ * Letting go restores the usual spring, and the card wobbles into its Slot.
+ */
+const GRAB_STIFFNESS = 900;
+const GRAB_DAMPING = 60;
+
+/**
+ * How far, in radians, a card leans per pixel per second of sideways speed,
+ * and the most it may lean. The top trails the motion.
+ */
+const LEAN_PER_SPEED = 0.0005;
+const LEAN_MAX = 0.5;
+
+/**
  * How one Card looks and moves on screen.
  * Position, rotation and scale are springs: moveTo() sets targets and
  * update() chases them. Scale is relative to CARD_WIDTH by CARD_HEIGHT.
@@ -70,6 +85,8 @@ export default class Card implements DisplayObject {
   private hover: Spring;
   private shake: Spring;
   private pointerX: number | null;
+  private grabbed: boolean;
+  private previousX: number;
   private depth: number;
   private age: number;
 
@@ -83,6 +100,8 @@ export default class Card implements DisplayObject {
     this.hover = new Spring(0);
     this.shake = new Spring(0, SHAKE_STIFFNESS, SHAKE_DAMPING);
     this.pointerX = null;
+    this.grabbed = false;
+    this.previousX = 0;
     this.depth = 0;
     this.age = 0;
   }
@@ -92,7 +111,16 @@ export default class Card implements DisplayObject {
   }
 
   getDepth(): number {
-    return this.depth + (this.pointerX === null ? 0 : HOVER_DEPTH);
+    const lifted = this.pointerX !== null || this.grabbed;
+    return this.depth + (lifted ? HOVER_DEPTH : 0);
+  }
+
+  getX(): number {
+    return this.x.getValue();
+  }
+
+  getY(): number {
+    return this.y.getValue();
   }
 
   setDepth(depth: number): void {
@@ -107,6 +135,37 @@ export default class Card implements DisplayObject {
     this.y.snap(y);
     this.rotation.snap(rotation);
     this.scale.snap(scale);
+    this.previousX = x;
+  }
+
+  /**
+   * Picks the card up. It stays lifted, draws above the Wave, and tracks
+   * the pointer without the usual overshoot. The pointer can leave it.
+   */
+  grab(): void {
+    this.grabbed = true;
+    this.x.tune(GRAB_STIFFNESS, GRAB_DAMPING);
+    this.y.tune(GRAB_STIFFNESS, GRAB_DAMPING);
+  }
+
+  /**
+   * Puts the card back on the table's springs. Where it sits is someone
+   * else's decision.
+   */
+  letGo(): void {
+    this.grabbed = false;
+    this.x.restore();
+    this.y.restore();
+  }
+
+  /**
+   * Aims a held card at the pointer. Rotation is left alone so the lean
+   * can follow the card's own sideways speed.
+   */
+  follow(x: number, y: number, scale: number): void {
+    this.x.setTarget(x);
+    this.y.setTarget(y);
+    this.scale.setTarget(scale);
   }
 
   moveTo(x: number, y: number, rotation = 0, scale = 1): void {
@@ -136,10 +195,19 @@ export default class Card implements DisplayObject {
 
   update(dt: number): void {
     this.flip.setTarget(this.card.getPlayed() ? 1 : 0);
-    this.hover.setTarget(this.pointerX === null ? 0 : 1);
+    const lifted = this.pointerX !== null || this.grabbed;
+    this.hover.setTarget(lifted ? 1 : 0);
 
     this.x.update(dt);
     this.y.update(dt);
+
+    if (this.grabbed && dt > 0) {
+      const speed = (this.x.getValue() - this.previousX) / dt;
+      const lean = -speed * LEAN_PER_SPEED;
+      this.rotation.setTarget(Math.min(LEAN_MAX, Math.max(-LEAN_MAX, lean)));
+    }
+
+    this.previousX = this.x.getValue();
     this.rotation.update(dt);
     this.scale.update(dt);
     this.flip.update(dt);
