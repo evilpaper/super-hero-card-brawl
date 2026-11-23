@@ -20,7 +20,7 @@ test("Deck should be able to be shuffled", () => {
   const orderHasChanged = deck.getCards().some((card, index) => {
     const originalCard = originalOrder[index];
     return (
-      card.getSuite() !== originalCard.getSuite() ||
+      card.getSuit() !== originalCard.getSuit() ||
       card.getValue() !== originalCard.getValue()
     );
   });
@@ -33,7 +33,7 @@ test("Deck should be able to be shuffled", () => {
       .getCards()
       .some(
         (shuffledCard) =>
-          shuffledCard.getSuite() === originalCard.getSuite() &&
+          shuffledCard.getSuit() === originalCard.getSuit() &&
           shuffledCard.getValue() === originalCard.getValue()
       )
   );

@@ -1,12 +1,12 @@
 import Card from "./card";
-import { Suite, Rank, Value } from "./card.types";
+import { Suit, Rank, Value } from "./card.types";
 
 export default class Deck {
   private cards: Array<Card>;
 
   constructor() {
     this.cards = [];
-    const suites: Suite[] = ["♠︎", "♥︎", "♣︎", "♦︎"];
+    const suits: Suit[] = ["♠︎", "♥︎", "♣︎", "♦︎"];
     const ranks: Rank[] = [
       "A",
       "2",
@@ -23,33 +23,33 @@ export default class Deck {
       "K",
     ];
 
-    for (const suite of suites) {
+    for (const suit of suits) {
       for (const rank of ranks) {
         /**
-         * Determine value based on rank and suite
+         * Determine value based on rank and suit
          */
         let value: Value;
         if (rank === "A") {
-          value = suite === "♠︎" || suite === "♣︎" ? 17 : 11;
+          value = suit === "♠︎" || suit === "♣︎" ? 17 : 11;
         } else if (rank === "J") {
-          value = suite === "♠︎" || suite === "♣︎" ? 11 : 11;
+          value = suit === "♠︎" || suit === "♣︎" ? 11 : 11;
         } else if (rank === "Q") {
-          value = suite === "♠︎" || suite === "♣︎" ? 13 : 11;
+          value = suit === "♠︎" || suit === "♣︎" ? 13 : 11;
         } else if (rank === "K") {
-          value = suite === "♠︎" || suite === "♣︎" ? 15 : 11;
+          value = suit === "♠︎" || suit === "♣︎" ? 15 : 11;
         } else {
           value = parseInt(rank) as Value;
         }
 
-        this.cards.push(new Card(suite, rank, value, `${rank} of ${suite}`));
+        this.cards.push(new Card(suit, rank, value, `${rank} of ${suit}`));
       }
     }
 
     /**
-     * Add the two Donsols
+     * Add the two Jokers
      */
-    this.cards.push(new Card("♣︎", "D", 21, "Donsol A"));
-    this.cards.push(new Card("♠︎", "D", 21, "Donsol B"));
+    this.cards.push(new Card("♣︎", "Joker", 21, "Joker A"));
+    this.cards.push(new Card("♠︎", "Joker", 21, "Joker B"));
   }
 
   getCards(): Array<Card> {

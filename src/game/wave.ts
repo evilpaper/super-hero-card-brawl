@@ -1,7 +1,7 @@
 import Card from "./card";
 import Deck from "./deck";
 
-export default class Board {
+export default class Wave {
   cards: Array<Card>;
   deck: Deck;
 
@@ -22,14 +22,14 @@ export default class Board {
     this.cards.push(...drawnCards);
   }
 
-  clear(): void {
+  dealNext(): void {
     /**
      * Find cards that haven't been played
      */
     const unplayedCards = this.cards.filter((card) => !card.getPlayed());
 
     /**
-     * Return unplayed cards to the deck, then reshuffle when escaping early.
+     * Return unplayed cards to the deck, then reshuffle when slipping past early.
      */
     this.deck.returnCard(unplayedCards);
     if (unplayedCards.length > 0) {
@@ -37,7 +37,7 @@ export default class Board {
     }
 
     /**
-     * Clear the board
+     * Empty the Wave
      */
     this.cards = [];
 
@@ -48,7 +48,7 @@ export default class Board {
     this.draw(cardsToDraw);
   }
 
-  isCleared() {
+  isComplete() {
     return this.cards.every((card) => card.getPlayed());
   }
 }

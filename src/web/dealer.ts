@@ -53,8 +53,8 @@ export default class Dealer {
   }
 
   /**
-   * Called once every card in the Wave is played. The rules only clear the
-   * Wave after its cards are off screen, so the old Wave is never redrawn as
+   * Called once every card in the Wave is played. The rules only deal the
+   * next Wave after its cards are off screen, so the old Wave is never redrawn as
    * the new one.
    */
   nextWave(): void {
@@ -64,13 +64,13 @@ export default class Dealer {
     this.script.wait(EXIT_TIME);
     this.script.after(0, () => {
       this.cards.forEach((card) => this.scene.remove(card));
-      this.game.clearHandledRoom();
+      this.game.completeWave();
       this.dealWave();
     });
   }
 
   private dealWave(): void {
-    this.cards = this.game.board.cards.map((card) => new Card(card));
+    this.cards = this.game.wave.cards.map((card) => new Card(card));
     this.cards.forEach((card) => this.scene.add(card));
     this.slots.deal(this.cards, this.script);
     this.script.after(0, () => this.input.unlock());

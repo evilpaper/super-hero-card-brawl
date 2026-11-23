@@ -1,5 +1,5 @@
 import GameCard from "../game/card";
-import { Suite } from "../game/card.types";
+import { Rank, Suit } from "../game/card.types";
 
 /**
  * Card faces in the style of the deck-of-cards-visualizer reference. All art
@@ -11,7 +11,7 @@ export const ART_HEIGHT = 716;
 export const CARD_STOCK = "#fbf8ef";
 export const BLACK = "#1d1c22";
 const RED = "#c9252d";
-const RED_SUITES: Suite[] = ["♥︎", "♦︎"];
+const RED_SUITS: Suit[] = ["♥︎", "♦︎"];
 
 /**
  * Standard pip positions for ranks 1-10, relative to the card centre. Pips on
@@ -41,8 +41,8 @@ const PIP_LAYOUTS: Record<number, number[][]> = {
   10: [...sideColumns(FOUR_ROWS), [0, -143], [0, 143]],
 };
 
-function inkFor(suite: Suite) {
-  return RED_SUITES.includes(suite) ? RED : BLACK;
+function inkFor(suit: Suit) {
+  return RED_SUITS.includes(suit) ? RED : BLACK;
 }
 
 /**
@@ -69,7 +69,7 @@ function traceStem(ctx: CanvasRenderingContext2D, fromY: number) {
 
 function drawPip(
   ctx: CanvasRenderingContext2D,
-  suite: Suite,
+  suit: Suit,
   x: number,
   y: number,
   size: number,
@@ -79,11 +79,11 @@ function drawPip(
   ctx.translate(x, y);
   if (upsideDown) ctx.rotate(Math.PI);
   ctx.scale(size / 100, size / 100);
-  ctx.fillStyle = inkFor(suite);
+  ctx.fillStyle = inkFor(suit);
 
-  if (suite === "♥︎") {
+  if (suit === "♥︎") {
     traceHeart(ctx);
-  } else if (suite === "♦︎") {
+  } else if (suit === "♦︎") {
     ctx.beginPath();
     ctx.moveTo(0, -40);
     ctx.quadraticCurveTo(-18, -18, -30, 0);
@@ -91,7 +91,7 @@ function drawPip(
     ctx.quadraticCurveTo(18, 18, 30, 0);
     ctx.quadraticCurveTo(18, -18, 0, -40);
     ctx.fill();
-  } else if (suite === "♠︎") {
+  } else if (suit === "♠︎") {
     ctx.save();
     ctx.scale(1, -1);
     ctx.translate(0, 6);
@@ -123,17 +123,18 @@ function drawPip(
  * second time turned half a circle for the opposite corner.
  */
 export function drawFaceArt(ctx: CanvasRenderingContext2D, card: GameCard) {
-  const suite = card.getSuite();
+  const suit = card.getSuit();
   const rank = card.getRank();
-  const color = inkFor(suite);
+  const index = indexFor(rank);
+  const color = inkFor(suit);
 
   const drawCornerIndex = () => {
     ctx.fillStyle = color;
     ctx.font = "700 60px Georgia, serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(rank, 52, 74);
-    drawPip(ctx, suite, 52, 140, 38, false);
+    ctx.fillText(index, 52, 74);
+    drawPip(ctx, suit, 52, 140, 38, false);
   };
   drawCornerIndex();
   ctx.save();
@@ -146,23 +147,31 @@ export function drawFaceArt(ctx: CanvasRenderingContext2D, card: GameCard) {
   const centerY = ART_HEIGHT / 2;
 
   if (rank === "A") {
-    drawPip(ctx, suite, centerX, centerY, suite === "♠︎" ? 300 : 230, false);
-  } else if (rank === "J" || rank === "Q" || rank === "K" || rank === "D") {
-    drawCourtCard(ctx, rank, suite, color);
+    drawPip(ctx, suit, centerX, centerY, suit === "♠︎" ? 300 : 230, false);
+  } else if (rank === "J" || rank === "Q" || rank === "K" || rank === "Joker") {
+    drawCourtCard(ctx, index, suit, color);
   } else {
     for (const [pipX, pipY] of PIP_LAYOUTS[parseInt(rank)]) {
-      drawPip(ctx, suite, centerX + pipX, centerY + pipY, 100, pipY > 0);
+      drawPip(ctx, suit, centerX + pipX, centerY + pipY, 100, pipY > 0);
     }
   }
 }
 
 /**
- * Courts, and the Donsols, are an ornate monogram rather than painted figures.
+ * The short label printed in the corners and on court monograms. A Joker's
+ * full rank is too wide for either, so it prints as a single letter.
+ */
+function indexFor(rank: Rank): string {
+  return rank === "Joker" ? "D" : rank;
+}
+
+/**
+ * Courts, and the Jokers, are an ornate monogram rather than painted figures.
  */
 function drawCourtCard(
   ctx: CanvasRenderingContext2D,
   label: string,
-  suite: Suite,
+  suit: Suit,
   color: string,
 ) {
   ctx.strokeStyle = color;
@@ -181,7 +190,7 @@ function drawCourtCard(
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(label, 178, 226);
-    drawPip(ctx, suite, 178, 404, 80, false);
+    drawPip(ctx, suit, 178, 404, 80, false);
   };
   drawHalf();
   ctx.save();

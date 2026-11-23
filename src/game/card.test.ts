@@ -8,7 +8,7 @@ test("Card get initialised with correct properties", () => {
   expect(card).toEqual({
     name: "Sabretooth",
     rank: "9",
-    suite: "♠︎",
+    suit: "♠︎",
     value: 9,
     played: false,
     id: expect.any(String),

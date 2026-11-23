@@ -87,7 +87,7 @@ test("Selecting a healer (♥︎) after a defender (♦︎) should heal again", 
   expect(player.getHealth()).toBe(15);
 });
 
-test("Selecting a healer (♥︎) after a monster brawl should heal again", () => {
+test("Selecting a healer (♥︎) after an opponent brawl should heal again", () => {
   const player = new Player();
 
   player.setHealth(10);

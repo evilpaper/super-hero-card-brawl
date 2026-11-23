@@ -60,7 +60,7 @@ function resizeCanvas() {
 }
 
 /**
- * Rules and the dealt board live here, apart from sprites. start() shuffles
+ * Rules and the dealt Wave live here, apart from sprites. start() shuffles
  * and draws the opening Wave so the scene has real cards to show.
  */
 const game = new Game();
@@ -101,7 +101,7 @@ const input = new Input(scene, (object) => {
   if (object instanceof Card) {
     game.playCard(object.getCard());
 
-    if (game.board.isCleared()) {
+    if (game.wave.isComplete()) {
       dealer.nextWave();
     }
   }

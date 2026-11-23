@@ -5,7 +5,7 @@ export default class Player {
   private health: number;
   private defence: number;
   private stamina: number;
-  private canMoveOn: boolean;
+  private canSlipPast: boolean;
   private canHeal: boolean;
 
   /**
@@ -15,7 +15,7 @@ export default class Player {
     this.health = 21;
     this.defence = 0;
     this.stamina = 0;
-    this.canMoveOn = true;
+    this.canSlipPast = true;
     this.canHeal = true;
   }
 
@@ -79,12 +79,12 @@ export default class Player {
     this.stamina = value;
   }
 
-  getCanMoveOn(): boolean {
-    return this.canMoveOn;
+  getCanSlipPast(): boolean {
+    return this.canSlipPast;
   }
 
-  setCanMoveOn(value: boolean): void {
-    this.canMoveOn = value;
+  setCanSlipPast(value: boolean): void {
+    this.canSlipPast = value;
   }
 
   getCanHeal(): boolean {
