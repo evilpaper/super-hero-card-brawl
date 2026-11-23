@@ -1,33 +1,33 @@
 import Deck from "./deck";
-import Board from "./board";
+import Wave from "./wave";
 import Player from "./player";
 import Card from "./card";
 
 export default class Game {
   deck: Deck;
-  board: Board;
+  wave: Wave;
   player: Player;
-  private escapedPreviousRoom: boolean;
+  private slippedPastPreviousWave: boolean;
 
   constructor() {
     this.deck = new Deck();
-    this.board = new Board(this.deck);
+    this.wave = new Wave(this.deck);
     this.player = new Player();
-    this.escapedPreviousRoom = false;
-    this.refreshMoveOnAvailability();
+    this.slippedPastPreviousWave = false;
+    this.refreshSlipPastAvailability();
   }
 
   start() {
     this.deck.shuffle();
-    this.board.draw(4);
-    this.refreshMoveOnAvailability();
+    this.wave.draw(4);
+    this.refreshSlipPastAvailability();
   }
 
   restart() {
     this.deck = new Deck();
-    this.board = new Board(this.deck);
+    this.wave = new Wave(this.deck);
     this.player = new Player();
-    this.escapedPreviousRoom = false;
+    this.slippedPastPreviousWave = false;
     this.start();
   }
 
@@ -38,44 +38,44 @@ export default class Game {
 
     card.play();
     this.handleCardEffect(card);
-    this.refreshMoveOnAvailability();
+    this.refreshSlipPastAvailability();
   }
 
-  escapeRoom() {
-    if (!this.player.getCanMoveOn()) {
+  slipPast() {
+    if (!this.player.getCanSlipPast()) {
       return;
     }
 
-    this.escapedPreviousRoom = true;
-    this.board.clear();
-    this.refreshMoveOnAvailability();
+    this.slippedPastPreviousWave = true;
+    this.wave.dealNext();
+    this.refreshSlipPastAvailability();
   }
 
-  clearHandledRoom() {
-    this.escapedPreviousRoom = false;
-    this.board.clear();
-    this.refreshMoveOnAvailability();
+  completeWave() {
+    this.slippedPastPreviousWave = false;
+    this.wave.dealNext();
+    this.refreshSlipPastAvailability();
   }
 
-  refreshMoveOnAvailability() {
-    this.player.setCanMoveOn(this.canMoveOnCurrentRoom());
+  refreshSlipPastAvailability() {
+    this.player.setCanSlipPast(this.canSlipPastCurrentWave());
   }
 
-  private canMoveOnCurrentRoom() {
-    if (!this.escapedPreviousRoom) {
+  private canSlipPastCurrentWave() {
+    if (!this.slippedPastPreviousWave) {
       return true;
     }
 
-    const hasUnplayedMonster = this.board.cards.some((boardCard) => {
-      if (boardCard.getPlayed()) {
+    const hasUnplayedOpponent = this.wave.cards.some((waveCard) => {
+      if (waveCard.getPlayed()) {
         return false;
       }
 
-      const suite = boardCard.getSuite();
-      return suite === "♠︎" || suite === "♣︎";
+      const suit = waveCard.getSuit();
+      return suit === "♠︎" || suit === "♣︎";
     });
 
-    return !hasUnplayedMonster;
+    return !hasUnplayedOpponent;
   }
 
   handleCardEffect(card: Card) {
@@ -83,7 +83,7 @@ export default class Game {
       return;
     }
 
-    switch (card.getSuite()) {
+    switch (card.getSuit()) {
       case "♥︎":
         this.player.playDefensiveBrawler(card.getValue());
         break;

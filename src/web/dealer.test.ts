@@ -68,7 +68,7 @@ test("The opening Wave should be dealt into the Slots with input locked until it
 
   run(script, scene, 1);
 
-  expect(cardsInSlots(scene)).toEqual(game.board.cards);
+  expect(cardsInSlots(scene)).toEqual(game.wave.cards);
   tapSlot(input, 0);
   expect(taps).toHaveLength(1);
 });
@@ -77,7 +77,7 @@ test("The next Wave should replace the played one once it is off screen", () => 
   const { game, scene, script, dealer } = setup();
   dealer.dealOpeningWave();
   run(script, scene, 1);
-  const firstWave = [...game.board.cards];
+  const firstWave = [...game.wave.cards];
 
   firstWave.forEach((card) => card.play());
   dealer.nextWave();
@@ -87,7 +87,7 @@ test("The next Wave should replace the played one once it is off screen", () => 
 
   run(script, scene, WAVE_PAUSE / 2 + DEAL_INTERVAL * 3 + EXIT_TIME + 1);
 
-  const secondWave = game.board.cards;
+  const secondWave = game.wave.cards;
   expect(secondWave).toHaveLength(4);
   expect(secondWave.some((card) => firstWave.includes(card))).toBe(false);
   expect(cardsInSlots(scene)).toEqual(secondWave);

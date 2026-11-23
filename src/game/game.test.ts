@@ -1,18 +1,18 @@
 import { expect, test } from "vitest";
 import Game from "./game";
 import Deck from "./deck";
-import Board from "./board";
+import Wave from "./wave";
 import Card from "./card";
 
 function makeCard(
-  suite: "♠︎" | "♥︎" | "♣︎" | "♦︎",
-  rank: "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K" | "D",
+  suit: "♠︎" | "♥︎" | "♣︎" | "♦︎",
+  rank: "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K" | "Joker",
   value: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 13 | 15 | 17 | 21
 ) {
-  return new Card(suite, rank, value, `${rank} of ${suite}`);
+  return new Card(suit, rank, value, `${rank} of ${suit}`);
 }
 
-test("Game should be initialized with a deck and a board", () => {
+test("Game should be initialized with a deck and a wave", () => {
   const game = new Game();
 
   /**
@@ -22,13 +22,13 @@ test("Game should be initialized with a deck and a board", () => {
   expect(game.deck.getCardCount()).toBe(54);
 
   /**
-   * Check if game has a board
+   * Check if game has a wave
    */
-  expect(game.board).toBeInstanceOf(Board);
-  expect(game.board.cards.length).toBe(0);
+  expect(game.wave).toBeInstanceOf(Wave);
+  expect(game.wave.cards.length).toBe(0);
 });
 
-test("Game should be able to be started. When so, board should be populated with 4 cards from the deck", () => {
+test("Game should be able to be started. When so, wave should be populated with 4 cards from the deck", () => {
   const game = new Game();
   const initialDeckSize = game.deck.getCardCount();
 
@@ -38,9 +38,9 @@ test("Game should be able to be started. When so, board should be populated with
   game.start();
 
   /**
-   * Check if board have 4 cards
+   * Check if wave have 4 cards
    */
-  expect(game.board.cards.length).toBe(4);
+  expect(game.wave.cards.length).toBe(4);
 
   /**
    * Ceck if deck have 4 fewer cards
@@ -48,60 +48,60 @@ test("Game should be able to be started. When so, board should be populated with
   expect(game.deck.getCardCount()).toBe(initialDeckSize - 4);
 });
 
-test("The first room can be escaped before any monster is handled", () => {
+test("The first wave can be slipped past before any opponent is played", () => {
   const game = new Game();
-  game.board.cards = [makeCard("♠︎", "7", 7), makeCard("♥︎", "4", 4)];
+  game.wave.cards = [makeCard("♠︎", "7", 7), makeCard("♥︎", "4", 4)];
 
-  game.refreshMoveOnAvailability();
+  game.refreshSlipPastAvailability();
 
-  expect(game.player.getCanMoveOn()).toBe(true);
+  expect(game.player.getCanSlipPast()).toBe(true);
 });
 
-test("A room that was not escaped still allows escaping the next room even with monsters face up", () => {
+test("A wave that was not slipped past still allows slipping past the next wave even with opponents face up", () => {
   const game = new Game();
-  game.clearHandledRoom();
-  game.board.cards = [makeCard("♣︎", "D", 21), makeCard("♦︎", "5", 5)];
+  game.completeWave();
+  game.wave.cards = [makeCard("♣︎", "Joker", 21), makeCard("♦︎", "5", 5)];
 
-  game.refreshMoveOnAvailability();
+  game.refreshSlipPastAvailability();
 
-  expect(game.player.getCanMoveOn()).toBe(true);
+  expect(game.player.getCanSlipPast()).toBe(true);
 });
 
-test("After escaping the previous room, leaving stays unavailable while any monster is still face up", () => {
+test("After slipping past the previous wave, slipping past stays unavailable while any opponent is still face up", () => {
   const game = new Game();
-  game.escapeRoom();
-  const firstMonster = makeCard("♠︎", "2", 2);
-  const secondMonster = makeCard("♣︎", "3", 3);
-  game.board.cards = [firstMonster, secondMonster, makeCard("♥︎", "4", 4)];
+  game.slipPast();
+  const firstOpponent = makeCard("♠︎", "2", 2);
+  const secondOpponent = makeCard("♣︎", "3", 3);
+  game.wave.cards = [firstOpponent, secondOpponent, makeCard("♥︎", "4", 4)];
 
-  game.refreshMoveOnAvailability();
-  expect(game.player.getCanMoveOn()).toBe(false);
+  game.refreshSlipPastAvailability();
+  expect(game.player.getCanSlipPast()).toBe(false);
 
-  game.playCard(firstMonster);
+  game.playCard(firstOpponent);
 
-  expect(game.player.getCanMoveOn()).toBe(false);
+  expect(game.player.getCanSlipPast()).toBe(false);
 });
 
-test("After escaping the previous room, leaving opens once every monster is handled, even if potions or shields remain", () => {
+test("After slipping past the previous wave, slipping past opens once every opponent is played, even if potions or shields remain", () => {
   const game = new Game();
-  game.escapeRoom();
-  const jokerMonster = makeCard("♣︎", "D", 21);
-  game.board.cards = [jokerMonster, makeCard("♥︎", "5", 5), makeCard("♦︎", "3", 3)];
+  game.slipPast();
+  const jokerOpponent = makeCard("♣︎", "Joker", 21);
+  game.wave.cards = [jokerOpponent, makeCard("♥︎", "5", 5), makeCard("♦︎", "3", 3)];
   game.player.setDefence(21);
   game.player.setStamina(22);
 
-  game.refreshMoveOnAvailability();
-  expect(game.player.getCanMoveOn()).toBe(false);
+  game.refreshSlipPastAvailability();
+  expect(game.player.getCanSlipPast()).toBe(false);
 
-  game.playCard(jokerMonster);
+  game.playCard(jokerOpponent);
 
-  expect(game.player.getCanMoveOn()).toBe(true);
+  expect(game.player.getCanSlipPast()).toBe(true);
 });
 
 test("A card that is already played has no effect when played again", () => {
   const game = new Game();
   const opponent = makeCard("♠︎", "5", 5);
-  game.board.cards = [opponent];
+  game.wave.cards = [opponent];
 
   game.playCard(opponent);
   const healthAfterFirstPlay = game.player.getHealth();
@@ -111,12 +111,12 @@ test("A card that is already played has no effect when played again", () => {
   expect(game.player.getHealth()).toBe(healthAfterFirstPlay);
 });
 
-test("A room with no monsters can be escaped even if the previous room was escaped", () => {
+test("A wave with no opponents can be slipped past even if the previous wave was slipped past", () => {
   const game = new Game();
-  game.escapeRoom();
-  game.board.cards = [makeCard("♥︎", "6", 6), makeCard("♦︎", "8", 8)];
+  game.slipPast();
+  game.wave.cards = [makeCard("♥︎", "6", 6), makeCard("♦︎", "8", 8)];
 
-  game.refreshMoveOnAvailability();
+  game.refreshSlipPastAvailability();
 
-  expect(game.player.getCanMoveOn()).toBe(true);
+  expect(game.player.getCanSlipPast()).toBe(true);
 });

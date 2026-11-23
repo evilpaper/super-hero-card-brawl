@@ -1,15 +1,15 @@
-import { Suite, Rank, Value } from "./card.types";
+import { Suit, Rank, Value } from "./card.types";
 
 export default class Card {
-  private suite: Suite;
+  private suit: Suit;
   private rank: Rank;
   private value: Value;
   private name: string;
   private played: boolean;
   private readonly id: string;
 
-  constructor(suite: Suite, rank: Rank, value: Value, name: string) {
-    this.suite = suite;
+  constructor(suit: Suit, rank: Rank, value: Value, name: string) {
+    this.suit = suit;
     this.rank = rank;
     this.value = value;
     this.name = name;
@@ -21,8 +21,8 @@ export default class Card {
     return this.id;
   }
 
-  getSuite(): Suite {
-    return this.suite;
+  getSuit(): Suit {
+    return this.suit;
   }
 
   getRank(): Rank {
