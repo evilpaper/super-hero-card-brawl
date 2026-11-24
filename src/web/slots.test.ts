@@ -74,6 +74,21 @@ test("There should always be four Slot centres", () => {
   expect(arrange(390, 844).centers).toHaveLength(SLOT_COUNT);
 });
 
+test("Dealing should park every card below the centre of the window", () => {
+  const cards = makeCards(4);
+  const slots = new Slots();
+  const script = new Script();
+  const width = 1400;
+  const height = 800;
+  slots.layout(width, height);
+
+  slots.deal(cards, script);
+
+  cards.forEach((card) => {
+    expect(card.contains(width / 2, height + CARD_HEIGHT)).toBe(true);
+  });
+});
+
 test("Dealing should send each card to its own Slot, one step at a time", () => {
   const cards = makeCards(4);
   const slots = new Slots();
