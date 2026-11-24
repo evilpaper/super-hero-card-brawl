@@ -60,10 +60,10 @@ test("The opening Wave should be dealt into the Slots with input locked until it
   dealer.dealOpeningWave();
 
   /**
-   * Before the first step runs, every card waits below its Slot, so a tap
-   * there would land on a card if input were not locked.
+   * Before the first step runs, every card waits below the centre of the
+   * window, so a tap there would land on a card if input were not locked.
    */
-  tap(input, arrange(WIDTH, HEIGHT).centers[0].x, HEIGHT + CARD_HEIGHT);
+  tap(input, WIDTH / 2, HEIGHT + CARD_HEIGHT);
   expect(taps).toEqual([]);
 
   run(script, scene, 1);
