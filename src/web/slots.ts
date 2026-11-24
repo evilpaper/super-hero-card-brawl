@@ -99,10 +99,10 @@ function tilt(slot: number) {
  * follows the card the player is holding. A Wave with fewer cards leaves its
  * last Slots empty.
  *
- * Cards come in from one point below the centre of the window — like a deck —
- * and leave under their own Slots, Slot 1 first. Only seated cards, those that
- * have been dealt and not yet sent off, follow the layout when the window
- * changes. A card in the hand stays on the pointer.
+ * Cards come in from and leave to one point below the centre of the window —
+ * like a deck — Slot 1 first. Only seated cards, those that have been dealt
+ * and not yet sent off, follow the layout when the window changes. A card in
+ * the hand stays on the pointer.
  */
 export default class Slots {
   private cards: Card[];
@@ -192,7 +192,8 @@ export default class Slots {
   }
 
   /**
-   * Queues one step per card that sends it back below the window under its Slot.
+   * Queues one step per card that sends it back below the centre of the window,
+   * the way it came in.
    */
   sendOff(script: Script): void {
     this.cards.forEach((card, slot) => {
@@ -242,8 +243,12 @@ export default class Slots {
     card.placeAt(this.width / 2, this.height + CARD_HEIGHT, tilt(slot), scale);
   }
 
+  /**
+   * Springs a card back below the bottom centre of the window, matching the
+   * deal origin so clearing a Wave also reads as returning to one deck.
+   */
   private sendBelow(card: Card, slot: number): void {
-    const { scale, centers } = arrange(this.width, this.height);
-    card.moveTo(centers[slot].x, this.height + CARD_HEIGHT, tilt(slot), scale);
+    const { scale } = arrange(this.width, this.height);
+    card.moveTo(this.width / 2, this.height + CARD_HEIGHT, tilt(slot), scale);
   }
 }

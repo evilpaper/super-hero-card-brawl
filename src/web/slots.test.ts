@@ -130,12 +130,14 @@ test("A short Wave should keep its cards in the first Slots", () => {
   );
 });
 
-test("Sending off should move every card out of its Slot, below the window", () => {
+test("Sending off should move every card below the centre of the window", () => {
   const cards = makeCards(4);
   const slots = new Slots();
   const script = new Script();
-  const { centers } = arrange(1400, 800);
-  slots.layout(1400, 800);
+  const width = 1400;
+  const height = 800;
+  const { centers } = arrange(width, height);
+  slots.layout(width, height);
   slots.deal(cards, script);
   script.update(1);
   settle(cards);
@@ -146,7 +148,7 @@ test("Sending off should move every card out of its Slot, below the window", () 
 
   cards.forEach((card, slot) => {
     expect(card.contains(centers[slot].x, centers[slot].y)).toBe(false);
-    expect(card.contains(centers[slot].x, 800 + CARD_HEIGHT)).toBe(true);
+    expect(card.contains(width / 2, height + CARD_HEIGHT)).toBe(true);
   });
 });
 
