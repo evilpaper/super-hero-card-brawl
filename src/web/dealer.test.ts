@@ -92,3 +92,28 @@ test("The next Wave should replace the played one once it is off screen", () => 
   expect(secondWave.some((card) => firstWave.includes(card))).toBe(false);
   expect(cardsInSlots(scene)).toEqual(secondWave);
 });
+
+test("dealOpeningWave can leave input locked for the title Screen", () => {
+  const { scene, script, input, dealer, taps } = setup();
+
+  dealer.dealOpeningWave(false);
+  run(script, scene, 1);
+
+  tapSlot(input, 0);
+  expect(taps).toEqual([]);
+});
+
+test("redealBrawl clears the table and deals a fresh Wave", () => {
+  const { game, scene, script, dealer } = setup();
+  dealer.dealOpeningWave();
+  run(script, scene, 1);
+  const firstWave = [...game.wave.cards];
+
+  dealer.redealBrawl();
+  run(script, scene, 1);
+
+  expect(game.wave.cards).toHaveLength(4);
+  expect(game.wave.cards.some((card) => firstWave.includes(card))).toBe(false);
+  expect(cardsInSlots(scene)).toEqual(game.wave.cards);
+  expect(game.player.getHealth()).toBe(21);
+});

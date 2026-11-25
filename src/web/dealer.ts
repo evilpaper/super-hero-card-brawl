@@ -47,9 +47,13 @@ export default class Dealer {
     this.cards = [];
   }
 
-  dealOpeningWave(): void {
+  /**
+   * @param unlockWhenDone - false under the title so a click dismisses the
+   *   Screen instead of playing a card (ADR 0003).
+   */
+  dealOpeningWave(unlockWhenDone = true): void {
     this.input.lock();
-    this.dealWave();
+    this.dealWave(unlockWhenDone);
   }
 
   /**
@@ -63,16 +67,34 @@ export default class Dealer {
     this.slots.sendOff(this.script);
     this.script.wait(EXIT_TIME);
     this.script.after(0, () => {
-      this.cards.forEach((card) => this.scene.remove(card));
+      this.clearCards();
       this.game.completeWave();
       this.dealWave();
     });
   }
 
-  private dealWave(): void {
+  /**
+   * Clears the table, starts a new Brawl, and deals under playing (no title).
+   */
+  redealBrawl(): void {
+    this.input.lock();
+    this.clearCards();
+    this.game.restart();
+    this.dealWave(true);
+  }
+
+  private clearCards(): void {
+    this.cards.forEach((card) => this.scene.remove(card));
+    this.cards = [];
+  }
+
+  private dealWave(unlockWhenDone = true): void {
     this.cards = this.game.wave.cards.map((card) => new Card(card));
     this.cards.forEach((card) => this.scene.add(card));
     this.slots.deal(this.cards, this.script);
-    this.script.after(0, () => this.input.unlock());
+
+    if (unlockWhenDone) {
+      this.script.after(0, () => this.input.unlock());
+    }
   }
 }

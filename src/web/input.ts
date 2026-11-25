@@ -6,7 +6,7 @@ import Scene, { DisplayObject } from "./scene";
  */
 export const TAP_SLOP = 8;
 
-type TapHandler = (object: DisplayObject) => void;
+type TapHandler = (object: DisplayObject, x: number, y: number) => void;
 
 /**
  * What a held object does while the pointer moves it. A tap is still a
@@ -173,7 +173,7 @@ export default class Input {
       pressed.isTappable() &&
       this.scene.objectAt(x, y) === pressed
     ) {
-      this.onTap(pressed);
+      this.onTap(pressed, x, y);
     }
   }
 

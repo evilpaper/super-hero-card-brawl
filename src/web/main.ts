@@ -3,10 +3,17 @@ import Loop from "./loop";
 import Scene from "./scene";
 import Card from "./card";
 import Dealer from "./dealer";
+import Director from "./director";
 import Input from "./input";
+import Overlay from "./overlay";
 import { drawReadout } from "./readout";
 import Script from "./script";
 import Slots from "./slots";
+
+/**
+ * Beat after a finishing play so the flip can settle before the end Screen.
+ */
+const END_PAUSE = 0.6;
 
 /**
  * Faces the card renderer paints with. They are loaded before the first frame
@@ -80,28 +87,42 @@ const slots = new Slots();
 const script = new Script();
 
 /**
- * The canvas does not follow the window on its own. The backing store is
- * resized and the Slots laid out again on every resize, and once at boot
- * before anything is drawn.
+ * Assigned before the first tap; the handlers close over these bindings.
  */
-window.addEventListener("resize", () => {
-  resizeCanvas();
-  slots.layout(width, height);
-});
-
-resizeCanvas();
-slots.layout(width, height);
+let dealer: Dealer;
+let director: Director;
 
 /**
  * What a tap means. Input only reports which object was tapped; turning that
- * into a Game command happens here. The card flips by itself once the game
- * marks it played, and a play that completes the Wave brings on the next one.
+ * into a Game command happens here. End Screens and the title are owned by
+ * the Director; card play only runs while playing.
  */
 const input = new Input(
   scene,
-  (object) => {
+  (object, x, y) => {
+    if (object instanceof Overlay) {
+      director.handleOverlayTap(object, x, y);
+      return;
+    }
+
+    if (!director.isPlaying()) {
+      return;
+    }
+
     if (object instanceof Card) {
       game.playCard(object.getCard());
+
+      if (game.isKnockedOut()) {
+        input.lock();
+        script.after(END_PAUSE, () => director.showKnockedOut());
+        return;
+      }
+
+      if (game.hasVictory()) {
+        input.lock();
+        script.after(END_PAUSE, () => director.showVictory());
+        return;
+      }
 
       if (game.wave.isComplete()) {
         dealer.nextWave();
@@ -129,7 +150,32 @@ const input = new Input(
 
 input.listen(canvas);
 
-const dealer = new Dealer(game, scene, slots, script, input);
+dealer = new Dealer(game, scene, slots, script, input);
+
+/**
+ * Title on cold start, knocked-out and victory overlays, and Restart.
+ */
+director = new Director(scene, input, () => {
+  script.clear();
+  dealer.redealBrawl();
+});
+
+director.listen(canvas);
+
+/**
+ * The canvas does not follow the window on its own. The backing store is
+ * resized and the Slots laid out again on every resize, and once at boot
+ * before anything is drawn.
+ */
+window.addEventListener("resize", () => {
+  resizeCanvas();
+  slots.layout(width, height);
+  director.layout(width, height);
+});
+
+resizeCanvas();
+slots.layout(width, height);
+director.layout(width, height);
 
 /**
  * Springs and script steps advance by elapsed seconds rather than by frames,
@@ -144,14 +190,15 @@ function update(dt: number) {
 /**
  * The canvas keeps the previous frame, so each frame paints a flat background
  * before the scene. Without the clear, sprites would smear as they move.
- * The readout is drawn last, outside the scene, so it sits above the cards
- * and never takes a tap.
+ * The readout sits above the cards; the Director paints the overlay last so
+ * the dim covers both (ADR 0003).
  */
 function draw() {
   ctx.fillStyle = "#17171a";
   ctx.fillRect(0, 0, width, height);
   scene.draw(ctx);
   drawReadout(ctx, game.player);
+  director.paint(ctx);
 }
 
 /**
@@ -163,10 +210,10 @@ const loop = new Loop(update, draw);
 
 /**
  * The loop waits for the fonts so the first frame uses the real faces.
- * The deal starts with the loop, so the springs carry each card in from
- * below the window instead of it appearing at rest.
+ * The deal starts under the title with input left locked until dismiss.
  */
 loadFonts().then(() => {
-  dealer.dealOpeningWave();
+  director.showTitle();
+  dealer.dealOpeningWave(false);
   loop.start();
 });

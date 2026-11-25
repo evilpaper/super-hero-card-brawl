@@ -32,6 +32,15 @@ export default class Script {
     this.after(seconds, () => {});
   }
 
+  /**
+   * Drops every queued step. Used when a Brawl restarts so a pending Wave
+   * change or end beat cannot fire into the new deal.
+   */
+  clear(): void {
+    this.steps = [];
+    this.waited = 0;
+  }
+
   update(dt: number): void {
     this.waited += dt;
 

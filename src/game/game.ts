@@ -3,6 +3,14 @@ import Wave from "./wave";
 import Player from "./player";
 import Card from "./card";
 
+/**
+ * Opponents are black cards: Spades, Clubs, and both Jokers.
+ */
+function isOpponent(card: Card): boolean {
+  const suit = card.getSuit();
+  return suit === "♠︎" || suit === "♣︎";
+}
+
 export default class Game {
   deck: Deck;
   wave: Wave;
@@ -61,6 +69,31 @@ export default class Game {
     this.player.setCanSlipPast(this.canSlipPastCurrentWave());
   }
 
+  /**
+   * Health at zero ends the Brawl as a knockout. The view decides when to
+   * show that Screen; the rules only report the fact.
+   */
+  isKnockedOut(): boolean {
+    return this.player.getHealth() <= 0;
+  }
+
+  /**
+   * Victory is the moment no unplayed Opponent remains in the Wave or the
+   * Deck, whatever red cards are left. Knocked out wins over this query.
+   */
+  hasVictory(): boolean {
+    if (this.isKnockedOut()) {
+      return false;
+    }
+
+    const unplayedInWave = this.wave.cards.some(
+      (card) => isOpponent(card) && !card.getPlayed(),
+    );
+    const leftInDeck = this.deck.getCards().some((card) => isOpponent(card));
+
+    return !unplayedInWave && !leftInDeck;
+  }
+
   private canSlipPastCurrentWave() {
     if (!this.slippedPastPreviousWave) {
       return true;
@@ -71,8 +104,7 @@ export default class Game {
         return false;
       }
 
-      const suit = waveCard.getSuit();
-      return suit === "♠︎" || suit === "♣︎";
+      return isOpponent(waveCard);
     });
 
     return !hasUnplayedOpponent;

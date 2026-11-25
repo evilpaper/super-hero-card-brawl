@@ -120,3 +120,42 @@ test("A wave with no opponents can be slipped past even if the previous wave was
 
   expect(game.player.getCanSlipPast()).toBe(true);
 });
+
+test("A player at zero Health is knocked out", () => {
+  const game = new Game();
+  game.player.setHealth(0);
+
+  expect(game.isKnockedOut()).toBe(true);
+  expect(game.hasVictory()).toBe(false);
+});
+
+/**
+ * Pulls every card out of the deck so victory can be tested without a stub.
+ */
+function drainDeck(game: Game) {
+  while (game.deck.getCardCount() > 0) {
+    game.deck.drawCard(Math.min(4, game.deck.getCardCount()));
+  }
+}
+
+test("Victory is true once every Opponent in the Wave and Deck is gone", () => {
+  const game = new Game();
+  drainDeck(game);
+  game.wave.cards = [makeCard("♥︎", "4", 4), makeCard("♦︎", "3", 3)];
+
+  expect(game.isKnockedOut()).toBe(false);
+  expect(game.hasVictory()).toBe(true);
+});
+
+test("An unplayed Opponent in the Wave blocks victory", () => {
+  const game = new Game();
+  drainDeck(game);
+  const opponent = makeCard("♠︎", "2", 2);
+  game.wave.cards = [opponent, makeCard("♥︎", "4", 4)];
+
+  expect(game.hasVictory()).toBe(false);
+
+  opponent.play();
+
+  expect(game.hasVictory()).toBe(true);
+});
