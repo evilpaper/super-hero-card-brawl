@@ -7,6 +7,7 @@ import Input from "./input";
 import { drawReadout } from "./readout";
 import Script from "./script";
 import Slots from "./slots";
+import Title from "./title";
 
 /**
  * Faces the card renderer paints with. They are loaded before the first frame
@@ -84,13 +85,20 @@ const script = new Script();
  * resized and the Slots laid out again on every resize, and once at boot
  * before anything is drawn.
  */
+/**
+ * Cold-start title only. Dismissed by the first click or key.
+ */
+const title = new Title();
+
 window.addEventListener("resize", () => {
   resizeCanvas();
   slots.layout(width, height);
+  title.layout(width, height);
 });
 
 resizeCanvas();
 slots.layout(width, height);
+title.layout(width, height);
 
 /**
  * What a tap means. Input only reports which object was tapped; turning that
@@ -128,6 +136,7 @@ const input = new Input(
 );
 
 input.listen(canvas);
+title.listen(canvas, () => input.unlock());
 
 const dealer = new Dealer(game, scene, slots, script, input);
 
@@ -144,14 +153,14 @@ function update(dt: number) {
 /**
  * The canvas keeps the previous frame, so each frame paints a flat background
  * before the scene. Without the clear, sprites would smear as they move.
- * The readout is drawn last, outside the scene, so it sits above the cards
- * and never takes a tap.
+ * The readout sits above the cards; the title paints last so it dims both.
  */
 function draw() {
   ctx.fillStyle = "#17171a";
   ctx.fillRect(0, 0, width, height);
   scene.draw(ctx);
   drawReadout(ctx, game.player);
+  title.draw(ctx);
 }
 
 /**
@@ -163,10 +172,9 @@ const loop = new Loop(update, draw);
 
 /**
  * The loop waits for the fonts so the first frame uses the real faces.
- * The deal starts with the loop, so the springs carry each card in from
- * below the window instead of it appearing at rest.
+ * The opening Wave deals under the title; input stays locked until dismiss.
  */
 loadFonts().then(() => {
-  dealer.dealOpeningWave();
+  dealer.dealOpeningWave(false);
   loop.start();
 });
