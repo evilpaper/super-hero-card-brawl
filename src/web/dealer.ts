@@ -47,9 +47,13 @@ export default class Dealer {
     this.cards = [];
   }
 
-  dealOpeningWave(): void {
+  /**
+   * @param unlockWhenDone - false under the cold-start title so a click
+   *   dismisses it instead of playing a card.
+   */
+  dealOpeningWave(unlockWhenDone = true): void {
     this.input.lock();
-    this.dealWave();
+    this.dealWave(unlockWhenDone);
   }
 
   /**
@@ -69,10 +73,13 @@ export default class Dealer {
     });
   }
 
-  private dealWave(): void {
+  private dealWave(unlockWhenDone = true): void {
     this.cards = this.game.wave.cards.map((card) => new Card(card));
     this.cards.forEach((card) => this.scene.add(card));
     this.slots.deal(this.cards, this.script);
-    this.script.after(0, () => this.input.unlock());
+
+    if (unlockWhenDone) {
+      this.script.after(0, () => this.input.unlock());
+    }
   }
 }
