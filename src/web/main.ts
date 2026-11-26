@@ -8,6 +8,7 @@ import { drawReadout } from "./readout";
 import Script from "./script";
 import Slots from "./slots";
 import Title from "./title";
+import KnockedOut from "./knocked-out";
 
 /**
  * Faces the card renderer paints with. They are loaded before the first frame
@@ -90,26 +91,40 @@ const script = new Script();
  */
 const title = new Title();
 
+/**
+ * Knocked out overlay. Shown when Health hits zero; Restart starts a new Brawl.
+ */
+const knockedOut = new KnockedOut();
+
 window.addEventListener("resize", () => {
   resizeCanvas();
   slots.layout(width, height);
   title.layout(width, height);
+  knockedOut.layout(width, height);
 });
 
 resizeCanvas();
 slots.layout(width, height);
 title.layout(width, height);
+knockedOut.layout(width, height);
 
 /**
  * What a tap means. Input only reports which object was tapped; turning that
  * into a Game command happens here. The card flips by itself once the game
- * marks it played, and a play that completes the Wave brings on the next one.
+ * marks it played. Knocked out locks play immediately; otherwise a complete
+ * Wave brings on the next one.
  */
 const input = new Input(
   scene,
   (object) => {
     if (object instanceof Card) {
       game.playCard(object.getCard());
+
+      if (game.player.getHealth() <= 0) {
+        input.lock();
+        knockedOut.show();
+        return;
+      }
 
       if (game.wave.isComplete()) {
         dealer.nextWave();
@@ -140,6 +155,11 @@ title.listen(canvas, () => input.unlock());
 
 const dealer = new Dealer(game, scene, slots, script, input);
 
+knockedOut.listen(canvas, () => {
+  knockedOut.hide();
+  dealer.restart();
+});
+
 /**
  * Springs and script steps advance by elapsed seconds rather than by frames,
  * so a slow frame does not change how far a card moves. The script runs
@@ -153,12 +173,13 @@ function update(dt: number) {
 /**
  * The canvas keeps the previous frame, so each frame paints a flat background
  * before the scene. Without the clear, sprites would smear as they move.
- * The readout sits above the cards; the title paints last so it dims both.
+ * Knocked out dims the table under the readout; the title paints last.
  */
 function draw() {
   ctx.fillStyle = "#17171a";
   ctx.fillRect(0, 0, width, height);
   scene.draw(ctx);
+  knockedOut.draw(ctx);
   drawReadout(ctx, game.player);
   title.draw(ctx);
 }

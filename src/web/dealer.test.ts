@@ -92,3 +92,22 @@ test("The next Wave should replace the played one once it is off screen", () => 
   expect(secondWave.some((card) => firstWave.includes(card))).toBe(false);
   expect(cardsInSlots(scene)).toEqual(secondWave);
 });
+
+test("restart should clear the table, reset the Brawl, and deal a new Wave", () => {
+  const { game, scene, script, input, dealer, taps } = setup();
+  dealer.dealOpeningWave();
+  run(script, scene, 1);
+  const firstWave = [...game.wave.cards];
+  game.player.setHealth(0);
+
+  dealer.restart();
+  run(script, scene, 1);
+
+  expect(game.player.getHealth()).toBe(21);
+  expect(game.wave.cards).toHaveLength(4);
+  expect(game.wave.cards.some((card) => firstWave.includes(card))).toBe(false);
+  expect(cardsInSlots(scene)).toEqual(game.wave.cards);
+
+  tapSlot(input, 0);
+  expect(taps).toHaveLength(1);
+});

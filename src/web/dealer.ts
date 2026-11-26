@@ -73,6 +73,18 @@ export default class Dealer {
     });
   }
 
+  /**
+   * Starts a new Brawl on the same table: clears the Wave, resets the rules,
+   * and deals fresh cards. Input stays locked until the deal finishes.
+   */
+  restart(): void {
+    this.input.lock();
+    this.cards.forEach((card) => this.scene.remove(card));
+    this.cards = [];
+    this.game.restart();
+    this.dealWave(true);
+  }
+
   private dealWave(unlockWhenDone = true): void {
     this.cards = this.game.wave.cards.map((card) => new Card(card));
     this.cards.forEach((card) => this.scene.add(card));
