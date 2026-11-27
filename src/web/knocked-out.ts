@@ -9,8 +9,8 @@ const BUTTON_LABEL = "Restart";
 /**
  * Restart pill size at full card scale, in CSS pixels.
  */
-const BUTTON_WIDTH = 108;
-const BUTTON_HEIGHT = 36;
+const BUTTON_WIDTH = 88;
+const BUTTON_HEIGHT = 26;
 
 /**
  * Gap between the card row and the Restart pill, in CSS pixels at full size.
@@ -196,5 +196,5 @@ function messageSize(width: number): number {
  * Restart label size; a touch smaller than the loss line.
  */
 function buttonSize(width: number): number {
-  return Math.max(14, Math.min(18, width * 0.016));
+  return Math.max(11, Math.min(13, width * 0.012));
 }
